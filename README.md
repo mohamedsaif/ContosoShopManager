@@ -1,4 +1,4 @@
-﻿![Banner](Res/Banner.png)
+﻿![Banner](Res/banner.png)
 
 A 360 Intelligent Experiences workshop around using AI + Mobile Apps to deliver advance intelligent that help auditor and store managers to evaluate Retail market product stocking compliance
 
