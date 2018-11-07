@@ -1,0 +1,117 @@
+{
+	"variables": [],
+	"info": {
+		"name": "Analyze Image",
+		"_postman_id": "637f1ce9-1851-458d-ba4f-7ee518b448ba",
+		"description": "Congnitive Services Analyze Image APIs",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "OCR API (Image URL)",
+			"request": {
+				"url": {
+					"raw": "{{cognitive-base-url}}/ocr?language=unk&detectOrientation =true",
+					"host": [
+						"{{cognitive-base-url}}"
+					],
+					"path": [
+						"ocr"
+					],
+					"query": [
+						{
+							"key": "language",
+							"value": "unk",
+							"equals": true,
+							"description": ""
+						},
+						{
+							"key": "detectOrientation ",
+							"value": "true",
+							"equals": true,
+							"description": ""
+						},
+						{
+							"key": "detectOrientation",
+							"value": "true"
+						}
+					],
+					"variable": []
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					},
+					{
+						"key": "Ocp-Apim-Subscription-Key",
+						"value": "{{Ocp-Apim-Subscription-Key}}",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"url\":\"https://contosoie.blob.core.windows.net/public-individuals/mosaif_id.png\"}"
+				},
+				"description": "Send image to OCR API to extract text"
+			},
+			"response": []
+		},
+		{
+			"name": "OCR API (Image File)",
+			"request": {
+				"url": {
+					"raw": "{{cognitive-base-url}}/ocr?language=unk&detectOrientation =true",
+					"host": [
+						"{{cognitive-base-url}}"
+					],
+					"path": [
+						"ocr"
+					],
+					"query": [
+						{
+							"key": "language",
+							"value": "unk",
+							"equals": true,
+							"description": ""
+						},
+						{
+							"key": "detectOrientation ",
+							"value": "true",
+							"equals": true,
+							"description": ""
+						},
+						{
+							"key": "detectOrientation",
+							"value": "true"
+						}
+					],
+					"variable": []
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/octet-stream",
+						"description": ""
+					},
+					{
+						"key": "Ocp-Apim-Subscription-Key",
+						"value": "{{Ocp-Apim-Subscription-Key}}",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "file",
+					"file": {
+						"src": ""
+					}
+				},
+				"description": "Send image to OCR API to extract text"
+			},
+			"response": []
+		}
+	]
+}

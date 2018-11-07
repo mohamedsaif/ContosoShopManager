@@ -1,0 +1,115 @@
+{
+	"variables": [],
+	"info": {
+		"name": "Custom Vision API",
+		"_postman_id": "3891c569-aca1-c822-6214-53fb195538a9",
+		"description": "APIs used to access Custom Vision APIs",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Prediction API (Image URL)",
+			"request": {
+				"url": {
+					"raw": "https://southcentralus.api.cognitive.microsoft.com/customvision/v2.0/Prediction/43b954f2-489b-4dbe-8696-938734853070/url?iterationId=c192bafb-719e-48f2-bb96-d98e30bbdd69",
+					"protocol": "https",
+					"host": [
+						"southcentralus",
+						"api",
+						"cognitive",
+						"microsoft",
+						"com"
+					],
+					"path": [
+						"customvision",
+						"v2.0",
+						"Prediction",
+						"43b954f2-489b-4dbe-8696-938734853070",
+						"url"
+					],
+					"query": [
+						{
+							"key": "iterationId",
+							"value": "c192bafb-719e-48f2-bb96-d98e30bbdd69",
+							"equals": true,
+							"description": ""
+						}
+					],
+					"variable": []
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Prediction-Key",
+						"value": "{{Prediction-Key}}",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"Url\": \"https://contosoie.blob.core.windows.net/public-individuals/invalid1.jpg\"}"
+				},
+				"description": "Prediction access for a specific iteration"
+			},
+			"response": []
+		},
+		{
+			"name": "Prediction API (Image File)",
+			"request": {
+				"url": {
+					"raw": "https://southcentralus.api.cognitive.microsoft.com/customvision/v2.0/Prediction/43b954f2-489b-4dbe-8696-938734853070/image?iterationId=c192bafb-719e-48f2-bb96-d98e30bbdd69",
+					"protocol": "https",
+					"host": [
+						"southcentralus",
+						"api",
+						"cognitive",
+						"microsoft",
+						"com"
+					],
+					"path": [
+						"customvision",
+						"v2.0",
+						"Prediction",
+						"43b954f2-489b-4dbe-8696-938734853070",
+						"image"
+					],
+					"query": [
+						{
+							"key": "iterationId",
+							"value": "c192bafb-719e-48f2-bb96-d98e30bbdd69",
+							"equals": true,
+							"description": ""
+						}
+					],
+					"variable": []
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Prediction-Key",
+						"value": "{{Prediction-Key}}",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/octet-stream",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "file",
+					"file": {
+						"src": ""
+					}
+				},
+				"description": "Prediction access for a specific iteration"
+			},
+			"response": []
+		}
+	]
+}

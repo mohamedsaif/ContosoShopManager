@@ -1,24 +1,52 @@
 ![Banner](Assets/Banner.png)
 
-# Smart Image Resizing with Azure Functions and Cognitive Services
+# Using Custom Vision to Assert Shelf Compliance
 
-We have come to a point where our backend has grown to a pretty solid state so let's do some of the more advanced stuff and add some intelligence to it! Not every developer has a background in Machine Learning and Artificial Intelligence to we should start with something simple: **Resizing uploaded images in an intelligent way**.
+First thing we start is configuration a Custom Vision service to create custom prediction model for our shelves compliance assessment policy.
 
-You remember, users can add photos to *Jobs* and upload them through the Web API sothat they get stored in the Blob Storage. These photos are uploaded and stored in **full size**, which results in high network traffic and download times when the Mobile App is fetching them. Sometimes the App just needs a small or preview version of the photo, so it would be nice to store some smaller sizes of the photos in addition to the orginnally uploaded ones.
-
-The problem with simple resizing of the images to a certain square resolution like 150 x 150 pixels for thumbnail icons could cut off important parts of a picture that got taken in portrait- or landscape format. This is why it is recommended to use AI to understand what is shown on a picture and crop it accordingly.
-
-## 1. Microsoft Cognitive Services
+## Azure Computer Vision Service Creation
 
 Great resources of Intelligence Services for developers without deeper Machine Learning knowledge are [Microsoft's Cognitive Services](https://azure.microsoft.com/en-us/services/cognitive-services/). These are a set of pre-trained Machine Learning APIs across various sections like Vision, Speech or Knowledge that developer's can simply include within their applications using a REST API.
 
-### 1.1 Computer Vision for thumbnail generation
-
 One of these APIs is [Computer Vision](https://azure.microsoft.com/en-us/services/cognitive-services/computer-vision/), a service that tries to understand what's on a picture or video. This service can analyze pictures to generate tags and captions, detect adult or racy content, read text in images, recognizes celebrities and landmarks, detects faces and emotions and much more. You should definitely take some time to explore and play around with all these services!
 
-![Cognitive Services Thumbnail Preview](Assets/CogServicesThumbnailPreview.png)
+Access Azure Portal [Azure Portal](https://portal.azure.com) to create a new Custom vision service.
 
-The perfect service for our scenario is the [Thumbnail Generation API](https://westcentralus.dev.cognitive.microsoft.com/docs/services/56f91f2d778daf23d8ec6739/operations/56f91f2e778daf14a499e1fb) which allows us to upload a picture together with a preferred size and get a cropped image back that does not miss out important parts of the original photo.
+![Add Computer Vision to Azure](Assets/new-computervision.png)
+
+Click on create and configure the options like the following:
+
+![Add Computer Vision to Azure](Assets/new-computervision-config.png)
+
+Once creation is done, you can open it from the resource group you place it:
+
+![Add Computer Vision to Azure](Assets/new-computervision-overview.png)
+
+## Create Custom Vision Project
+
+Now by visiting [Custom Vision Portal](https://customvision.ai/projects) and sign in with your Azure account you will be able to create a new project to host our new prediction model.
+
+![Custom Vision Portal](Assets/new-customvision-project.png)
+
+After connecting this new project to the created Computer Vision service, you will be ready to upload the training images
+
+![Custom Vision Portal](Assets/new-customvision-project-addimages.png)
+
+From the GitHub repo, you have a folder named **Dataset**, under it you will find **Compliant**, **Non-Compliant** and **TestImages**.
+
+Start by uploading the images in the **Compliant** folder and set the tag to **Compliant** in the Custom Vision project.
+
+![Custom Vision Portal](Assets/new-customvision-project-upload.png)
+
+Repeat the same for **Non-Compliant** images.
+
+> **Hint:** If you faced issues with upload try to upload 1 by 1.
+
+After completing the upload process, you are ready to train the model on the new tagged images. Click on **Train** to start (green button on top).
+
+When training completes, under the tab **Performance** you will have information about the accurecy of your new model.
+
+![Custom Vision Portal](Assets/new-customvision-project-performance.png)
 
 ### 2.1 Get access through Azure
 
@@ -50,10 +78,10 @@ Whenever a user uploads an image, he should get immediate feedback and should no
 We have already prepared an Azure Function so we don't need to start from scratch! In the repository, there is an Azure Function called [`ResizeImage.cs`](/Backend/Functions/ResizeImage.cs) that contains the code for our scenario.
 
 1. Get triggered by a Storage Queue message
-1. Take an image from Azure Blob Storage
-1. Upload it to the Cognitive Services Computer Vision API
-1. Write the resized images back to Azure Blob Storage
-1. Update the Cosmos DB entry
+2. Take an image from Azure Blob Storage
+3. Upload it to the Cognitive Services Computer Vision API
+4. Write the resized images back to Azure Blob Storage
+5. Update the Cosmos DB entry
 
 ### 2.1 Create an Azure Function
 
