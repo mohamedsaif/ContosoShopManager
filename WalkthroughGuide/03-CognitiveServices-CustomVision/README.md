@@ -47,20 +47,3 @@ After completing the upload process, you are ready to train the model on the new
 When training completes, under the tab **Performance** you will have information about the accurecy of your new model.
 
 ![Custom Vision Portal](Assets/new-customvision-project-performance.png)
-
-### 2.1 Get access through Azure
-
-Microsoft Cognitive Services are hosted in various Azure Regions and can be consumed through an Azure Subscription. They are priced by transactions with numerous **free transactions** every month and a pay-per-use model for each additional request.
-
-To add Computer Vision to our solution, enter the [Azure Portal](https://portal.azure.com) and click on the ***Create a resource*** button, find ***AI + Cognitive Services*** and select ***Computer Vision API*** to configure access to the API.
-
-![Add Computer Vision to Azure](Assets/AddComputerVision.png)
-
-Choose the following settings and hit the ***Create*** button to start.
-
-- **ID:** myawesomenewstartupcognitivevision
-- **Location:** Same as your Web App(or close as Cognitive Services are not available in all Regions)
-- **Pricing tier:** F0
-- **Resouce Group:** Use existing
-
-Once the deployment is succeeded, you can navigate to the resource and access the API Key from the ***Keys*** section.
