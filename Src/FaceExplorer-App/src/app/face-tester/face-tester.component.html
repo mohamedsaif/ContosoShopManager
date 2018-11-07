@@ -1,0 +1,52 @@
+<div class="container">
+  <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '14px' }"></ngx-loading>
+
+  <div class="card">
+    <h3 class="card-header">Test Faces</h3>
+    <div class="card-body">
+
+      <div class="form-group">
+        <label>Person Group</label>
+        <select [(ngModel)]="selectedGroupId" name="personGroups" class="form-control">
+          <option value="">(Select)</option>
+          <option *ngFor="let group of personGroups" [value]="group.personGroupId">
+            {{group.name}} ({{group.personGroupId}})
+          </option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Image URL:</label>
+        <input type="text" class="form-control" name="groupName" [(ngModel)]="imageUrl">
+      </div>
+
+      <button class="btn btn-primary mr-sm-2" (click)="detect()">Detect</button>
+      <button class="btn btn-primary" (click)="identify()">Identify</button>
+
+      <hr/>
+
+      <div *ngIf="selectedFace" class="text-primary">
+        <pre class="text-primary">{{selectedFace | json}}</pre>
+      </div>
+      <div *ngIf="selectedFace && selectedFace.identifiedPerson">
+        <ngb-alert>
+          Subject Identified: {{selectedFace.name}}
+        </ngb-alert>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+
+    <div class="mainImgContainer" *ngIf="imageUrl">
+      <img #mainImg class="card-img main-img" [src]="imageUrl" (load)="imageLoaded($event)" />
+
+      <div [ngClass]="{'face-box-green': item.identifiedPerson, 'face-box-yellow': !item.identifiedPerson}" *ngFor="let item of detectedFaces"
+        (click)="faceClicked(item)" [style.top.px]="item.faceRectangle.top * multiplier" [style.left.px]="item.faceRectangle.left * multiplier"
+        [style.height.px]="item.faceRectangle.height * multiplier" [style.width.px]="item.faceRectangle.width * multiplier"></div>
+
+    </div>
+
+  </div>
+
+
+</div>

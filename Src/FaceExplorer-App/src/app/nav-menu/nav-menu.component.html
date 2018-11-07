@@ -1,0 +1,40 @@
+<div class="navbar navbar-expand-lg fixed-top navbar-dark bg-primary">
+  <div class="container">
+
+    <a class="navbar-brand" [routerLink]="['/']">Face API Explorer</a>
+
+    <div class="collapse navbar-collapse xnavbar-nav xnav">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <a class="nav-item nav-link" [routerLink]="['/']" [routerLinkActive]="['link-active']">
+            <span class='fa fa-home'></span> Home
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-item nav-link" [routerLink]="['/configuration']" [routerLinkActive]="['link-active']">
+            <span class='fa fa-users'></span> Configure
+          </a>
+        </li>
+        <li class="nav-item dropdown">
+          <div ngbDropdown class="d-inline-block">
+            <a class="nav-item nav-link" ngbDropdownToggle>
+              <span class='fa fa-eye'></span> Face Analysis
+            </a>
+            <div ngbDropdownMenu>
+              <a class="dropdown-item" [routerLink]="['/test-faces']" [routerLinkActive]="['link-active']">
+                Detection/Identification
+              </a>
+              <a class="dropdown-item" [routerLink]="['/face-grouping']" [routerLinkActive]="['link-active']">
+                Face Grouping
+              </a>
+              <a class="dropdown-item" [routerLink]="['/find-similar']" [routerLinkActive]="['link-active']">
+                Find Similar
+              </a>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+  </div>
+</div>

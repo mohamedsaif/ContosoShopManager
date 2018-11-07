@@ -1,0 +1,85 @@
+<div>
+  <div class="container">
+    <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '14px' }"></ngx-loading>
+
+    <div class="card">
+      <h3 class="card-header">Known Individuals - Groups</h3>
+      <div class="card-body">
+        <form action="" class="form-inline">
+          <button type="button" class="btn btn-primary mb-2 mr-sm-2 mb-sm-0" (click)="addPersonGroup()">Add Group</button>
+
+          <label class="mr-sm-2" for="exampleSelect1">Groups:</label>
+          <select [(ngModel)]="selectedGroupId" name="personGroups" class="form-control mb-2 mr-sm-2 mb-sm-0" (change)="onGroupsChange()">
+            <option value="">(Select)</option>
+            <option *ngFor="let group of personGroups" [value]="group.personGroupId">{{group.name}}</option>
+          </select>
+
+          <button type="button" class="btn btn-danger mb-2 mr-sm-2 mb-sm-0" *ngIf="selectedGroupId" (click)="deletePersonGroup()">Delete Group</button>
+          <button type="button" class="btn btn-success mb-2 mr-sm-2 mb-sm-0" *ngIf="selectedGroupId" (click)="trainPersonGroup()">Train Model</button>
+          <button type="button" class="btn btn-info" *ngIf="selectedGroupId" (click)="getGroupTrainingStatus()">Check Training Status</button>
+        </form>
+      </div>
+    </div>
+
+    <div class="card" *ngIf="selectedGroupId">
+      <h3 class="card-header">Individuals</h3>
+      <div class="card-body">
+
+        <div class="row">
+          <!-- First column for left-hand section for Persons -->
+          <div class="col-2">
+
+            <div class="row">
+              <button class="btn btn-primary mb-sm-2" (click)="addPerson()">Add Person</button>
+            </div>
+            <div class="row">
+              <div class="list-group">
+                <a *ngFor="let person of personList" class="list-group-item list-group-item-action clickable" (click)="personClick(person)">
+                  {{person.name}}
+                </a>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Main column (right-side) for Person section -->
+          <div class="col" *ngIf="selectedPerson">
+
+            <div class="card">
+              <h4 class="card-header">Individual: {{selectedPerson.name}}</h4>
+              <div class="card-body">
+                <button class="btn btn-primary mr-sm-2" (click)="addPersonFace()">Add New Face</button>
+                <button class="btn btn-danger" (click)="deletePerson()">Delete Person</button>
+                <hr/>
+
+                <h5 class="card-title">Person Faces</h5>
+                <div class="row">
+                  <div class="col-md-3" *ngFor="let img of personFaces">
+                    <div class="card text-center">
+                      <div class="card-body card-block-img-container">
+                        <span class="img-container">
+                          <img class="img-person-face img-thumnail" [src]="img.userData" height="140" width="140" />
+                        </span>
+                      </div>
+                      <div class="card-body">
+                        <button type="button" class="btn btn-danger btn-sm" (click)="deletePersonFace(img.persistedFaceId)">Delete Face</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+
+      </div>
+    </div>
+
+
+
+
+
+  </div>
+</div>

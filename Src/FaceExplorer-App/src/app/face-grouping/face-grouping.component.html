@@ -1,0 +1,48 @@
+<div class="container">
+  <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '14px' }"></ngx-loading>
+
+  <div class="card">
+    <h3 class="card-header">Face Grouping</h3>
+    <div class="card-body">
+
+
+      <textarea rows="8" cols="80" [(ngModel)]="imageUrls">
+      </textarea>
+
+      <hr/>
+
+      <button class="btn btn-primary" (click)="executeGrouping()">Execute Grouping</button>
+
+      <div *ngFor="let group of groupingResults.groups">
+        <h3>Group</h3>
+        <div class="row">
+          <div class="col-md-3" *ngFor="let face of group">
+            <div class="card text-center">
+              <div class="card-body card-block-img-container">
+                <span class="img-container">
+                  <img class="img-person-face img-thumnail" [src]="getUrlForFace(face)" height="140" width="140" />
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="groupingResults.messyGroup">
+          <h3>Messy Group</h3>
+          <div class="row">
+            <div class="col-md-3" *ngFor="let face of groupingResults.messyGroup">
+              <div class="card text-center">
+                <div class="card-body card-block-img-container">
+                  <span class="img-container">
+                    <img class="img-person-face img-thumnail" [src]="getUrlForFace(face)" height="140" width="140" />
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+    </div>
+  </div>
+</div>

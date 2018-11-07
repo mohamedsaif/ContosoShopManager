@@ -1,0 +1,53 @@
+<div class="container">
+  <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '14px' }"></ngx-loading>
+
+  <div class="card">
+    <h3 class="card-header">Find Similar</h3>
+    <div class="card-body">
+
+
+      <textarea rows="8" cols="80" [(ngModel)]="imageUrls">
+        </textarea>
+
+      <input type="text" class="form-control" placeholder="Query Face" [(ngModel)]="queryFace" />
+
+      <hr/>
+
+      <button class="btn btn-primary" (click)="findSimilar()">Find Similar</button>
+
+      <div *ngIf="queryFace">
+        <h3>Query Face</h3>
+        <div class="row">
+          <div class="col-md-3">
+            <div class="card text-center">
+              <div class="card-body card-block-img-container">
+                <span class="img-container">
+                  <img class="img-person-face img-thumnail" [src]="queryFace" height="140" width="140" />
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="findSimilarResults">
+        <h3>Find Similar Results</h3>
+        <div class="row">
+          <div class="col-md-3" *ngFor="let face of findSimilarResults">
+            <div class="card text-center">
+              <div class="card-body card-block-img-container">
+                <span class="img-container">
+                  <img class="img-person-face img-thumnail" [src]="getUrlForFace(face.persistedFaceId)" height="140" width="140" />
+                </span>
+                <hr/>
+                <span>Confidence: {{face.confidence}}</span>                
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+  </div>
+</div>

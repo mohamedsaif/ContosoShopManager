@@ -11,6 +11,9 @@ Please bring your own **Windows or Mac** laptop. To participate in this workshop
 ### Requirements
 - [Microsoft Azure Account with a Subscription](https://aka.ms/azft-mobile)
 - [Postman](https://www.getpostman.com/)
+- [Azure Storage Explorer](https://azure.microsoft.com/en-us/features/storage-explorer/)
+- [NodeJS](https://nodejs.org/en/)
+- [Angular CLI](https://cli.angular.io/)
 - [Python with Jupyter notebooks (required for bonus tracks)](http://jupyter.org/)
 - [Visual Studio Code](https://code.visualstudio.com/)
   - [Azure App Service Extension](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-azureappservice)
