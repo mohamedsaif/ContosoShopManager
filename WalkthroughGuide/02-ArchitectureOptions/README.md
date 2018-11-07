@@ -4,14 +4,10 @@
 
 First thing we start is configuration a Custom Vision service to create custom prediction model for our shelves compliance assessment policy.
 
-It's for the reason that we'll opt to use Platform as a Service (PaaS) and Software as a Service (SaaS) as much as possible within our design. 
- 
+## Azure Computer Vision Service Creation
 
 Great resources of Intelligence Services for developers without deeper Machine Learning knowledge are [Microsoft's Cognitive Services](https://azure.microsoft.com/en-us/services/cognitive-services/). These are a set of pre-trained Machine Learning APIs across various sections like Vision, Speech or Knowledge that developer's can simply include within their applications using a REST API.
 
-## The real architecture
-![Azure Functions/PaaS Architecture](Assets/architecture-full.png)
-Above you can see a high-level overview of our production architecture. Some key decisions: 
 One of these APIs is [Computer Vision](https://azure.microsoft.com/en-us/services/cognitive-services/computer-vision/), a service that tries to understand what's on a picture or video. This service can analyze pictures to generate tags and captions, detect adult or racy content, read text in images, recognizes celebrities and landmarks, detects faces and emotions and much more. You should definitely take some time to explore and play around with all these services!
 
 Access Azure Portal [Azure Portal](https://portal.azure.com) to create a new Custom vision service.
@@ -240,4 +236,4 @@ Once the photo has been uploaded, we should see a successful execution of the Az
 
 
 # Next Steps 
-[Congnitive Services Deployment](..\03-CognitiveServices-CustomVision\README.md)
+[Mobile Options](../08%20Mobile%20Overview/README.md)
