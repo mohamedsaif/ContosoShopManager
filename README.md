@@ -8,19 +8,16 @@ The workshop will give you insights and hands-on sessions on how to leverage inn
 
 Attendees will also learn how Microsoft's Cognitive Services and Advance AI Techniques can be used in conjunction with App Development Tools to scope, design, and execute the next generation of intelligent services. 
 
-
 # Workshop Requirements
-
-
 
 ## Technical Requirements
 
-1.	Azure Subscription 
-2.	Visual Studio Code (Mac or PC)
-3.	Optional - Visual Studio (for PC or for Mac) with Xamarin & latest updates installed - [DOWNLOAD](https://visualstudio.microsoft.com/downloads/)
-4.	Postman - [DWONLOAD](https://www.getpostman.com/)
-5.  Azure Storage Explorer [DOWNLOAD](https://azure.microsoft.com/en-us/features/storage-explorer/)
-6.	Python with Jupyter notebooks (required for bonus tracks) [DOWNLOAD](http://jupyter.org/)
+1. Azure Subscription
+2. Visual Studio Code (Mac or PC)
+3. Optional - Visual Studio (for PC or for Mac) with Xamarin & latest updates installed - [DOWNLOAD](https://visualstudio.microsoft.com/downloads/)
+4. Postman - [DWONLOAD](https://www.getpostman.com/)
+5. Azure Storage Explorer [DOWNLOAD](https://azure.microsoft.com/en-us/features/storage-explorer/)
+6. Python with Jupyter notebooks (required for bonus tracks) [DOWNLOAD](http://jupyter.org/)
 
 > **NOTE:** Visit the [Setup](WalkthroughGuide/01-Setup/README.md) section of this workshop to get further details on how to setup various environment requirements.
 
@@ -53,7 +50,7 @@ You can find a walkthrough guide for the project(s) that outlines how you too ca
 
 ### [4. Cognitive Services - Face](WalkthroughGuide/04-CognitiveServices-Face)
 
-### [5. Cognitive Services - Custom Vision](Walkthrough%20Guide/05%20Search)
+### [5. Cognitive Services - Custom Vision](WalkthroughGuide/05-CognitiveServices-CustomVision)
 
 ### [6. Cloud Backend & Cognitive Services](WalkthroughGuide/06-CloudDeployment)
 
