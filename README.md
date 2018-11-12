@@ -22,21 +22,44 @@ Attendees will also learn how Microsoft's Cognitive Services and Advance AI Tech
 5.  Azure Storage Explorer [DOWNLOAD](https://azure.microsoft.com/en-us/features/storage-explorer/)
 6.	Python with Jupyter notebooks (required for bonus tracks) [DOWNLOAD](http://jupyter.org/)
 
+> **NOTE:** Visit the [Setup](WalkthroughGuide/01-Setup/README.md) section of this workshop to get further details on how to setup various environment requirements.
+
 ## Target Audience
 
-1.	Data Scientists  
-2.	Application Developers 
-3.	Development Leads/AI Leads
+1. Data Scientists  
+2. Application Developers
+3. Development Leads/AI Leads
 
 > **NOTE:** We highly recommend you setup and configure your system *before* attending one of the guided sessions. Although we’ve allowed an hour in the morning to assist in trouble shooting configurations, we won’t have time to do a fresh installation.
 
-## Objectives 
+## Objectives
 
-1.	Demonstrate AI platform capabilities and options
-2.	Show case the ease of infusing AI in the dev cycle for building AI-models,  new apps and innovating existing ones 
-3.	Demonstrate unmatched time to value through leveraging Microsoft AI Platform
-4.	Deliver omnichannel intelligent apps with a consistent and outstanding end user experience
+1. Demonstrate the AI platform capabilities and options
+2. Show case the ease of infusing AI in the dev cycle for building AI-models,  new apps and innovating existing ones
+3. Demonstrate unmatched time to value through leveraging Microsoft AI Platform
+4. Deliver omnichannel intelligent apps with a consistent and outstanding end user experience
 
+# Guided Walkthrough
+
+You can find a walkthrough guide for the project(s) that outlines how you too can build and deploy your own version of the app, Postman and backend services.
+
+> **NOTE:** We highly recommend you setup and configure your system before attending one of the guided sessions. Although we’ve allowed an hour in the morning to assist in trouble shooting configurations, we won’t have time to do a fresh installation.
+
+### [1. Setup](WalkthroughGuide/01-Setup/)
+
+### [2. Architecture Options](WalkthroughGuide/02-ArchitectureOptions/)
+
+### [3. Cognitive Services - OCR](WalkthroughGuide/03-CognitiveServices-OCR)
+
+### [4. Cognitive Services - Face](WalkthroughGuide/04-CognitiveServices-Face)
+
+### [5. Cognitive Services - Custom Vision](Walkthrough%20Guide/05%20Search)
+
+### [6. Cloud Backend & Cognitive Services](WalkthroughGuide/06-CloudDeployment)
+
+### [7. Shop Manager App](WalkthroughGuide/07-ShopManagerApp)
+
+### [8. Bonus Content](WalkthroughGuide\Bonus)
 
 ## Proposed Agenda
 
@@ -107,7 +130,6 @@ Attendees will also learn how Microsoft's Cognitive Services and Advance AI Tech
 <td>-</td>
 </tr>
 </table>
-
 
 # Backround
 
