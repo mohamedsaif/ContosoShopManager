@@ -2,21 +2,27 @@
 
 # Architecture Options
 
-Azure architecture for Contoso Shop Manager platform is brining modular and flexible back end options. This project was designed to allow future addition of features to the AI-infused features, that is why it is built on top of a ***Serverless-based Cognitive Pipeline***
+There are 2 major decisions needed to successfully deliver Contoso Shop Manager platform, Shelves compliance classification algorithm/platform and the Azure backend architecture to support scalable and cost efficient services.
 
-## Cognitive Piepeline
+This workshop will focus on [Custom Vision](https://azure.microsoft.com/en-us/services/cognitive-services/custom-vision-service/) as it proved to provide sufficient accuracy for the required scope. This is not to under estimate other approaches to the problem, but to make it simpler and efficient.
+
+You can fund further information about [Advanced Computer Vision - Bonus Track](../Bonus/Advanced-ComputerVision/) where couple more Machine Learning approaches where discussed. Just make sure to bring your Python skills with [Jupyter Notebook](http://jupyter.org/) along the ride :)
+
+As for the Azure architecture for Contoso Shop Manager platform, a ***Serverless-based Cognitive Pipeline*** is brining modular and flexible backend options to the table. The solution was designed to allow future addition of new AI-skills to the pipeline.
+
+## Cognitive Pipeline
 
 AI democratization initiative is enabling developers to take advantage of pre-trained models to bring intelligent to their applications.
 
-[Microsoft Azure Cognitive Services]() are continously improved by adding new services or enhance the exsiting one.
+[Microsoft Azure Cognitive Services](https://azure.microsoft.com/en-us/services/cognitive-services/) are continuously improved by adding new services or enhance the existing ones.
 
-That is why having a ***Cognitive Pipeline*** will allow adding new AI services to be part of the processing pipeline easily and without any significant changes to the client code.
+That is why having a ***Cognitive Pipeline*** will allow adding new AI services to be part of the processing pipeline easily and without any significant changes to the client code (or the server).
 
 ## Cognitive Services SDK vs APIs
 
 It was tough choice to select Cognitive Services SDKs vs. APIs. As the matter of fact, all Cognitive Services offer APIs but not all offers solid SDKs. 
 
-The choice to go with SDK ,when possible, made sense as it produces cleaner code and in some cases enhanced performance (like in Speech SDKs). 
+The choice to go with SDK ,when possible, made sense as it produces cleaner code and in some cases enhanced performance (like in Speech SDKs).
 
 > ***NOTE:*** All Cognitive Services have API-first architecture. So if you didn't find an SDK that is optimized for the platform you target, you can always fall back to using the service APIs.
 
@@ -24,9 +30,9 @@ The choice to go with SDK ,when possible, made sense as it produces cleaner code
 
 Event driven pipeline processing was the option selected to implement the primary component of the backend.
 
-[Azure Functions](https://azure.microsoft.com/en-us/services/functions/) offers great capabilitiy to execute complex server less scenario by combining triggers, input/output binding and [Durable Funcations](https://docs.microsoft.com/en-us/azure/azure-functions/durable-functions-overview).
+[Azure Functions](https://azure.microsoft.com/en-us/services/functions/) offers great capability to execute complex server less scenario by combining triggers, input/output binding and [Durable Functions](https://docs.microsoft.com/en-us/azure/azure-functions/durable-functions-overview).
 
-I always like to think of Azure Functions like a Windows Service, it is availabe on the background listneing to potential events to respond.
+I always like to think of Azure Functions like a Windows Service, it is available on the background listening to potential events to respond.
 
 ## Architecture Overview
 
@@ -51,7 +57,7 @@ Mixing multiple implementations for Azure Functions was used to optimum executio
 
 ### 2. Backend APIs
 
-1. [Classification/SubmitDoc API]() will recieve the 4 information sent by the client and validate the request
+1. [Classification/SubmitDoc API]() will receive the 4 information sent by the client and validate the request
 
 ```csharp
 [HttpPost("{ownerId}/{docType}/{isAsync}")]
@@ -139,7 +145,7 @@ public class SmartDoc : BaseModel
 
 [View in project](/Src/Backend/BackgroundSerivces/NewReq.cs#L22)
 
-> **NOTE:** You always want to expose your APIs behind API proxy ([Like API Management Service]()) to retain control and protect your acutal APIs endpoints.
+> **NOTE:** You always want to expose your APIs behind API proxy ([Like API Management Service](https://docs.microsoft.com/en-us/azure/api-management/)) to retain control and protect your actual APIs endpoints.
 
 ```csharp
 public class NewRequest<T> : BaseModel
@@ -156,30 +162,23 @@ public class NewRequest<T> : BaseModel
 
 ### 3. Backend Background Services - New Request Function
 
-1. Once the request was recieved from the API, a New Request function will collaborate to finalize the required instructions.
+1. Once the request was received from the API, a New Request function will collaborate to finalize the required instructions.
 2. Based on IsAsync flag, this function will do one of the of the following:
-    1. Async: will create a new queue item to be picked up by Cognitive Pipeline Durable Function. The request object will be returned immedialty to the caller while the function process this document.
+    1. Async: will create a new queue item to be picked up by Cognitive Pipeline Durable Function. The request object will be returned immediately to the caller while the function process this document.
     2. Sync: will post an HTTP request(s) directly to the relevant function(s) and wait for the result to come back. Final cognitive processing result will be updated in CosmosDB and returned back to the caller.
 
 ```csharp
 [FunctionName("NewSmartDocReq")]
 public static async Task<IActionResult> Run(
     //HTTP Trigger
-    //[HttpTrigger(AuthorizationLevel.Function, "post", Route = null)]NewRequest<SmartDoc> newSmartDocRequest,
     [HttpTrigger(AuthorizationLevel.Function, "post", Route = null)]HttpRequestMessage newReq,
-
-    //Input
-    //[DocumentDB("test", "test", ConnectionStringSetting = "CosmosDB")] DocumentClient client,
 
     //Output
     [Queue("newreq", Connection = "NewRequestQueue")]ICollector<string> outputQueueItem, 
 
     //Logger
     ILogger log)
-    //TraceWriter log)
 {
-    //log.Info($"NewReq function http triggered for: {newReq}");
-
     var newSmartDocRequestJson = await newReq.Content.ReadAsStringAsync();
     var newSmartDocRequest = JsonConvert.DeserializeObject<NewRequest<SmartDoc>>(newSmartDocRequestJson);
 
@@ -198,7 +197,7 @@ public static async Task<IActionResult> Run(
             result = newSmartDocRequestJson;
             return (ActionResult)new OkObjectResult(result);
         }
-        else //Sync exection
+        else //Sync execution
         {
             //Assess what type of processing instruction needed and execute the relevant functions
             if(newSmartDocRequest.Instructions.Contains(InstructionFlag.AnalyzeText.ToString()))
@@ -229,7 +228,7 @@ public static async Task<IActionResult> Run(
 
 ### 4. Backend Background Services - Async/Sync
 
-1. Cognitive Pipelince orchestration will be either triggered by a queue message or http request (based on the original IsAsync flag)
+1. Cognitive Pipeline orchestration will be either triggered by a queue message or http request (based on the original IsAsync flag)
     1. In case of ***Async***, Cognitive Pipeline durable function will be triggered via the new queue message
     2. In case of ***Sync***, the New Request function will make the calls directly and wait for the result to return them back to the API directly without going throw the orchestration.
 
@@ -259,9 +258,9 @@ public static async Task QueueStart(
 }
 ```
 
-> **NOTE:** If your tasks must be executed in sequence, you can select ***Function Chainning Pattern*** to execute in sequnce with the ability to get the output of one function into the next. Refere back to [Durable Functions](https://docs.microsoft.com/en-us/azure/azure-functions/durable-functions-overview) documentations for futher details about orchestration patterns.
+> **NOTE:** If your tasks must be executed in sequence, you can select ***Function Chaining Pattern*** to execute in sequence with the ability to get the output of one function into the next. Refer back to [Durable Functions](https://docs.microsoft.com/en-us/azure/azure-functions/durable-functions-overview) documentations for further details about orchestration patterns.
 
 ### 6. Backend Background Services - Result Update & Callback (Async)
 
 1. A final ResultCapture function will be called to update the CosmosDB with all the cognitive results.
-2. If required, a Logic App based callback workflow can be triggered by adding a new queue message in ***callback*** queue to send push notification, email or even SMS to the concered party about the complition of the processing
+2. If required, a Logic App based callback workflow can be triggered by adding a new queue message in ***callback*** queue to send push notification, email or even SMS to the concerned party about the completion of the processing
