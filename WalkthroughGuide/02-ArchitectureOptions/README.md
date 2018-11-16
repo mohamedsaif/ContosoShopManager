@@ -41,21 +41,24 @@ Mixing multiple implementations for Azure Functions was used to optimum executio
 
 ## Request Workflow
 
-1. A client (web or mobile) will submit 4 thins to a ASP .NET API:
-    1. OwnerId: currently being fixed to a static values but in the future it will be based on the authenticated user
-    2. Document Type: which is basically what type of image are being submitted with the following initial values:
-        1. Passport, DriverLicense, ID, BirthCertificate, Receipt, Check, Generic, Face, VoiceID, Unidentified
-    3. Document Image: the actual image that will be processed by the backend
-    4. IsAsync bool flag to tell the back end how this request should be processed
-2. Backend APIs
-    1. [Classification/SubmitDoc API]() will recieve the 4 information sent by the client and validate the request
+### 1. A client (web or mobile) will submit 4 thins to a ASP .NET API
+
+1. OwnerId: currently being fixed to a static values but in the future it will be based on the authenticated user
+2. Document Type: which is basically what type of image are being submitted with the following initial values:
+    1. Passport, DriverLicense, ID, BirthCertificate, Receipt, Check, Generic, Face, VoiceID, Unidentified
+3. Document Image: the actual image that will be processed by the backend
+4. IsAsync bool flag to tell the back end how this request should be processed
+
+### 2. Backend APIs
+
+1. [Classification/SubmitDoc API]() will recieve the 4 information sent by the client and validate the request
 
 ```csharp
 [HttpPost("{ownerId}/{docType}/{isAsync}")]
         public async Task<IActionResult> SubmitDoc(string ownerId, string docType, bool isAsync, IFormFile doc)
 ```
 
-    2. Based on the document type, a list of instructions for the (Background Services) will be added to the request (like if it is an ID document, 2 instructions will be added to do both Face auth on the ID image and OCR to extract ID information like name, title and employee number)
+2. Based on the document type, a list of instructions for the (Background Services) will be added to the request (like if it is an ID document, 2 instructions will be added to do both Face auth on the ID image and OCR to extract ID information like name, title and employee number)
 
 ```csharp
 public class DocumentInstructionsProcessor
@@ -106,7 +109,7 @@ public enum InstructionFlag
     }
 ```
 
-    3. A new document will be created in CosmosDB ***smartdocs** collection.
+3. A new document will be created in CosmosDB ***smartdocs*** collection and the file will be saved to the blob storage with naming standard of ***DocType-GUID.ext***.
 
 ```csharp
 public class SmartDoc : BaseModel
@@ -144,10 +147,6 @@ public class NewRequest<T> : BaseModel
         public string OwnerId { get; set; }
         public string ItemReferenceId { get; set; }
         public T RequestItem { get; set; }
-
-        //[JsonConverter(typeof(FlagConverter))]
-        //[JsonConverter(typeof(StringEnumConverter))]
-        //public InstructionFlag Instruction { get; set; }
         public List<string> Instructions { get; set; }
         public string Status { get; set; }
         public bool IsAsync { get; set; }
@@ -155,14 +154,88 @@ public class NewRequest<T> : BaseModel
     }
 ```
 
-3. Backend Background Services - New Request Function:
-    1. Once the request was recieved from the API, a workflow of functions will collaborate to finalize the required instructions.
-4. Based on IsAsync flag, this function will do one of the of the following:
+### 3. Backend Background Services - New Request Function
+
+1. Once the request was recieved from the API, a New Request function will collaborate to finalize the required instructions.
+2. Based on IsAsync flag, this function will do one of the of the following:
     1. Async: will create a new queue item to be picked up by Cognitive Pipeline Durable Function. The request object will be returned immedialty to the caller while the function process this document.
     2. Sync: will post an HTTP request(s) directly to the relevant function(s) and wait for the result to come back. Final cognitive processing result will be updated in CosmosDB and returned back to the caller.
 
-5. Backend Background Services - Cognitive Pipeline Orchestrations (Durable Function) are either triggered by a queue message or http request (based on the original IsAsync flag)
-    1. Fan-out/fan-in pattern was selected as these instructions can be executed in parallel.
+```csharp
+[FunctionName("NewSmartDocReq")]
+        public static async Task<IActionResult> Run(
+            //HTTP Trigger
+            //[HttpTrigger(AuthorizationLevel.Function, "post", Route = null)]NewRequest<SmartDoc> newSmartDocRequest,
+            [HttpTrigger(AuthorizationLevel.Function, "post", Route = null)]HttpRequestMessage newReq,
+
+            //Input
+            //[DocumentDB("test", "test", ConnectionStringSetting = "CosmosDB")] DocumentClient client,
+
+            //Output
+            [Queue("newreq", Connection = "NewRequestQueue")]ICollector<string> outputQueueItem, 
+
+            //Logger
+            ILogger log)
+            //TraceWriter log)
+        {
+            //log.Info($"NewReq function http triggered for: {newReq}");
+
+            var newSmartDocRequestJson = await newReq.Content.ReadAsStringAsync();
+            var newSmartDocRequest = JsonConvert.DeserializeObject<NewRequest<SmartDoc>>(newSmartDocRequestJson);
+
+            log.LogInformation($"NewReq function http triggered for: {newSmartDocRequestJson}");
+
+            string result = "";
+            IActionResult executionResult = null;
+            try
+            {
+                newSmartDocRequest.Status = SmartDocStatus.InProcessing.ToString();
+
+                //Check if request is Async (a new queue item will be added) or Sync (direct call to functions)
+                if (newSmartDocRequest.IsAsync)
+                {
+                    outputQueueItem.Add(JsonConvert.SerializeObject(newSmartDocRequest));
+                    result = newSmartDocRequestJson;
+                    return (ActionResult)new OkObjectResult(result);
+                }
+                else //Sync exection
+                {
+                    //Assess what type of processing instruction needed and execute the relevant functions
+                    if(newSmartDocRequest.Instructions.Contains(InstructionFlag.AnalyzeText.ToString()))
+                    {
+                        string funcUri = GlobalSettings.GetKeyValue("FunctionBaseUrl") + "/NewCognitiveOCR";
+                        var content = new StringContent(newSmartDocRequestJson, Encoding.UTF8, "application/json");
+                        executionResult = await FunctionExecuter.CallFunction(funcUri, content);
+                        if(executionResult is OkObjectResult)
+                        {
+                            //TODO: Update the request processing step
+                            return executionResult;
+                        }
+                        else
+                        {
+                            //return (ActionResult)new BadRequestObjectResult(result);
+                        }
+                    }
+
+                    return (ActionResult)new BadRequestObjectResult(executionResult);
+                }
+            }
+            catch(Exception ex)
+            {
+                return new BadRequestObjectResult($"{ex.Message}");
+            }
+        }
+```
+
+### 4. Backend Background Services - Async/Sync
+
+1. Cognitive Pipelince orchestration will be either triggered by a queue message or http request (based on the original IsAsync flag)
+    1. In case of ***Async***, Cognitive Pipeline durable function will be triggered via the new queue message
+    2. In case of ***Sync***, the New Request function will make the calls directly and wait for the result to return them back to the API directly without going throw the orchestration.
+
+### 5. Backend Background Services - Cognitive Pipeline Orchestrations Durable Function
+
+1. Fan-out/fan-in pattern was selected as these instructions can be executed in parallel.
 
 ```csharp
 [FunctionName("ClassificationOrchestrator_QueueStart")]
@@ -187,3 +260,8 @@ public class NewRequest<T> : BaseModel
 ```
 
 > **NOTE:** If your tasks must be executed in sequence, you can select ***Function Chainning Pattern*** to execute in sequnce with the ability to get the output of one function into the next. Refere back to [Durable Functions](https://docs.microsoft.com/en-us/azure/azure-functions/durable-functions-overview) documentations for futher details about orchestration patterns.
+
+### 6. Backend Background Services - Result Update & Callback (Async)
+
+1. A final ResultCapture function will be called to update the CosmosDB with all the cognitive results.
+2. If required, a Logic App based callback workflow can be triggered by adding a new queue message in ***callback*** queue to send push notification, email or even SMS to the concered party about the complition of the processing
