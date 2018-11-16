@@ -182,3 +182,6 @@ You can find a walkthrough guide for the project(s) that outlines how you too ca
 ### Contributors
 
 - **Ahmed Sabbour** ([GitHub](https://github.com/sabbour))
+
+## Inspired by the Microsoft App Innovation Workshop
+This project is inspired by and makes use of assets and guides from the Microsoft [App Innovation Workshop](https://github.com/Microsoft/app-innovation-workshop) created by [Mike James](https://github.com/MikeCodesDotNET) & [Robin-Manuel Thiel](https://github.com/robinmanuelthiel).
