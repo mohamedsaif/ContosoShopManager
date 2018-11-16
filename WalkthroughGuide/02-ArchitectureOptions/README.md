@@ -113,28 +113,28 @@ public enum InstructionFlag
 
 ```csharp
 public class SmartDoc : BaseModel
-    {
-        public string OwnerId { get; set; }
-        public string DocName { get; set; }
-        public string DocUri { get; set; }
-        public string TileSizeUri { get; set; }
-        public string IconSizeUrl { get; set; }
+{
+    public string OwnerId { get; set; }
+    public string DocName { get; set; }
+    public string DocUri { get; set; }
+    public string TileSizeUri { get; set; }
+    public string IconSizeUrl { get; set; }
 
-        [JsonConverter(typeof(StringEnumConverter))]
-        public ClassificationType DocType { get; set; }
-        public string PrimaryClassification { get; set; }
-        public double PrimaryClassificationConfidence { get; set; }
+    [JsonConverter(typeof(StringEnumConverter))]
+    public ClassificationType DocType { get; set; }
+    public string PrimaryClassification { get; set; }
+    public double PrimaryClassificationConfidence { get; set; }
 
-        //Bytes will not stored in the db. Instead will remain in the blob storage and accessed via the DocUri
-        //public byte[] DocBytes { get; set; }
+    //Bytes will not stored in the db. Instead will remain in the blob storage and accessed via the DocUri
+    //public byte[] DocBytes { get; set; }
 
-        public string ClassificationTagsRaw { get; set; }
-        public List<SmartDocTag> ClassificationTags { get; set; }
-        public string OCRTextTagsRaw { get; set; }
-        public List<SmartDocTag> OCRTextTags { get; set; }
-        public string ErrorMessage { get; set; }
-        public string Status { get; set; }
-    }
+    public string ClassificationTagsRaw { get; set; }
+    public List<SmartDocTag> ClassificationTags { get; set; }
+    public string OCRTextTagsRaw { get; set; }
+    public List<SmartDocTag> OCRTextTags { get; set; }
+    public string ErrorMessage { get; set; }
+    public string Status { get; set; }
+}
 ```
 
 [View in project](/Src/Backend/BackgroundSerivces/NewReq.cs#L22)
@@ -143,15 +143,15 @@ public class SmartDoc : BaseModel
 
 ```csharp
 public class NewRequest<T> : BaseModel
-    {
-        public string OwnerId { get; set; }
-        public string ItemReferenceId { get; set; }
-        public T RequestItem { get; set; }
-        public List<string> Instructions { get; set; }
-        public string Status { get; set; }
-        public bool IsAsync { get; set; }
-        public List<ProcessingStep> Steps { get; set; } = new List<ProcessingStep>();
-    }
+{
+    public string OwnerId { get; set; }
+    public string ItemReferenceId { get; set; }
+    public T RequestItem { get; set; }
+    public List<string> Instructions { get; set; }
+    public string Status { get; set; }
+    public bool IsAsync { get; set; }
+    public List<ProcessingStep> Steps { get; set; } = new List<ProcessingStep>();
+}
 ```
 
 ### 3. Backend Background Services - New Request Function
@@ -163,68 +163,68 @@ public class NewRequest<T> : BaseModel
 
 ```csharp
 [FunctionName("NewSmartDocReq")]
-        public static async Task<IActionResult> Run(
-            //HTTP Trigger
-            //[HttpTrigger(AuthorizationLevel.Function, "post", Route = null)]NewRequest<SmartDoc> newSmartDocRequest,
-            [HttpTrigger(AuthorizationLevel.Function, "post", Route = null)]HttpRequestMessage newReq,
+public static async Task<IActionResult> Run(
+    //HTTP Trigger
+    //[HttpTrigger(AuthorizationLevel.Function, "post", Route = null)]NewRequest<SmartDoc> newSmartDocRequest,
+    [HttpTrigger(AuthorizationLevel.Function, "post", Route = null)]HttpRequestMessage newReq,
 
-            //Input
-            //[DocumentDB("test", "test", ConnectionStringSetting = "CosmosDB")] DocumentClient client,
+    //Input
+    //[DocumentDB("test", "test", ConnectionStringSetting = "CosmosDB")] DocumentClient client,
 
-            //Output
-            [Queue("newreq", Connection = "NewRequestQueue")]ICollector<string> outputQueueItem, 
+    //Output
+    [Queue("newreq", Connection = "NewRequestQueue")]ICollector<string> outputQueueItem, 
 
-            //Logger
-            ILogger log)
-            //TraceWriter log)
+    //Logger
+    ILogger log)
+    //TraceWriter log)
+{
+    //log.Info($"NewReq function http triggered for: {newReq}");
+
+    var newSmartDocRequestJson = await newReq.Content.ReadAsStringAsync();
+    var newSmartDocRequest = JsonConvert.DeserializeObject<NewRequest<SmartDoc>>(newSmartDocRequestJson);
+
+    log.LogInformation($"NewReq function http triggered for: {newSmartDocRequestJson}");
+
+    string result = "";
+    IActionResult executionResult = null;
+    try
+    {
+        newSmartDocRequest.Status = SmartDocStatus.InProcessing.ToString();
+
+        //Check if request is Async (a new queue item will be added) or Sync (direct call to functions)
+        if (newSmartDocRequest.IsAsync)
         {
-            //log.Info($"NewReq function http triggered for: {newReq}");
-
-            var newSmartDocRequestJson = await newReq.Content.ReadAsStringAsync();
-            var newSmartDocRequest = JsonConvert.DeserializeObject<NewRequest<SmartDoc>>(newSmartDocRequestJson);
-
-            log.LogInformation($"NewReq function http triggered for: {newSmartDocRequestJson}");
-
-            string result = "";
-            IActionResult executionResult = null;
-            try
-            {
-                newSmartDocRequest.Status = SmartDocStatus.InProcessing.ToString();
-
-                //Check if request is Async (a new queue item will be added) or Sync (direct call to functions)
-                if (newSmartDocRequest.IsAsync)
-                {
-                    outputQueueItem.Add(JsonConvert.SerializeObject(newSmartDocRequest));
-                    result = newSmartDocRequestJson;
-                    return (ActionResult)new OkObjectResult(result);
-                }
-                else //Sync exection
-                {
-                    //Assess what type of processing instruction needed and execute the relevant functions
-                    if(newSmartDocRequest.Instructions.Contains(InstructionFlag.AnalyzeText.ToString()))
-                    {
-                        string funcUri = GlobalSettings.GetKeyValue("FunctionBaseUrl") + "/NewCognitiveOCR";
-                        var content = new StringContent(newSmartDocRequestJson, Encoding.UTF8, "application/json");
-                        executionResult = await FunctionExecuter.CallFunction(funcUri, content);
-                        if(executionResult is OkObjectResult)
-                        {
-                            //TODO: Update the request processing step
-                            return executionResult;
-                        }
-                        else
-                        {
-                            //return (ActionResult)new BadRequestObjectResult(result);
-                        }
-                    }
-
-                    return (ActionResult)new BadRequestObjectResult(executionResult);
-                }
-            }
-            catch(Exception ex)
-            {
-                return new BadRequestObjectResult($"{ex.Message}");
-            }
+            outputQueueItem.Add(JsonConvert.SerializeObject(newSmartDocRequest));
+            result = newSmartDocRequestJson;
+            return (ActionResult)new OkObjectResult(result);
         }
+        else //Sync exection
+        {
+            //Assess what type of processing instruction needed and execute the relevant functions
+            if(newSmartDocRequest.Instructions.Contains(InstructionFlag.AnalyzeText.ToString()))
+            {
+                string funcUri = GlobalSettings.GetKeyValue("FunctionBaseUrl") + "/NewCognitiveOCR";
+                var content = new StringContent(newSmartDocRequestJson, Encoding.UTF8, "application/json");
+                executionResult = await FunctionExecuter.CallFunction(funcUri, content);
+                if(executionResult is OkObjectResult)
+                {
+                    //TODO: Update the request processing step
+                    return executionResult;
+                }
+                else
+                {
+                    //return (ActionResult)new BadRequestObjectResult(result);
+                }
+            }
+
+            return (ActionResult)new BadRequestObjectResult(executionResult);
+        }
+    }
+    catch(Exception ex)
+    {
+        return new BadRequestObjectResult($"{ex.Message}");
+    }
+}
 ```
 
 ### 4. Backend Background Services - Async/Sync
@@ -239,24 +239,24 @@ public class NewRequest<T> : BaseModel
 
 ```csharp
 [FunctionName("ClassificationOrchestrator_QueueStart")]
-        public static async Task QueueStart(
-            //Triggers
-            [QueueTrigger("newreq", Connection = "NewRequestQueue")]NewRequest<SmartDoc> newReq,
+public static async Task QueueStart(
+    //Triggers
+    [QueueTrigger("newreq", Connection = "NewRequestQueue")]NewRequest<SmartDoc> newReq,
 
-            //Durable Function Orchestration Client
-            [OrchestrationClient]DurableOrchestrationClientBase starter,
+    //Durable Function Orchestration Client
+    [OrchestrationClient]DurableOrchestrationClientBase starter,
 
-            //Logger
-            ILogger log)
-        {
-            // Function input comes from the request content.
-            var newReqJson = JsonConvert.SerializeObject(newReq);
-            string instanceId = await starter.StartNewAsync("ClassificationOrchestrator", newReqJson);
+    //Logger
+    ILogger log)
+{
+    // Function input comes from the request content.
+    var newReqJson = JsonConvert.SerializeObject(newReq);
+    string instanceId = await starter.StartNewAsync("ClassificationOrchestrator", newReqJson);
 
-            log.LogInformation($"Started orchestration with ID = '{instanceId}'. Document: {newReq}");
+    log.LogInformation($"Started orchestration with ID = '{instanceId}'. Document: {newReq}");
 
-            //return newReq;
-        }
+    //return newReq;
+}
 ```
 
 > **NOTE:** If your tasks must be executed in sequence, you can select ***Function Chainning Pattern*** to execute in sequnce with the ability to get the output of one function into the next. Refere back to [Durable Functions](https://docs.microsoft.com/en-us/azure/azure-functions/durable-functions-overview) documentations for futher details about orchestration patterns.
