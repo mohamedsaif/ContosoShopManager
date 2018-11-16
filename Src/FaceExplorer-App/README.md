@@ -1,3 +1,8 @@
+# Face Explorer App 
+There is a great Angular app (https://github.com/smichelotti/ps-face-api-explorer) built by [Steve Michelotti](https://github.com/smichelotti/ps-face-api-explorer) that can make Face APIs administration quite easy. If you want, you can follow the link and clone it.
+
+> **Note** After you download the code, you need to update (ps-face-api-explorer/src/app/services/face-api-service.service.ts) with your Face API endpoint and subscription key.
+
 # Face API Explorer
 
 This is a simple demo app to show how to use the [Microsoft Cognitive Services Face API](https://azure.microsoft.com/en-us/services/cognitive-services/face/).
