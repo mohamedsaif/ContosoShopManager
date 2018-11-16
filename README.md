@@ -184,4 +184,4 @@ You can find a walkthrough guide for the project(s) that outlines how you too ca
 - **Steve Michelotti** for the great [Face-API-Explorer](https://github.com/smichelotti/ps-face-api-explorer) web app ([GitHub](https://github.com/smichelotti))
 
 ### Inspired by the Microsoft App Innovation Workshop
-This project is inspired by and makes use of assets and guides from the Microsoft [App Innovation Workshop](https://github.com/Microsoft/app-innovation-workshop) created by [Mike James](https://github.com/MikeCodesDotNET) & [Robin-Manuel Thiel](https://github.com/robinmanuelthiel).
+This project documentation style is inspired by and makes use of assets and guides from the Microsoft [App Innovation Workshop](https://github.com/Microsoft/app-innovation-workshop) created by [Mike James](https://github.com/MikeCodesDotNET) & [Robin-Manuel Thiel](https://github.com/robinmanuelthiel).
