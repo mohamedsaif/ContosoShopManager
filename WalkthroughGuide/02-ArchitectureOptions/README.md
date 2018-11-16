@@ -12,7 +12,7 @@ AI democratization initiative is enabling developers to take advantage of pre-tr
 
 That is why having a ***Cognitive Pipeline*** will allow adding new AI services to be part of the processing pipeline easily and without any significant changes to the client code.
 
-## SDK vs APIs
+## Cognitive Services SDK vs APIs
 
 It was tough choice to select Cognitive Services SDKs vs. APIs. As the matter of fact, all Cognitive Services offer APIs but not all offers solid SDKs. 
 
