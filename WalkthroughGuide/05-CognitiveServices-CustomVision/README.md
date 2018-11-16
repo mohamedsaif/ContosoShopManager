@@ -47,3 +47,13 @@ After completing the upload process, you are ready to train the model on the new
 When training completes, under the tab **Performance** you will have information about the accurecy of your new model.
 
 ![Custom Vision Portal](Assets/new-customvision-project-performance.png)
+
+## Testing with Postman
+
+First you need to download and import the [Custom Vision APIs Collection](../../Src/Postman-APIs/Custom_Vision_API.postman_collection.json) along with the [Dev Environment](../../Src/Postman-APIs/Dev.postman_environment.json) to easily get started with your testing.
+
+Please update the relevant parameters to reflect your endpoints and keys.
+
+You will notice you have two options to call you custom vision endpoint, one with URL to the image and the other with the actual image file submitted as part of the request body.
+
+This is a common approach of almost all Computer Vision APIs.

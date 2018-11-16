@@ -68,51 +68,51 @@ Mixing multiple implementations for Azure Functions was used to optimum executio
 
 ```csharp
 public class DocumentInstructionsProcessor
+{
+    public static List<string> GetInstructions(ClassificationType docType)
     {
-        public static List<string> GetInstructions(ClassificationType docType)
+        List<string> instructions = new List<string>();
+
+        switch (docType)
         {
-            List<string> instructions = new List<string>();
-
-            switch (docType)
-            {
-                case ClassificationType.Passport:
-                case ClassificationType.DriverLicense:
-                case ClassificationType.ID:
-                case ClassificationType.BirthCertificate:
-                case ClassificationType.Receipt:
-                    //result = InstructionFlag.AnalyzeImage | InstructionFlag.AnalyzeText;
-                    instructions.Add(InstructionFlag.AnalyzeText.ToString());
-                    break;
-                case ClassificationType.Check:
-                    instructions.Add(InstructionFlag.CustomVision.ToString());
-                    instructions.Add(InstructionFlag.AnalyzeText.ToString());
-                    break;
-                case ClassificationType.Generic:
-                    instructions.Add(InstructionFlag.AnalyzeImage.ToString());
-                    break;
-                case ClassificationType.Unidentified:
-                    instructions.Add(InstructionFlag.AnalyzeImage.ToString());
-                    break;
-                default:
-                    break;
-            }
-
-            return instructions;
+            case ClassificationType.Passport:
+            case ClassificationType.DriverLicense:
+            case ClassificationType.ID:
+            case ClassificationType.BirthCertificate:
+            case ClassificationType.Receipt:
+                //result = InstructionFlag.AnalyzeImage | InstructionFlag.AnalyzeText;
+                instructions.Add(InstructionFlag.AnalyzeText.ToString());
+                break;
+            case ClassificationType.Check:
+                instructions.Add(InstructionFlag.CustomVision.ToString());
+                instructions.Add(InstructionFlag.AnalyzeText.ToString());
+                break;
+            case ClassificationType.Generic:
+                instructions.Add(InstructionFlag.AnalyzeImage.ToString());
+                break;
+            case ClassificationType.Unidentified:
+                instructions.Add(InstructionFlag.AnalyzeImage.ToString());
+                break;
+            default:
+                break;
         }
+
+        return instructions;
     }
+}
 ```
 
 ```csharp
 public enum InstructionFlag
-    {
-        AnalyzeImage,
-        AnalyzeText,
-        AnalyzeTextv2,
-        Thumbnail,
-        TypeVerification,
-        FaceAuthentication,
-        CustomVision
-    }
+{
+    AnalyzeImage,
+    AnalyzeText,
+    AnalyzeTextv2,
+    Thumbnail,
+    TypeVerification,
+    FaceAuthentication,
+    CustomVision
+}
 ```
 
 3. A new document will be created in CosmosDB ***smartdocs*** collection and the file will be saved to the blob storage with naming standard of ***DocType-GUID.ext***.
