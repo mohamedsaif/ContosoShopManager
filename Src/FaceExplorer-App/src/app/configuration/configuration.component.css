@@ -1,0 +1,21 @@
+.img-container {
+    display: inline-block;
+    width: 140px;
+    height: 140px;
+    position: relative;
+}
+
+.img-person-face {
+    max-width:140px;
+    max-height:140px;
+    width:auto;
+    height:auto;
+    border: 0;
+    position: absolute;
+    top: 0; right: 0; bottom: 0; left: 0;
+    margin: auto;
+}
+
+.card-block-img-container {
+    text-align: center;
+}

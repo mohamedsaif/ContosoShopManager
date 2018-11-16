@@ -1,0 +1,34 @@
+<div>
+  <div class="jumbotron">
+    <h1 class="display-3">Face API Explorer</h1>
+    <hr class="my-4" />
+    <p>
+      Face API Explorer for Cognitive Services Face API
+    </p>
+  </div>
+
+  <div class="card-group">
+    <div class="card">
+      <h4 class="card-header">Configure Known Individuals</h4>
+      <div class="card-body">
+        <div class="card-text">
+          Here is where we configure Person Groups, Persons, and Faces.
+        </div>
+      </div>
+      <div class="card-footer">
+        <a class="btn btn-primary" [routerLink]="['/configuration']">Configuration</a>
+      </div>
+    </div>
+    <div class="card">
+      <h4 class="card-header">Test Faces</h4>
+      <div class="card-body">
+        <div class="card-text">
+          Test faces for detection and identification.
+        </div>
+      </div>
+      <div class="card-footer">
+        <a class="btn btn-success" [routerLink]="['/test-faces']">Test Faces</a>
+      </div>
+    </div>
+
+  </div>

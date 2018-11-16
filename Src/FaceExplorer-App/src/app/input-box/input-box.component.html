@@ -1,0 +1,17 @@
+<div class="modal-header">
+  <h4 class="modal-title">{{properties.title}}</h4>
+</div>
+
+<div class="modal-body">
+  <form class="form">
+    <div class="form-group">
+      <label>{{properties.message}}</label>
+      <input name="inputValue" type="text" class="form-control" [(ngModel)]="inputValue">
+    </div>
+  </form>
+</div>
+
+<div class="modal-footer">
+  <button type="button" class="btn btn-primary" (click)="save()">Save</button>
+  <button type="button" class="btn btn-secondary" (click)="activeModal.dismiss()">Cancel</button>
+</div>
