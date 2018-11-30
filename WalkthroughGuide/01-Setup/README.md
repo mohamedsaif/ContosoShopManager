@@ -33,3 +33,7 @@ Although all backend code can be opened on VS Code, Visual Studio for PC or Mac 
 
 - [Visual Studio for Windows or Mac](https://www.visualstudio.com/) (Community Version or higher)
   - [Xamarin Tooling](https://developer.xamarin.com/guides/cross-platform/getting_started/installation/windows/)
+
+# Next Step
+
+[Architecture Options](../02-ArchitectureOptions)

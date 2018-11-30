@@ -14,7 +14,7 @@ In order to provide a Multi-Factor-Authentication as part of the biometric sign 
 
 This is done also through the [Cognitive Pipeline](WalkthroughGuide\02-ArchitectureOptions) we discussed in the [Architecture Options](WalkthroughGuide/02-ArchitectureOptions)
 
-# Backend Setup
+# Azure Backend Setup
 
 To leverage the OCR service, we need to provision Azure Computer Vision service to get the needed subscription keys that will be used in our backend services.
 
@@ -52,3 +52,7 @@ As IDs are fixed document (Text will always be positioned in the same order in e
 We parse the OCR json payload and extract the name and employee ID to compare it to the information from CosmosDB.
 
 Upon successful match between the extracted text and the database records, results will be sent back to the caller with the details.
+
+# Next Steps
+
+[Authentication - Face](../04-CognitiveServices-Face)

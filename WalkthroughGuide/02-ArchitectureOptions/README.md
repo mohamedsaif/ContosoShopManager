@@ -264,3 +264,7 @@ public static async Task QueueStart(
 
 1. A final ResultCapture function will be called to update the CosmosDB with all the cognitive results.
 2. If required, a Logic App based callback workflow can be triggered by adding a new queue message in ***callback*** queue to send push notification, email or even SMS to the concerned party about the completion of the processing
+
+# Next Steps
+
+[Authentication - Digital ID OCR](../03-CognitiveServices-OCR)

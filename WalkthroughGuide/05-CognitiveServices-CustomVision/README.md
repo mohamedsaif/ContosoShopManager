@@ -10,6 +10,8 @@ Great resources of Intelligence Services for developers without deeper Machine L
 
 One of these APIs is [Computer Vision](https://azure.microsoft.com/en-us/services/cognitive-services/computer-vision/), a service that tries to understand what's on a picture or video. This service can analyze pictures to generate tags and captions, detect adult or racy content, read text in images, recognizes celebrities and landmarks, detects faces and emotions and much more. You should definitely take some time to explore and play around with all these services!
 
+## Azure Backend Setup
+
 Access Azure Portal [Azure Portal](https://portal.azure.com) to create a new Custom vision service.
 
 ![Add Computer Vision to Azure](Assets/new-computervision.png)
@@ -57,3 +59,7 @@ Please update the relevant parameters to reflect your endpoints and keys.
 You will notice you have two options to call you custom vision endpoint, one with URL to the image and the other with the actual image file submitted as part of the request body.
 
 This is a common approach of almost all Computer Vision APIs.
+
+# Next Steps
+
+[Cloud Deployment](../06-CloudDeployment)
