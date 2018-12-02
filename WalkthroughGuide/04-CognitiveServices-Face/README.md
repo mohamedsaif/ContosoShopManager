@@ -32,7 +32,7 @@ Faces data store is hosted under what is called a [Person Group](https://westus.
 
 To try out the different Face APIs preparation work, this workshop includes a ***Postman*** collection extract that can be imported. Collection is organized in folders that each include the relevant operations for each part of the Face APIs usage process.
 
-![Postman Face APIs](Assests/face-postman.png)
+![Postman Face APIs](Assets/face-postman.png)
 
 Also you need to import the [Dev](../../Src/Postman-APIs/Dev.postman_environment.json) environment variables that are being used through out the APIs.
 
@@ -53,7 +53,7 @@ Included with this workshop a nice Angular web application that provides GUI to 
 
 You can access the source code for [Face Explorer here](../../Src/FaceExplorer-App).
 
-![Face Explorer App](Assets/face-explorer-app)
+![Face Explorer App](Assets/face-explorer-app.png)
 
 If you wish to run the Angular app locally on you machine, you need to have [Angular CLI](https://cli.angular.io/) installed. Below are the steps you should perform:
 
