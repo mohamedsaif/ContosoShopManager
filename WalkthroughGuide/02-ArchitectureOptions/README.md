@@ -47,7 +47,7 @@ Mixing multiple implementations for Azure Functions was used to optimum executio
 
 ## Request Workflow
 
-### 1. A client (web or mobile) will submit 4 thins to a ASP .NET API
+### 1. A client (web or mobile) will submit 4 things to a ASP .NET API
 
 1. OwnerId: currently being fixed to a static values but in the future it will be based on the authenticated user
 2. Document Type: which is basically what type of image are being submitted with the following initial values:
@@ -61,7 +61,7 @@ Mixing multiple implementations for Azure Functions was used to optimum executio
 
 ```csharp
 [HttpPost("{ownerId}/{docType}/{isAsync}")]
-        public async Task<IActionResult> SubmitDoc(string ownerId, string docType, bool isAsync, IFormFile doc)
+public async Task<IActionResult> SubmitDoc(string ownerId, string docType, bool isAsync, IFormFile doc)
 ```
 
 2. Based on the document type, a list of instructions for the (Background Services) will be added to the request (like if it is an ID document, 2 instructions will be added to do both Face auth on the ID image and OCR to extract ID information like name, title and employee number)
