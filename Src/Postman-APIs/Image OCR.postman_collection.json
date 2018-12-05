@@ -1,0 +1,114 @@
+{
+	"info": {
+		"_postman_id": "637f1ce9-1851-458d-ba4f-7ee518b448ba",
+		"name": "Image OCR",
+		"description": "Congnitive Services OCR APIs",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "OCR API (Image URL)",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Ocp-Apim-Subscription-Key",
+						"value": "{{Ocp-Apim-Subscription-Key}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"url\":\"https://contosoie.blob.core.windows.net/public-individuals/mosaif_id.png\"}"
+				},
+				"url": {
+					"raw": "{{cognitive-base-url}}/ocr?language=unk&detectOrientation =true",
+					"host": [
+						"{{cognitive-base-url}}"
+					],
+					"path": [
+						"ocr"
+					],
+					"query": [
+						{
+							"key": "language",
+							"value": "unk"
+						},
+						{
+							"key": "detectOrientation ",
+							"value": "true"
+						}
+					]
+				},
+				"description": "Send image to OCR API to extract text"
+			},
+			"response": []
+		},
+		{
+			"name": "OCR API (Image File)",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/octet-stream"
+					},
+					{
+						"key": "Ocp-Apim-Subscription-Key",
+						"value": "{{Ocp-Apim-Subscription-Key}}"
+					}
+				],
+				"body": {
+					"mode": "file",
+					"file": {}
+				},
+				"url": {
+					"raw": "{{cognitive-base-url}}/ocr?language=unk&detectOrientation=true",
+					"host": [
+						"{{cognitive-base-url}}"
+					],
+					"path": [
+						"ocr"
+					],
+					"query": [
+						{
+							"key": "language",
+							"value": "unk"
+						},
+						{
+							"key": "detectOrientation",
+							"value": "true"
+						}
+					]
+				},
+				"description": "Send image to OCR API to extract text"
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "950a7dfc-274f-4f06-af4b-aafddea6ebaf",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "573f44c1-63f7-4b3d-8f32-5bd0edf18341",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}

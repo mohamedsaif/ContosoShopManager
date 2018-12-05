@@ -1,20 +1,16 @@
 {
-	"variables": [],
 	"info": {
-		"name": "Face API",
 		"_postman_id": "61664542-de79-da9c-0eb9-847212549721",
-		"description": "",
-		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+		"name": "Face API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
 			"name": "1. Person Group Operations",
-			"description": "",
 			"item": [
 				{
 					"name": "1. Create Person Group",
 					"request": {
-						"url": "{{base-url}}/persongroups/1",
 						"method": "PUT",
 						"header": [
 							{
@@ -28,16 +24,24 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"authors\",\r\n    \"userData\": \"authors person group\"\r\n}"
+							"raw": "{\r\n    \"name\": \"Microsoft GBB\",\r\n    \"userData\": \"Microsoft Global Black Belt Team\"\r\n}"
 						},
-						"description": ""
+						"url": {
+							"raw": "{{face-base-url}}/persongroups/1",
+							"host": [
+								"{{face-base-url}}"
+							],
+							"path": [
+								"persongroups",
+								"1"
+							]
+						}
 					},
 					"response": []
 				},
 				{
 					"name": "2. Get Person Group",
 					"request": {
-						"url": "{{base-url}}/persongroups/1",
 						"method": "GET",
 						"header": [
 							{
@@ -51,16 +55,24 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"authors\",\r\n    \"userData\": \"authors person group\"\r\n}"
+							"raw": ""
 						},
-						"description": ""
+						"url": {
+							"raw": "{{face-base-url}}/persongroups/1",
+							"host": [
+								"{{face-base-url}}"
+							],
+							"path": [
+								"persongroups",
+								"1"
+							]
+						}
 					},
 					"response": []
 				},
 				{
 					"name": "3. Update Person Group",
 					"request": {
-						"url": "{{base-url}}/persongroups/1",
 						"method": "PATCH",
 						"header": [
 							{
@@ -74,16 +86,24 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"authors\",\r\n    \"userData\": \"authors person group (updated)\"\r\n}"
+							"raw": "{\n    \"name\": \"Microsoft GBB EMEA\",\n    \"userData\": \"Microsoft Global Black Belt Team\"\n}"
 						},
-						"description": ""
+						"url": {
+							"raw": "{{face-base-url}}/persongroups/1",
+							"host": [
+								"{{face-base-url}}"
+							],
+							"path": [
+								"persongroups",
+								"1"
+							]
+						}
 					},
 					"response": []
 				},
 				{
 					"name": "4. Delete Person Group",
 					"request": {
-						"url": "{{base-url}}/persongroups/1",
 						"method": "DELETE",
 						"header": [
 							{
@@ -99,106 +119,22 @@
 							"mode": "raw",
 							"raw": ""
 						},
-						"description": ""
+						"url": {
+							"raw": "{{face-base-url}}/persongroups/1",
+							"host": [
+								"{{face-base-url}}"
+							],
+							"path": [
+								"persongroups",
+								"1"
+							]
+						}
 					},
 					"response": []
 				},
 				{
 					"name": "5. List Person Groups",
 					"request": {
-						"url": "{{base-url}}/persongroups",
-						"method": "GET",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							},
-							{
-								"key": "Ocp-Apim-Subscription-Key",
-								"value": "{{face-api-key}}"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"authors\",\r\n    \"userData\": \"authors person group\"\r\n}"
-						},
-						"description": ""
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "2. Person Operations",
-			"description": "",
-			"item": [
-				{
-					"name": "1. Create Person",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"type": "text/javascript",
-								"exec": [
-									"pm.test(\"Response is ok\", function() {",
-									"    pm.response.to.be.ok;",
-									"});",
-									"",
-									"pm.test(\"Response has personId\", function () {",
-									"    var jsonData = pm.response.json();",
-									"    pm.expect(jsonData.personId).to.not.equal(null);",
-									"    pm.environment.set(\"personId\", jsonData.personId);",
-									"});",
-									""
-								]
-							}
-						}
-					],
-					"request": {
-						"url": "{{base-url}}/persongroups/1/persons",
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							},
-							{
-								"key": "Ocp-Apim-Subscription-Key",
-								"value": "{{face-api-key}}"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"Steve Michelotti\",\r\n    \"userData\": \"Steve Michelotti, Microsoft\"\r\n}"
-						},
-						"description": ""
-					},
-					"response": []
-				},
-				{
-					"name": "2. Get Person",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"type": "text/javascript",
-								"exec": [
-									"pm.test(\"Response is ok\", function() {",
-									"    pm.response.to.be.ok;",
-									"});",
-									"",
-									"pm.test(\"Response has correct personId\", function() {",
-									"    var jsonData = pm.response.json();",
-									"    pm.expect(jsonData.personId).to.be.equal(pm.environment.get(\"personId\"));",
-									"});",
-									"",
-									""
-								]
-							}
-						}
-					],
-					"request": {
-						"url": "{{base-url}}/persongroups/1/persons/{{personId}}",
 						"method": "GET",
 						"header": [
 							{
@@ -214,7 +150,126 @@
 							"mode": "raw",
 							"raw": ""
 						},
-						"description": ""
+						"url": {
+							"raw": "{{face-base-url}}/persongroups",
+							"host": [
+								"{{face-base-url}}"
+							],
+							"path": [
+								"persongroups"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "2. Person Operations",
+			"item": [
+				{
+					"name": "1. Create Person",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "3b6759cd-3f6f-48af-ab25-1822fd12b48a",
+								"exec": [
+									"pm.test(\"Response is ok\", function() {",
+									"    pm.response.to.be.ok;",
+									"});",
+									"",
+									"pm.test(\"Response has personId\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.personId).to.not.equal(null);",
+									"    pm.environment.set(\"personId\", jsonData.personId);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Ocp-Apim-Subscription-Key",
+								"value": "{{face-api-key}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Mo Saif\",\r\n    \"userData\": \"Mohamed Saif, Contoso Shop Auditor\"\r\n}"
+						},
+						"url": {
+							"raw": "{{face-base-url}}/persongroups/1/persons",
+							"host": [
+								"{{face-base-url}}"
+							],
+							"path": [
+								"persongroups",
+								"1",
+								"persons"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "2. Get Person",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "1b7f5fe9-536f-4183-8637-b6feae23960f",
+								"exec": [
+									"pm.test(\"Response is ok\", function() {",
+									"    pm.response.to.be.ok;",
+									"});",
+									"",
+									"pm.test(\"Response has correct personId\", function() {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.personId).to.be.equal(pm.environment.get(\"personId\"));",
+									"});",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Ocp-Apim-Subscription-Key",
+								"value": "{{face-api-key}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{face-base-url}}/persongroups/1/persons/{{personId}}",
+							"host": [
+								"{{face-base-url}}"
+							],
+							"path": [
+								"persongroups",
+								"1",
+								"persons",
+								"{{personId}}"
+							]
+						}
 					},
 					"response": []
 				},
@@ -224,18 +279,18 @@
 						{
 							"listen": "test",
 							"script": {
-								"type": "text/javascript",
+								"id": "306e4564-fab5-411e-a35b-724d6d3bd56a",
 								"exec": [
 									"pm.test(\"Response is ok\", function() {",
 									"    pm.response.to.be.ok;",
 									"});",
 									""
-								]
+								],
+								"type": "text/javascript"
 							}
 						}
 					],
 					"request": {
-						"url": "{{base-url}}/persongroups/1/persons/{{personId}}",
 						"method": "PATCH",
 						"header": [
 							{
@@ -251,7 +306,18 @@
 							"mode": "raw",
 							"raw": "{\r\n    \"name\": \"Steve Michelotti\",\r\n    \"userData\": \"Steve Michelotti, Microsoft (updated)\"\r\n}"
 						},
-						"description": ""
+						"url": {
+							"raw": "{{face-base-url}}/persongroups/1/persons/{{personId}}",
+							"host": [
+								"{{face-base-url}}"
+							],
+							"path": [
+								"persongroups",
+								"1",
+								"persons",
+								"{{personId}}"
+							]
+						}
 					},
 					"response": []
 				},
@@ -261,18 +327,18 @@
 						{
 							"listen": "test",
 							"script": {
-								"type": "text/javascript",
+								"id": "49e7afc4-ff04-475d-9061-b6a9be9a0a6d",
 								"exec": [
 									"pm.test(\"Response is ok\", function() {",
 									"    pm.response.to.be.ok;",
 									"});",
 									""
-								]
+								],
+								"type": "text/javascript"
 							}
 						}
 					],
 					"request": {
-						"url": "{{base-url}}/persongroups/1/persons/{{personId}}",
 						"method": "DELETE",
 						"header": [
 							{
@@ -288,7 +354,18 @@
 							"mode": "raw",
 							"raw": ""
 						},
-						"description": ""
+						"url": {
+							"raw": "{{face-base-url}}/persongroups/1/persons/{{personId}}",
+							"host": [
+								"{{face-base-url}}"
+							],
+							"path": [
+								"persongroups",
+								"1",
+								"persons",
+								"{{personId}}"
+							]
+						}
 					},
 					"response": []
 				},
@@ -298,7 +375,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"type": "text/javascript",
+								"id": "16a21bee-b6df-4542-a8a5-aa3df4643284",
 								"exec": [
 									"pm.test(\"Response is ok\", function() {",
 									"    pm.response.to.be.ok;",
@@ -309,12 +386,12 @@
 									"    pm.expect(jsonData.length).to.be.equal(0);",
 									"});",
 									""
-								]
+								],
+								"type": "text/javascript"
 							}
 						}
 					],
 					"request": {
-						"url": "{{base-url}}/persongroups/1/persons/",
 						"method": "GET",
 						"header": [
 							{
@@ -330,7 +407,18 @@
 							"mode": "raw",
 							"raw": ""
 						},
-						"description": ""
+						"url": {
+							"raw": "{{face-base-url}}/persongroups/1/persons/",
+							"host": [
+								"{{face-base-url}}"
+							],
+							"path": [
+								"persongroups",
+								"1",
+								"persons",
+								""
+							]
+						}
 					},
 					"response": []
 				}
@@ -338,7 +426,6 @@
 		},
 		{
 			"name": "3. Person Face Operations",
-			"description": "",
 			"item": [
 				{
 					"name": "1. Create Person Face",
@@ -346,7 +433,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"type": "text/javascript",
+								"id": "c597bcaf-1065-43b5-b42c-3cc87ec160fa",
 								"exec": [
 									"pm.test(\"Response is ok\", function() {",
 									"    pm.response.to.be.ok;",
@@ -358,12 +445,12 @@
 									"    pm.environment.set(\"persistedFaceId\", jsonData.persistedFaceId);",
 									"});",
 									""
-								]
+								],
+								"type": "text/javascript"
 							}
 						}
 					],
 					"request": {
-						"url": "{{base-url}}/persongroups/1/persons/{{personId}}/persistedFaces",
 						"method": "POST",
 						"header": [
 							{
@@ -379,7 +466,19 @@
 							"mode": "raw",
 							"raw": "{\n\t\"url\": \"https://psfaceapicourse.blob.core.windows.net/individuals/steve2.jpg\"\n}"
 						},
-						"description": ""
+						"url": {
+							"raw": "{{face-base-url}}/persongroups/1/persons/{{personId}}/persistedFaces",
+							"host": [
+								"{{face-base-url}}"
+							],
+							"path": [
+								"persongroups",
+								"1",
+								"persons",
+								"{{personId}}",
+								"persistedFaces"
+							]
+						}
 					},
 					"response": []
 				},
@@ -389,7 +488,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"type": "text/javascript",
+								"id": "d7483dfb-fa0c-451c-b001-3ae1ed57a3bc",
 								"exec": [
 									"pm.test(\"Response is ok\", function() {",
 									"    pm.response.to.be.ok;",
@@ -401,12 +500,12 @@
 									"    pm.environment.set(\"persistedFaceId\", jsonData.persistedFaceId);",
 									"});",
 									""
-								]
+								],
+								"type": "text/javascript"
 							}
 						}
 					],
 					"request": {
-						"url": "{{base-url}}/persongroups/1/persons/{{personId}}/persistedFaces/{{persistedFaceId}}",
 						"method": "GET",
 						"header": [
 							{
@@ -420,16 +519,28 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"url\": \"https://ngvision.blob.core.windows.net/known-individuals/han1.jpg\"\n}"
+							"raw": ""
 						},
-						"description": ""
+						"url": {
+							"raw": "{{face-base-url}}/persongroups/1/persons/{{personId}}/persistedFaces/{{persistedFaceId}}",
+							"host": [
+								"{{face-base-url}}"
+							],
+							"path": [
+								"persongroups",
+								"1",
+								"persons",
+								"{{personId}}",
+								"persistedFaces",
+								"{{persistedFaceId}}"
+							]
+						}
 					},
 					"response": []
 				},
 				{
 					"name": "3. Update Person Face",
 					"request": {
-						"url": "{{base-url}}/persongroups/1/persons/{{personId}}/persistedFaces/{{persistedFaceId}}",
 						"method": "PATCH",
 						"header": [
 							{
@@ -445,14 +556,26 @@
 							"mode": "raw",
 							"raw": "{\n\t\"userData\": \"https://psfaceapicourse.blob.core.windows.net/individuals/steve2.jpg\"\n}"
 						},
-						"description": ""
+						"url": {
+							"raw": "{{face-base-url}}/persongroups/1/persons/{{personId}}/persistedFaces/{{persistedFaceId}}",
+							"host": [
+								"{{face-base-url}}"
+							],
+							"path": [
+								"persongroups",
+								"1",
+								"persons",
+								"{{personId}}",
+								"persistedFaces",
+								"{{persistedFaceId}}"
+							]
+						}
 					},
 					"response": []
 				},
 				{
 					"name": "4. Delete Person Face",
 					"request": {
-						"url": "{{base-url}}/persongroups/1/persons/{{personId}}/persistedFaces/{{persistedFaceId}}",
 						"method": "DELETE",
 						"header": [
 							{
@@ -468,7 +591,20 @@
 							"mode": "raw",
 							"raw": ""
 						},
-						"description": ""
+						"url": {
+							"raw": "{{face-base-url}}/persongroups/1/persons/{{personId}}/persistedFaces/{{persistedFaceId}}",
+							"host": [
+								"{{face-base-url}}"
+							],
+							"path": [
+								"persongroups",
+								"1",
+								"persons",
+								"{{personId}}",
+								"persistedFaces",
+								"{{persistedFaceId}}"
+							]
+						}
 					},
 					"response": []
 				}
@@ -476,7 +612,6 @@
 		},
 		{
 			"name": "4. Training and Identification",
-			"description": "",
 			"item": [
 				{
 					"name": "1. Train Person Group",
@@ -484,19 +619,19 @@
 						{
 							"listen": "test",
 							"script": {
-								"type": "text/javascript",
+								"id": "a4c708f6-656c-48db-b203-a7764036f0b2",
 								"exec": [
 									"pm.test(\"Response is 202\", function() {",
 									"    pm.response.to.be.accepted;",
 									"});",
 									"",
 									""
-								]
+								],
+								"type": "text/javascript"
 							}
 						}
 					],
 					"request": {
-						"url": "{{base-url}}/persongroups/1/train",
 						"method": "POST",
 						"header": [
 							{
@@ -512,14 +647,23 @@
 							"mode": "raw",
 							"raw": ""
 						},
-						"description": ""
+						"url": {
+							"raw": "{{face-base-url}}/persongroups/1/train",
+							"host": [
+								"{{face-base-url}}"
+							],
+							"path": [
+								"persongroups",
+								"1",
+								"train"
+							]
+						}
 					},
 					"response": []
 				},
 				{
 					"name": "2. Get Training Status",
 					"request": {
-						"url": "{{base-url}}/persongroups/1/training",
 						"method": "GET",
 						"header": [
 							{
@@ -535,7 +679,17 @@
 							"mode": "raw",
 							"raw": ""
 						},
-						"description": ""
+						"url": {
+							"raw": "{{face-base-url}}/persongroups/1/training",
+							"host": [
+								"{{face-base-url}}"
+							],
+							"path": [
+								"persongroups",
+								"1",
+								"training"
+							]
+						}
 					},
 					"response": []
 				},
@@ -545,7 +699,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"type": "text/javascript",
+								"id": "b0c38082-e3d7-4e5f-bb55-e328adb65083",
 								"exec": [
 									"pm.test(\"Response is 200\", function() {",
 									"    pm.response.to.be.ok;",
@@ -560,12 +714,12 @@
 									"});",
 									"",
 									""
-								]
+								],
+								"type": "text/javascript"
 							}
 						}
 					],
 					"request": {
-						"url": "{{base-url}}/detect",
 						"method": "POST",
 						"header": [
 							{
@@ -579,16 +733,23 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"url\": \"https://psfaceapicourse.blob.core.windows.net/images/steve-with-kids.jpg\"\n}"
+							"raw": "{\n\t\"url\": \"https://contosoie.blob.core.windows.net/public-individuals/DevConf_Speakers.jpg\"\n}"
 						},
-						"description": ""
+						"url": {
+							"raw": "{{face-base-url}}/detect",
+							"host": [
+								"{{face-base-url}}"
+							],
+							"path": [
+								"detect"
+							]
+						}
 					},
 					"response": []
 				},
 				{
 					"name": "4. Face Identification",
 					"request": {
-						"url": "{{base-url}}/identify",
 						"method": "POST",
 						"header": [
 							{
@@ -604,7 +765,15 @@
 							"mode": "raw",
 							"raw": "{\n\t\"personGroupId\": \"1\",\n\t\"faceIds\": {{faceIdsJSON}}\n}"
 						},
-						"description": ""
+						"url": {
+							"raw": "{{face-base-url}}/identify",
+							"host": [
+								"{{face-base-url}}"
+							],
+							"path": [
+								"identify"
+							]
+						}
 					},
 					"response": []
 				}
@@ -612,7 +781,6 @@
 		},
 		{
 			"name": "5. Face Verify",
-			"description": "",
 			"item": [
 				{
 					"name": "1. Detect for Verification",
@@ -620,7 +788,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"type": "text/javascript",
+								"id": "302a9e66-cf4c-47c6-9416-fefc07300041",
 								"exec": [
 									"pm.test(\"Response is 200\", function() {",
 									"    pm.response.to.be.ok;",
@@ -632,12 +800,12 @@
 									"   pm.environment.set(\"faceIdForVerification\", jsonData[0].faceId);",
 									"});",
 									""
-								]
+								],
+								"type": "text/javascript"
 							}
 						}
 					],
 					"request": {
-						"url": "{{base-url}}/detect",
 						"method": "POST",
 						"header": [
 							{
@@ -653,14 +821,21 @@
 							"mode": "raw",
 							"raw": "{\n\t\"url\": \"https://psfaceapicourse.blob.core.windows.net/individuals/steve4.png\"\n}"
 						},
-						"description": ""
+						"url": {
+							"raw": "{{face-base-url}}/detect",
+							"host": [
+								"{{face-base-url}}"
+							],
+							"path": [
+								"detect"
+							]
+						}
 					},
 					"response": []
 				},
 				{
 					"name": "2. Face Verify",
 					"request": {
-						"url": "{{base-url}}/verify",
 						"method": "POST",
 						"header": [
 							{
@@ -676,7 +851,15 @@
 							"mode": "raw",
 							"raw": "{\n\t\"faceId\": \"{{faceIdForVerification}}\",\n\t\"personGroupId\": \"pluralsight-authors\",\n\t\"personId\": \"<insert-person-id>\"\n}"
 						},
-						"description": ""
+						"url": {
+							"raw": "{{face-base-url}}/verify",
+							"host": [
+								"{{face-base-url}}"
+							],
+							"path": [
+								"verify"
+							]
+						}
 					},
 					"response": []
 				}

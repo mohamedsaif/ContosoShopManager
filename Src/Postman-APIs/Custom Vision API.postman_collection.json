@@ -1,0 +1,66 @@
+{
+	"info": {
+		"_postman_id": "3891c569-aca1-c822-6214-53fb195538a9",
+		"name": "Custom Vision API",
+		"description": "APIs used to access Custom Vision APIs",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Prediction API (Image URL)",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Prediction-Key",
+						"value": "{{Custom-Vision-Prediction-Key}}"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"Url\": \"https://contosoie.blob.core.windows.net/public-individuals/invalid1.jpg\"}"
+				},
+				"url": {
+					"raw": "{{Custom-Vision-Endpoint}}",
+					"host": [
+						"{{Custom-Vision-Endpoint}}"
+					]
+				},
+				"description": "Prediction access for a specific iteration"
+			},
+			"response": []
+		},
+		{
+			"name": "Prediction API (Image File)",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Prediction-Key",
+						"value": "{{Custom-Vision-Prediction-Key}}"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/octet-stream"
+					}
+				],
+				"body": {
+					"mode": "file",
+					"file": {}
+				},
+				"url": {
+					"raw": "{{Custom-Vision-Endpoint}}",
+					"host": [
+						"{{Custom-Vision-Endpoint}}"
+					]
+				},
+				"description": "Prediction access for a specific iteration"
+			},
+			"response": []
+		}
+	]
+}
