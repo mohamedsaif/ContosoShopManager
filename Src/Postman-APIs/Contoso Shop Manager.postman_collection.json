@@ -1,0 +1,220 @@
+{
+	"info": {
+		"_postman_id": "9d77191b-1229-478f-8ef7-2d68ea9897b4",
+		"name": "Contoso Shop Manager",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Classification Controller Status",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{api-base-url}}/classification",
+					"host": [
+						"{{api-base-url}}"
+					],
+					"path": [
+						"classification"
+					]
+				},
+				"description": "Checking that service is running or not"
+			},
+			"response": []
+		},
+		{
+			"name": "IDAuth (Sync)",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "doc",
+							"type": "file",
+							"src": ""
+						}
+					]
+				},
+				"url": {
+					"raw": "{{api-base-url}}/IDAuth/{{ownerId}}/false",
+					"host": [
+						"{{api-base-url}}"
+					],
+					"path": [
+						"IDAuth",
+						"{{ownerId}}",
+						"false"
+					]
+				},
+				"description": "Upload employee image id to scan and verify"
+			},
+			"response": []
+		},
+		{
+			"name": "Face Auth (Sync)",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "doc",
+							"type": "file",
+							"src": ""
+						}
+					]
+				},
+				"url": {
+					"raw": "{{api-base-url}}/FaceAuth/{{ownerId}}/false",
+					"host": [
+						"{{api-base-url}}"
+					],
+					"path": [
+						"FaceAuth",
+						"{{ownerId}}",
+						"false"
+					]
+				},
+				"description": "Authenticate Face against specific employee"
+			},
+			"response": []
+		},
+		{
+			"name": "Shelf Compliance (Sync)",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "doc",
+							"type": "file",
+							"src": ""
+						}
+					]
+				},
+				"url": {
+					"raw": "{{api-base-url}}/ShelvesCompliance/{{ownerId}}/false",
+					"host": [
+						"{{api-base-url}}"
+					],
+					"path": [
+						"ShelvesCompliance",
+						"{{ownerId}}",
+						"false"
+					]
+				},
+				"description": "CLassify uploaded shelf agains custom vision model"
+			},
+			"response": []
+		},
+		{
+			"name": "Classification - ID Auth (Sync)",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "doc",
+							"type": "file",
+							"src": ""
+						}
+					]
+				},
+				"url": {
+					"raw": "{{api-base-url}}/classification/{{ownerId}}/ID/false",
+					"host": [
+						"{{api-base-url}}"
+					],
+					"path": [
+						"classification",
+						"{{ownerId}}",
+						"ID",
+						"false"
+					]
+				},
+				"description": "Old classification API that was built to classify any document type but return different results based on the document type submitted."
+			},
+			"response": []
+		},
+		{
+			"name": "Classification - Face Auth (Sync)",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "doc",
+							"type": "file",
+							"src": ""
+						}
+					]
+				},
+				"url": {
+					"raw": "{{api-base-url}}/classification/{{ownerId}}/Face/false",
+					"host": [
+						"{{api-base-url}}"
+					],
+					"path": [
+						"classification",
+						"{{ownerId}}",
+						"Face",
+						"false"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Classification - Shelf Compliance (Sync)",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "doc",
+							"type": "file",
+							"src": ""
+						}
+					]
+				},
+				"url": {
+					"raw": "{{api-base-url}}/classification/{{ownerId}}/StoreShelf/false",
+					"host": [
+						"{{api-base-url}}"
+					],
+					"path": [
+						"classification",
+						"{{ownerId}}",
+						"StoreShelf",
+						"false"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
