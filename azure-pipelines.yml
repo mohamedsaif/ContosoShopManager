@@ -1,0 +1,48 @@
+# Azure Pipelines for GitHub
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- master
+
+pool:
+  vmImage: 'Ubuntu-16.04'
+  demands: npm
+
+steps:
+- task: Npm@1
+  displayName: 'Angular CLI Install'
+  inputs:
+    command: custom
+
+    verbose: false
+
+    customCommand: 'install @angular/cli -g'
+
+
+- task: Npm@1
+  displayName: 'Project Dependencies Install'
+  inputs:
+    workingDir: 'Src/FaceExplorer-App'
+
+    verbose: false
+
+
+- script: 'ng build --prod'
+  workingDirectory: 'Src/FaceExplorer-App'
+
+  displayName: 'Build Angular App'
+
+- task: Npm@1
+  displayName: 'npm install for dist/ folder'
+  inputs:
+    workingDir: 'Src/FaceExplorer-App/dist'
+
+    verbose: false
+
+- task: PublishBuildArtifacts@1
+  displayName: 'Publish Artifact: FaceExplorer-App-Dist'
+  inputs:
+    PathtoPublish: 'Src/FaceExplorer-App/dist'
+
+    ArtifactName: 'FaceExplorer-App-Dist'
