@@ -6,7 +6,7 @@ trigger:
 - master
 
 pool:
-  vmImage: 'Ubuntu-16.04'
+  vmImage: 'VS2017'
   demands: npm
 
 steps:
