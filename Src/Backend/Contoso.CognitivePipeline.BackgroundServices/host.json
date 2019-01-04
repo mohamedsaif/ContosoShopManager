@@ -1,0 +1,34 @@
+{
+  "version": "2.0",
+  "http": {
+    "routePrefix": "api",
+    "maxOutstandingRequests": 20,
+    "maxConcurrentRequests": 10,
+    "dynamicThrottlesEnabled": false
+  },
+  "Values": {
+    "FunctionGlobalKey": "<Update Function Key>",
+    "FunctionBaseUrl": "http://localhost:7071/api",
+    "FUNCTIONS_WORKER_RUNTIME": "dotnet",
+    "AzureWebJobsStorage": "<Storage Connection String for Functions>",
+    "AzureWebJobsDashboard": "<Storage Connection String for Functions>",
+    "NewRequestQueue": "<Storage Connection String for Async Queues>",
+    "SmartDocsStorageConnection": "<Storage Connection String for Documents Upload>",
+    "CosmosDb": "<CosmosDb Connection String>",
+    "CosmosDbEndpoint": "<CosmosDb Endpoint>",
+    "CosmosDbKey": "<CosmosDb Key>",
+    "CosmosDbName": "ContosoShopManagerDb",
+    "ResultOperationSleep": 500,
+    "CognitiveServices-Thumbnail-Config": "320,200,128,128",
+    "CognitiveServices-CompVision-Endpoint": "https://eastus.api.cognitive.microsoft.com/vision/v2.0",
+    "CognitiveServices-CompVision-Key": "<Computer Vision Key>",
+    "CognitiveServices-Face-Endpoint": "<Cognitive Services Computer Vision Endpoint>",
+    "CognitiveServices-Face-Key": "<Cognitive Services Computer Vision API Key>",
+    "CognitiveServices-Face-PersonGroupId": "<Person Group Id>",
+    "CognitiveServices-ShelfCompliance-Key": "<Custom Vision Prediction Key>",
+    "CognitiveServices-ShelfCompliance-Endpoint": "<Custom Vision Endpoint>",
+    "CognitiveServices-ShelfCompliance-Threshold": "0.6",
+    "Env": "Production",
+    "Origin": "CognitivePipeline.BackgroundServices.Prod.v1"
+  }
+}

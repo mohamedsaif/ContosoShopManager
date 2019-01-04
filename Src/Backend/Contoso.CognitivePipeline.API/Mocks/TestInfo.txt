@@ -1,0 +1,5 @@
+﻿Testing params for using Cognitive Services API Console
+https://westeurope.dev.cognitive.microsoft.com/docs/services/5adf991815e1060e6355ad44/operations/56f91f2e778daf14a499e1fa/console
+https://d85ecz8votkqa.cloudfront.net/support/help_center/Print_Payment_Receipt.JPG
+6d1971fc99b64c71b0a0f64f625e5189
+https://westeurope.api.cognitive.microsoft.com/vision/v2.0/textOperations/4a609772-af6b-49b3-ad26-c4b20663c628
