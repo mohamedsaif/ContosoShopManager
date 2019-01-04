@@ -5,44 +5,39 @@
 trigger:
 - master
 
-pool:
-  vmImage: 'vs2017-win2016'
-  demands: npm
+variables:
+  buildConfiguration: 'Release'
 
-steps:
-- task: Npm@1
-  displayName: 'Angular CLI Install'
-  inputs:
-    command: custom
+jobs:
+- job: FaceExplorer-CI
+  pool:
+    vmImage: 'ubuntu-16.04'
+  steps:
+  - task: Npm@1
+    displayName: 'Angular CLI Install'
+    inputs:
+      command: custom
+      verbose: false
+      customCommand: 'install @angular/cli -g'
 
-    verbose: false
+  - task: Npm@1
+    displayName: 'Project Dependencies Install'
+    inputs:
+      workingDir: 'Src/FaceExplorer-App'
+      verbose: false
 
-    customCommand: 'install @angular/cli -g'
+  - script: 'ng build --prod'
+    workingDirectory: 'Src/FaceExplorer-App'
+    displayName: 'Build Angular App'
 
+  - task: Npm@1
+    displayName: 'npm install for dist/ folder'
+    inputs:
+      workingDir: 'Src/FaceExplorer-App/dist'
+      verbose: false
 
-- task: Npm@1
-  displayName: 'Project Dependencies Install'
-  inputs:
-    workingDir: 'Src/FaceExplorer-App'
-
-    verbose: false
-
-
-- script: 'ng build --prod'
-  workingDirectory: 'Src/FaceExplorer-App'
-
-  displayName: 'Build Angular App'
-
-- task: Npm@1
-  displayName: 'npm install for dist/ folder'
-  inputs:
-    workingDir: 'Src/FaceExplorer-App/dist'
-
-    verbose: false
-
-- task: PublishBuildArtifacts@1
-  displayName: 'Publish Artifact: FaceExplorer-App-Dist'
-  inputs:
-    PathtoPublish: 'Src/FaceExplorer-App/dist'
-
-    ArtifactName: 'FaceExplorer-App-Dist'
+  - task: PublishBuildArtifacts@1
+    displayName: 'Publish Artifact: FaceExplorer-App-Dist'
+    inputs:
+      PathtoPublish: 'Src/FaceExplorer-App/dist'
+      ArtifactName: 'FaceExplorer-App-Dist'
