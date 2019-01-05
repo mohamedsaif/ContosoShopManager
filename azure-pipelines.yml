@@ -1,0 +1,39 @@
+# Azure Pipelines for GitHub :)
+# More info: https://docs.microsoft.com/en-us/azure/devops/pipelines/?view=vsts
+trigger:
+- master
+- azure-pipelines
+
+variables:
+  buildConfiguration: 'Release'
+
+jobs:
+- job: 'FaceExplorerAngular'
+  pool:
+    vmImage: 'ubuntu-16.04'
+    demands: npm
+  steps:
+  - script: sudo npm install -g @angular/cli
+    displayName: Install Angular-CLI via NPM
+
+  - task: Npm@1
+    displayName: 'Project Dependencies Install'
+    inputs:
+      workingDir: 'Src/FaceExplorer-App'
+      verbose: false
+
+  - script: 'ng build --prod'
+    workingDirectory: 'Src/FaceExplorer-App'
+    displayName: 'Build Angular App'
+
+  - task: Npm@1
+    displayName: 'npm install for dist/ folder'
+    inputs:
+      workingDir: 'Src/FaceExplorer-App/dist'
+      verbose: false
+
+  - task: PublishBuildArtifacts@1
+    displayName: 'Publish Artifact: FaceExplorer-App-Dist'
+    inputs:
+      PathtoPublish: 'Src/FaceExplorer-App/dist'
+      ArtifactName: 'FaceExplorer-App-Dist'

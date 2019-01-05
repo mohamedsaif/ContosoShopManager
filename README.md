@@ -1,5 +1,7 @@
 ﻿![Banner](Res/banner.png)
 
+[![Build Status](https://gbb-appinnovation.visualstudio.com/ContosoShopManager/_apis/build/status/mohamedsaif.ContosoShopManager?branchName=master)](https://gbb-appinnovation.visualstudio.com/ContosoShopManager/_build/latest?definitionId=14?branchName=master)
+
 A 360 Intelligent Experiences workshop around using AI + Mobile Apps to deliver advance intelligent that help auditor and store managers to evaluate Retail market product stocking compliance
 
 The workshop aims to educate and inform data scientists and application development teams on the importance of having Data-Driven Intelligent Apps.
