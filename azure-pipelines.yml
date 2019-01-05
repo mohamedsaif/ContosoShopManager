@@ -9,12 +9,13 @@ trigger:
     include:
       - 'Src/FaceExplorer-App'
       - 'Src/Backend'
+      - 'azure-pipelines.yml'
 
 variables:
   buildConfiguration: 'Release'
 
 jobs:
-- template: azure-pipelines.webapp.yml
+- template: azure-pipelines-webapp.yml
   parameters:
     Name: ContosoBackendAPIs
     RestoreBuildProjects: '**/*.API.csproj'
@@ -32,6 +33,6 @@ jobs:
     ArtifactName: 'ContosoBackendFunctions'
     PublishWebApp: False
 
-- template: azure-pipelines.angular.yml
+- template: azure-pipelines-angular.yml
   parameters:
     Name: FaceExplorerApp
