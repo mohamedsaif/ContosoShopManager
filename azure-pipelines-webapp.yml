@@ -31,7 +31,7 @@ jobs:
     displayName: Publish
     inputs:
       command: publish
-      publishWebProjects: True
+      publishWebProjects: ${{ Parameters.PublishWebApp }}
       arguments: '--configuration ${{ Parameters.BuildConfiguration }} --output $(build.artifactstagingdirectory)'
       zipAfterPublish: True
       workingDirectory: ${{ Parameters.WorkingDirectory }}
@@ -39,7 +39,6 @@ jobs:
   - task: PublishBuildArtifacts@1
     displayName: 'Publish Artifact: ${{ Parameters.ArtifactName }}'
     inputs:
-      publishWebProjects: ${{ Parameters.PublishWebApp }}
       PathtoPublish: '$(build.artifactstagingdirectory)'
       ArtifactName: ${{ Parameters.ArtifactName }}
       zipAfterPublish: True
