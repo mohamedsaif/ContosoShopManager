@@ -14,6 +14,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Swashbuckle.AspNetCore.Swagger;
+using System.IO;
+using System.Reflection;
 
 namespace Contoso.SB.API
 {
@@ -36,6 +38,8 @@ namespace Contoso.SB.API
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new Info { Title = "Contoso Cognitive Pipeline API", Version = "v1" });
+                var filePath = Path.Combine(System.AppContext.BaseDirectory, $"{Assembly.GetEntryAssembly().GetName().Name}.xml");
+                c.IncludeXmlComments(filePath);
             });
 
             //Register application services
