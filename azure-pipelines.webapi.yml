@@ -1,23 +1,13 @@
 # Azure Pipelines for GitHub :)
 # More info: https://docs.microsoft.com/en-us/azure/devops/pipelines/?view=vsts
 parameters:
-  name: 'WebAPI'
+  Name: 'WebAPI'
   RestoreBuildProjects: '**/*.API.csproj'
-
-trigger:
-  branches:
-    include:
-      - master
-  paths:
-    include:
-      - 'Src/Backend'
-
-variables:
   BuildConfiguration: 'Release'
   WorkingDirectory: 'Src/Backend/Contoso.CognitivePipeline.API'
 
 jobs:
-- job: ${{ Parameters.name }}
+- job: ${{ Parameters.Name }}
   pool:
     vmImage: 'ubuntu-16.04'
     demands: npm
@@ -26,23 +16,23 @@ jobs:
     displayName: Restore
     inputs:
       command: restore
-      projects: '$(Parameters.RestoreBuildProjects)'
+      projects: ${{ Parameters.RestoreBuildProjects }}
 
   - task: DotNetCoreCLI@2
     displayName: Build
     inputs:
-      projects: '$(Parameters.RestoreBuildProjects)'
-      arguments: '--configuration $(BuildConfiguration)'
-      workingDirectory: $(WorkingDirectory)
+      projects: ${{ Parameters.RestoreBuildProjects }}
+      arguments: '--configuration ${{ Parameters.BuildConfiguration }}'
+      workingDirectory: ${{ Parameters.WorkingDirectory }}
 
   - task: DotNetCoreCLI@2
     displayName: Publish
     inputs:
       command: publish
       publishWebProjects: True
-      arguments: '--configuration $(BuildConfiguration) --output $(build.artifactstagingdirectory)'
+      arguments: '--configuration ${{ Parameters.BuildConfiguration }} --output $(build.artifactstagingdirectory)'
       zipAfterPublish: True
-      workingDirectory: $(WorkingDirectory)
+      workingDirectory: ${{ Parameters.WorkingDirectory }}
 
   - task: PublishBuildArtifacts@1
     displayName: 'Publish Artifact'
