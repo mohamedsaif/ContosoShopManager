@@ -14,12 +14,24 @@ variables:
   buildConfiguration: 'Release'
 
 jobs:
-- template: azure-pipelines.webapi.yml
+- template: azure-pipelines.webapp.yml
   parameters:
-    name: ContosoBackendAPIs
-#- template: azure-pipelines-function.yml
-#  parameters:
-#    name: ContosoBackendFunction
+    Name: ContosoBackendAPIs
+    RestoreBuildProjects: '**/*.API.csproj'
+    BuildConfiguration: 'Release'
+    WorkingDirectory: 'Src/Backend/Contoso.CognitivePipeline.API'
+    ArtifactName: 'ContosoBackendAPIs'
+    PublishWebApp: True
+
+- template: azure-pipelines-webapp.yml
+  parameters:
+    Name: ContosoBackendFunction
+    RestoreBuildProjects: '**/*.BackgroundServices.csproj'
+    BuildConfiguration: 'Release'
+    WorkingDirectory: 'Src/Backend/Contoso.CognitivePipeline.BackgroundServices'
+    ArtifactName: 'ContosoBackendFunctions'
+    PublishWebApp: False
+
 - template: azure-pipelines.angular.yml
   parameters:
-    name: FaceExplorerApp
+    Name: FaceExplorerApp

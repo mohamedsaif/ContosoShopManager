@@ -1,10 +1,12 @@
-# Azure Pipelines for GitHub :)
+# Azure Pipelines for .NET Core app (Web, Function, ....) :)
 # More info: https://docs.microsoft.com/en-us/azure/devops/pipelines/?view=vsts
 parameters:
-  Name: 'WebAPI'
-  RestoreBuildProjects: '**/*.API.csproj'
+  Name: 'ASPNetCoreWebApp'
+  RestoreBuildProjects: 'PASSEDTOTHETEMPLATE'
   BuildConfiguration: 'Release'
-  WorkingDirectory: 'Src/Backend/Contoso.CognitivePipeline.API'
+  WorkingDirectory: 'PASSEDTOTHETEMPLATE'
+  PublishWebApp: True
+  ArtifactName: 'AppDrop'
 
 jobs:
 - job: ${{ Parameters.Name }}
@@ -35,7 +37,9 @@ jobs:
       workingDirectory: ${{ Parameters.WorkingDirectory }}
 
   - task: PublishBuildArtifacts@1
-    displayName: 'Publish Artifact'
+    displayName: 'Publish Artifact: ${{ Parameters.ArtifactName }}'
     inputs:
+      publishWebProjects: ${{ Parameters.PublishWebApp }}
       PathtoPublish: '$(build.artifactstagingdirectory)'
-      ArtifactName: ContosoBackendAPIs
+      ArtifactName: ${{ Parameters.ArtifactName }}
+      zipAfterPublish: True

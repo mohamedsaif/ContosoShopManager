@@ -1,47 +1,25 @@
-# Azure Pipelines for GitHub :)
+# Azure Pipelines for Function :)
 # More info: https://docs.microsoft.com/en-us/azure/devops/pipelines/?view=vsts
 parameters:
-  name: 'AzureFunction'
-
-trigger:
-  branches:
-    include:
-      - master
-  paths:
-    include:
-      - 'Src/FaceExplorer-App'
-      - 'Src/Backend'
-
-variables:
-  buildConfiguration: 'Release'
-
+  Name: 'AzureFunction'
+  RestoreBuildProjects: '**/*.API.csproj'
+  BuildConfiguration: 'Release'
+  WorkingDirectory: 'Src/Backend/Contoso.CognitivePipeline.BackgroundServices'
 jobs:
 - job: ${{ parameters.name }}
   pool:
     vmImage: 'ubuntu-16.04'
     demands: npm
   steps:
-  - script: sudo npm install -g @angular/cli
-    displayName: Install Angular-CLI via NPM
-
-  - task: Npm@1
-    displayName: 'Project Dependencies Install'
+  - task: ArchiveFiles@2
+    displayName: "Archive files"
     inputs:
-      workingDir: 'Src/FaceExplorer-App'
-      verbose: false
-
-  - script: 'ng build --prod'
-    workingDirectory: 'Src/FaceExplorer-App'
-    displayName: 'Build Angular App'
-
-  - task: Npm@1
-    displayName: 'npm install for dist/ folder'
-    inputs:
-      workingDir: 'Src/FaceExplorer-App/dist'
-      verbose: false
+      rootFolderOrFile: ${{ Parameters.WorkingDirectory }}
+      includeRootFolder: false
+      archiveFile: "${{ Parameters.WorkingDirectory }}/dist/$(Build.BuildId).zip"
 
   - task: PublishBuildArtifacts@1
-    displayName: 'Publish Artifact: FaceExplorer-App-Dist'
+    displayName: 'Publish Artifact: ContosoBackendFunctions'
     inputs:
-      PathtoPublish: 'Src/FaceExplorer-App/dist'
-      ArtifactName: 'FaceExplorer-App-Dist'
+      PathtoPublish: "${{ Parameters.WorkingDirectory }}/dist"
+      ArtifactName: 'ContosoBackendFunctions'

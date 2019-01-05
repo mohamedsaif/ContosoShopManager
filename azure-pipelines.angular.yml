@@ -1,4 +1,4 @@
-# Azure Pipelines for GitHub :)
+# Azure Pipelines for Angular app :)
 # More info: https://docs.microsoft.com/en-us/azure/devops/pipelines/?view=vsts
 parameters:
   Name: 'AngularApp'
