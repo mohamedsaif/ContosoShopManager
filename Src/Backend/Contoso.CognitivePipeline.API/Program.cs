@@ -22,6 +22,7 @@ namespace Contoso.SB.API
 
         public static IWebHost BuildWebHost(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
+                .UseApplicationInsights()
                 //All these configuration and more are part of the default builder
                 //.UseKestrel()
                 //.UseContentRoot(Directory.GetCurrentDirectory())
