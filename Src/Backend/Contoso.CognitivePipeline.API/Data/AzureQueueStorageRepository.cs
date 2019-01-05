@@ -82,18 +82,21 @@ namespace Contoso.SB.API.Data
 
         public CloudQueue GetQueue(QueueType queueType)
         {
+            CloudQueue result = null;
             switch (queueType)
             {
                 case QueueType.NewRequestQueue:
-                    return newReqQueue;
+                    result = newReqQueue;
                     break;
                 case QueueType.CallbackRequestQueue:
-                    return callbackReqQueue;
+                    result = callbackReqQueue;
                     break;
                 default:
-                    return null;
+                    result = null;
                     break;
             }
+
+            return result;
         }
     }
 }

@@ -20,11 +20,11 @@ namespace Contoso.CognitivePipeline.API.Controllers
         IDocumentDBRepository<User> userRepository;
         INewCognitiveRequest<SmartDoc> newReqService;
 
-        public ShelvesComplianceController(IStorageRepository storage, IDocumentDBRepository<SmartDoc> documentDBRepository, IDocumentDBRepository<User> uReposiroty, INewCognitiveRequest<SmartDoc> newAsyncReq)
+        public ShelvesComplianceController(IStorageRepository storage, IDocumentDBRepository<SmartDoc> documentDBRepository, IDocumentDBRepository<User> uRepository, INewCognitiveRequest<SmartDoc> newAsyncReq)
         {
             storageRepository = storage;
             docRepository = documentDBRepository;
-            userRepository = uReposiroty;
+            userRepository = uRepository;
             newReqService = newAsyncReq;
         }
 
@@ -35,12 +35,12 @@ namespace Contoso.CognitivePipeline.API.Controllers
         }
 
         /// <summary>
-        /// Submit a new Docment file to be processed by the Cognitive Pipeline
+        /// Submit a new Document file to be processed by the Cognitive Pipeline
         /// </summary>
         /// <returns>The result of document after processing</returns>
         /// <param name="ownerId">Document Owner Id (like EmployeeId or CustomerId)</param>
         /// <param name="isAsync">Indicate if the processing will be Sync or Async</param>
-        /// <param name="doc">The acutal document binary data</param>
+        /// <param name="doc">The actual document binary data</param>
         [HttpPost("{ownerId}/{isAsync}")]
         [ProducesResponseType(200, Type = typeof(ShelfCompliance))]
         [ProducesResponseType(400)]
@@ -53,7 +53,7 @@ namespace Contoso.CognitivePipeline.API.Controllers
                 newReq = await ClassificationRequestHelper.CreateNewRequest(
                     ownerId, isAsync, doc, docType, storageRepository, docRepository, userRepository);
 
-                result = await newReqService.SendNewReuqest(newReq, newReq.RequestItem.Id, isAsync);
+                result = await newReqService.SendNewRequest(newReq, newReq.RequestItem.Id, isAsync);
             }
             catch (Exception ex)
             {

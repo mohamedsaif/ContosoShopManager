@@ -17,11 +17,11 @@ namespace Contoso.SB.API.Controllers
         IDocumentDBRepository<User> userRepository;
         INewCognitiveRequest<SmartDoc> newReqService;
 
-        public ClassificationController(IStorageRepository storage, IDocumentDBRepository<SmartDoc> documentDBRepository, IDocumentDBRepository<User> uReposiroty, INewCognitiveRequest<SmartDoc> newAsyncReq)
+        public ClassificationController(IStorageRepository storage, IDocumentDBRepository<SmartDoc> documentDBRepository, IDocumentDBRepository<User> uRepository, INewCognitiveRequest<SmartDoc> newAsyncReq)
         {
             storageRepository = storage;
             docRepository = documentDBRepository;
-            userRepository = uReposiroty;
+            userRepository = uRepository;
             newReqService = newAsyncReq;
         }
 
@@ -35,7 +35,7 @@ namespace Contoso.SB.API.Controllers
 
         //}
         [HttpGet]
-        public async Task<IActionResult> Get()
+        public IActionResult Get()
         {
             return Ok("{\"status\": \"Classification working...\"}");
         }
@@ -128,7 +128,7 @@ namespace Contoso.SB.API.Controllers
                 IsAsync = isAsync
             };
 
-            var result = await newReqService.SendNewReuqest(newReq, newDoc.Id, isAsync);
+            var result = await newReqService.SendNewRequest(newReq, newDoc.Id, isAsync);
 
             return Ok(result);
         }

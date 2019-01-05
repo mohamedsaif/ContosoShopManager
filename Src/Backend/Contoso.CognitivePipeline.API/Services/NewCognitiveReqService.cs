@@ -22,7 +22,7 @@ namespace Contoso.SB.API.Services
             queue = queueRepository;
         }
 
-        public async Task<string> SendNewReuqest(NewRequest<T> message, string id, bool IsAsync)
+        public async Task<string> SendNewRequest(NewRequest<T> message, string id, bool IsAsync)
         {
             // TODO: Refactor out the pure HTTP calls
 

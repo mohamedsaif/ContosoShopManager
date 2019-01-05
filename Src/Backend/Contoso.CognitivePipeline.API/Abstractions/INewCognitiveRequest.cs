@@ -5,6 +5,6 @@ namespace Contoso.SB.API.Abstractions
 {
     public interface INewCognitiveRequest<T>
     {
-        Task<string> SendNewReuqest(NewRequest<T> message, string id, bool isAsync);
+        Task<string> SendNewRequest(NewRequest<T> message, string id, bool isAsync);
     }
 }
