@@ -1,7 +1,5 @@
-# Azure Pipelines for GitHub
-# Add steps that build, run tests, deploy, and more:
-# https://aka.ms/yaml
-
+# Azure Pipelines for GitHub :)
+# More info: https://docs.microsoft.com/en-us/azure/devops/pipelines/?view=vsts
 trigger:
 - master
 
@@ -9,16 +7,17 @@ variables:
   buildConfiguration: 'Release'
 
 jobs:
-- job: FaceExplorer-CI
+- job: 'FaceExplorerAngular'
   pool:
     vmImage: 'ubuntu-16.04'
+    demands: npm
   steps:
   - task: Npm@1
     displayName: 'Angular CLI Install'
     inputs:
       command: custom
       verbose: false
-      customCommand: 'install @angular/cli -g'
+      customCommand: 'sudo install @angular/cli -g'
 
   - task: Npm@1
     displayName: 'Project Dependencies Install'
