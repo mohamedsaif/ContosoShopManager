@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Contoso.CognitivePipeline.API</name>
+    </assembly>
+    <members>
+        <!-- Badly formed XML comment ignored for member "M:Contoso.SB.API.Controllers.ClassificationController.SubmitDoc(System.String,System.String,System.Boolean,Microsoft.AspNetCore.Http.IFormFile)" -->
+        <member name="M:Contoso.CognitivePipeline.API.Controllers.FaceAuthController.SubmitDoc(System.String,System.Boolean,Microsoft.AspNetCore.Http.IFormFile,System.Boolean)">
+            <summary>
+            Submit a new Document file to be processed by the Cognitive Pipeline
+            </summary>
+            <returns>The result of document after processing</returns>
+            <param name="ownerId">Document Owner Id (like EmployeeId or CustomerId)</param>
+            <param name="isAsync">Indicate if the processing will be Sync or Async</param>
+            <param name="doc">The actual document binary data</param>
+            <param name="isMinimum">Flag to optimize the output by removing additiona details from the results.</param>
+        </member>
+        <member name="M:Contoso.CognitivePipeline.API.Controllers.IDAuthController.SubmitDoc(System.String,System.Boolean,Microsoft.AspNetCore.Http.IFormFile,System.Boolean)">
+            <summary>
+            Submit a new Document file to be processed by the Cognitive Pipeline
+            </summary>
+            <returns>The result of document after processing</returns>
+            <param name="ownerId">Document Owner Id (like EmployeeId or CustomerId)</param>
+            <param name="isAsync">Indicate if the processing will be Sync or Async</param>
+            <param name="doc">The actual document binary data</param>
+            <param name="isMinimum">Flag to optimize the output by removing additiona details from the results.</param>
+        </member>
+        <member name="M:Contoso.CognitivePipeline.API.Controllers.ShelvesComplianceController.SubmitDoc(System.String,System.Boolean,Microsoft.AspNetCore.Http.IFormFile,System.Boolean)">
+            <summary>
+            Submit a new Document file to be processed by the Cognitive Pipeline
+            </summary>
+            <returns>The result of document after processing</returns>
+            <param name="ownerId">Document Owner Id (like EmployeeId or CustomerId)</param>
+            <param name="isAsync">Indicate if the processing will be Sync or Async</param>
+            <param name="doc">The actual document binary data</param>
+            <param name="isMinimum">Flag to optimize the output by removing additiona details from the results.</param>
+        </member>
+    </members>
+</doc>
