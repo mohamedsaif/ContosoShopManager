@@ -2,6 +2,7 @@
 # More info: https://docs.microsoft.com/en-us/azure/devops/pipelines/?view=vsts
 trigger:
 - master
+- azure-pipelines
 
 variables:
   buildConfiguration: 'Release'
