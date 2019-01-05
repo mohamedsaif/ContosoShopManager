@@ -13,6 +13,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Swashbuckle.AspNetCore.Swagger;
 
 namespace Contoso.SB.API
 {
@@ -30,6 +31,12 @@ namespace Contoso.SB.API
         {
 
             services.AddMvc();
+
+            //Add API documentation service
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new Info { Title = "Contoso Cognitive Pipeline API", Version = "v1" });
+            });
 
             //Register application services
             services.AddSingleton<IStorageRepository, AzureBlobStorageRepository>();
@@ -60,6 +67,13 @@ namespace Contoso.SB.API
             }
 
             app.UseMvc();
+
+            //Configuring Swagger API documentation and its UI
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Contoso Cognitive Pipeline V1");
+            });
         }
     }
 }
