@@ -12,12 +12,8 @@ jobs:
     vmImage: 'ubuntu-16.04'
     demands: npm
   steps:
-  - task: Npm@1
-    displayName: 'Angular CLI Install'
-    inputs:
-      command: custom
-      verbose: true
-      customCommand: 'sudo install @angular/cli -g'
+  - script: sudo npm install -g @angular/cli
+    displayName: Install Angular-CLI via NPM
 
   - task: Npm@1
     displayName: 'Project Dependencies Install'
