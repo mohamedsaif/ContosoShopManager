@@ -16,7 +16,7 @@ jobs:
     displayName: 'Angular CLI Install'
     inputs:
       command: custom
-      verbose: false
+      verbose: true
       customCommand: 'sudo install @angular/cli -g'
 
   - task: Npm@1
