@@ -8,6 +8,7 @@ using Contoso.SB.API.Abstractions;
 using Contoso.SB.API.BusinessLogic;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 
 namespace Contoso.CognitivePipeline.API.Controllers
 {
@@ -41,10 +42,11 @@ namespace Contoso.CognitivePipeline.API.Controllers
         /// <param name="ownerId">Document Owner Id (like EmployeeId or CustomerId)</param>
         /// <param name="isAsync">Indicate if the processing will be Sync or Async</param>
         /// <param name="doc">The actual document binary data</param>
-        [HttpPost("{ownerId}/{isAsync}")]
+        /// <param name="isMinimum">Flag to optimize the output by removing additiona details from the results.</param>
+        [HttpPost("{ownerId}/{isAsync}/{isMinimum?}")]
         [ProducesResponseType(200, Type = typeof(EmployeeId))]
         [ProducesResponseType(400)]
-        public async Task<IActionResult> SubmitDoc(string ownerId, bool isAsync, IFormFile doc)
+        public async Task<IActionResult> SubmitDoc(string ownerId, bool isAsync, IFormFile doc, bool isMinimum = true)
         {
             NewRequest<SmartDoc> newReq = null;
             string result = null;
@@ -58,6 +60,14 @@ namespace Contoso.CognitivePipeline.API.Controllers
             catch (Exception ex)
             {
                 return new BadRequestObjectResult(ex.Message);
+            }
+
+            //Reduce the size of the payload if isMinimum = true
+            if (isMinimum)
+            {
+                var output = JsonConvert.DeserializeObject<FaceAuthCard>(result);
+                output.OptimizeSmartDoc(isMinimum);
+                result = JsonConvert.SerializeObject(output);
             }
 
             return Ok(result);
