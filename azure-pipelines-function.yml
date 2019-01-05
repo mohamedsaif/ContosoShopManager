@@ -1,0 +1,25 @@
+# Azure Pipelines for Function :)
+# More info: https://docs.microsoft.com/en-us/azure/devops/pipelines/?view=vsts
+parameters:
+  Name: 'AzureFunction'
+  RestoreBuildProjects: '**/*.API.csproj'
+  BuildConfiguration: 'Release'
+  WorkingDirectory: 'Src/Backend/Contoso.CognitivePipeline.BackgroundServices'
+jobs:
+- job: ${{ parameters.name }}
+  pool:
+    vmImage: 'ubuntu-16.04'
+    demands: npm
+  steps:
+  - task: ArchiveFiles@2
+    displayName: "Archive files"
+    inputs:
+      rootFolderOrFile: ${{ Parameters.WorkingDirectory }}
+      includeRootFolder: false
+      archiveFile: "${{ Parameters.WorkingDirectory }}/dist/$(Build.BuildId).zip"
+
+  - task: PublishBuildArtifacts@1
+    displayName: 'Publish Artifact: ContosoBackendFunctions'
+    inputs:
+      PathtoPublish: "${{ Parameters.WorkingDirectory }}/dist"
+      ArtifactName: 'ContosoBackendFunctions'
