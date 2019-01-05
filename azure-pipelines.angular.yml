@@ -1,22 +1,10 @@
 # Azure Pipelines for GitHub :)
 # More info: https://docs.microsoft.com/en-us/azure/devops/pipelines/?view=vsts
 parameters:
-  name: 'AngularApp'
-
-trigger:
-  branches:
-    include:
-      - master
-  paths:
-    include:
-      - 'Src/FaceExplorer-App'
-      - 'Src/Backend'
-
-variables:
-  buildConfiguration: 'Release'
+  Name: 'AngularApp'
 
 jobs:
-- job: ${{ parameters.name }}
+- job: ${{ parameters.Name }}
   pool:
     vmImage: 'ubuntu-16.04'
     demands: npm
