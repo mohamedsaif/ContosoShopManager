@@ -16,14 +16,14 @@ variables:
   buildConfiguration: 'Release'
 
 jobs:
-#- template: azure-pipelines-webapp.yml
-#  parameters:
-#    Name: ContosoBackendAPIs
-#    RestoreBuildProjects: '**/*.API.csproj'
-#    BuildConfiguration: 'Release'
-#    WorkingDirectory: 'Src/Backend/Contoso.CognitivePipeline.API'
-#    ArtifactName: 'ContosoBackendAPIs'
-#    PublishWebApp: True
+- template: azure-pipelines-webapp.yml
+  parameters:
+    Name: ContosoBackendAPIs
+    RestoreBuildProjects: '**/*.API.csproj'
+    BuildConfiguration: 'Debug'
+    WorkingDirectory: 'Src/Backend/Contoso.CognitivePipeline.API'
+    ArtifactName: 'ContosoBackendAPIs'
+    PublishWebApp: True
 
 - template: azure-pipelines-webapp.yml
   parameters:
