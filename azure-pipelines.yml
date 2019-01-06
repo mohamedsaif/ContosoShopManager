@@ -24,7 +24,7 @@ jobs:
     ArtifactName: 'ContosoBackendAPIs'
     PublishWebApp: True
 
-- template: azure-pipelines-webapp.yml
+- template: azure-pipelines-function.yml
   parameters:
     Name: ContosoBackendFunction
     RestoreBuildProjects: '**/*.BackgroundServices.csproj'
