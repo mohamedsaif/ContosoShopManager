@@ -61,14 +61,18 @@ namespace Contoso.SB.API
 
             loggerFactory.AddConsole();
 
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
-            else
-            {
-                app.UseExceptionHandler();
-            }
+            //As this is a demo, we will continue to use Developer Exceptions. 
+            app.UseDeveloperExceptionPage();
+
+            //In production you would change that.
+            //if (env.IsDevelopment())
+            //{
+            //    app.UseDeveloperExceptionPage();
+            //}
+            //else
+            //{
+            //    app.UseExceptionHandler();
+            //}
 
             app.UseMvc();
 
