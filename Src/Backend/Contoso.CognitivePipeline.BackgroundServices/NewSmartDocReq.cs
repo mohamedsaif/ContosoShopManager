@@ -33,7 +33,7 @@ namespace Contoso.CognitivePipeline.BackgroundServices.Functions
         [FunctionName("NewSmartDocReq")]
         public static async Task<IActionResult> Run(
             //HTTP Trigger
-            //Sample of used typed input paramter
+            //Sample of used typed input parameter
             [HttpTrigger(AuthorizationLevel.Function, "post", Route = "NewSmartDocReq/{docId}")]HttpRequestMessage newReq,
 
             //Input
