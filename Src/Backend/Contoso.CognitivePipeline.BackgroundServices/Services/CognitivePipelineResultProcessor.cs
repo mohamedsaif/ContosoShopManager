@@ -22,12 +22,12 @@ namespace Contoso.CognitivePipeline.BackgroundServices.Services
                 var tempResult = CognitiveBusinessProcessor.ProcessEmployeeIdDocument(processedReq);
                 var isValid = await IsEmployeeExists(tempResult.EmployeeNum, usersClient);
                 tempResult.IsAuthenticationSuccessful = isValid;
-                tempResult.DetectionNotes = isValid ? "Authentication Sucessful" : "Authenticaton Failed";
+                tempResult.DetectionNotes += isValid ? ". Authentication Successful" : ". Authentication Failed";
                 tempResult.PrimaryClassification = InstructionFlag.AnalyzeText.ToString();
                 tempResult.PrimaryClassificationConfidence = 1;
                 result = JsonConvert.SerializeObject(tempResult);
 
-                //TODO: Future implementation to include face verfication on the employee scanned id as well
+                //TODO: Future implementation to include face verification on the employee scanned id as well
             }
             else if(processedReq.RequestItem.DocType == ClassificationType.Face)
             {

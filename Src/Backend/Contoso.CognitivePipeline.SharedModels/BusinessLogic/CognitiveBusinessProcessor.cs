@@ -56,7 +56,7 @@ namespace Contoso.CognitivePipeline.SharedModels.BusinessLogic
                         result.DetectionNotes = "Valid Employee Id";
                     }
                     else
-                        result.DetectionNotes = "Invalid Employee Id";
+                        result.DetectionNotes = "Invalid Employee Id*";
                 }
             }
 
