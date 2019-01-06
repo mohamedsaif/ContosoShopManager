@@ -60,6 +60,9 @@ namespace Contoso.CognitivePipeline.SharedModels.BusinessLogic
                 }
             }
 
+            if (string.IsNullOrEmpty(result.DetectionNotes))
+                result.DetectionNotes = "No OCR Found";
+
             return result;
         }
 

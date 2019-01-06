@@ -107,23 +107,23 @@ namespace Contoso.CognitivePipeline.BackgroundServices.Functions
                         var result = executionResult as OkObjectResult;
                         string updatedDocJson = result.Value.ToString();
                         NewRequest<SmartDoc> updatedDoc = JsonConvert.DeserializeObject<NewRequest<SmartDoc>>(updatedDocJson);
-                        newSmartDocRequest.Steps.Add(updatedDoc.RequestItem.CognitivePipelineActions[0]);
+                        newSmartDocRequest.RequestItem.CognitivePipelineActions.Add(updatedDoc.RequestItem.CognitivePipelineActions[0]);
                     }
                     else
                     {
                         //TODO: Better error information to be implemented
-                        newSmartDocRequest.Steps.Add(new ProcessingStep
+                        newSmartDocRequest.RequestItem.CognitivePipelineActions.Add(new ProcessingStep
                         {
                             LastUpdatedAt = DateTime.UtcNow,
                             Status = SmartDocStatus.ProcessedUnsuccessfully.ToString(),
-                            StepName = InstructionFlag.AnalyzeText.ToString()
+                            StepName = stepName
                         });
                     }
                 }
                 catch (Exception ex)
                 {
                     log.LogError($"***EXCEPTION*** in {stepName}: {ex.Message}, {ex.StackTrace}");
-                    newSmartDocRequest.Steps.Add(new ProcessingStep
+                    newSmartDocRequest.RequestItem.CognitivePipelineActions.Add(new ProcessingStep
                     {
                         LastUpdatedAt = DateTime.UtcNow,
                         Status = SmartDocStatus.ProcessedUnsuccessfully.ToString(),
@@ -148,12 +148,12 @@ namespace Contoso.CognitivePipeline.BackgroundServices.Functions
                         var result = executionResult as OkObjectResult;
                         string updatedDocJson = result.Value.ToString();
                         NewRequest<SmartDoc> updatedDoc = JsonConvert.DeserializeObject<NewRequest<SmartDoc>>(updatedDocJson);
-                        newSmartDocRequest.Steps.Add(updatedDoc.RequestItem.CognitivePipelineActions[0]);
+                        newSmartDocRequest.RequestItem.CognitivePipelineActions.Add(updatedDoc.RequestItem.CognitivePipelineActions[0]);
                     }
                     else
                     {
                         //TODO: Better error information to be implemented
-                        newSmartDocRequest.Steps.Add(new ProcessingStep
+                        newSmartDocRequest.RequestItem.CognitivePipelineActions.Add(new ProcessingStep
                         {
                             LastUpdatedAt = DateTime.UtcNow,
                             Status = SmartDocStatus.ProcessedUnsuccessfully.ToString(),
@@ -164,7 +164,7 @@ namespace Contoso.CognitivePipeline.BackgroundServices.Functions
                 catch (Exception ex)
                 {
                     log.LogError($"***EXCEPTION*** in {stepName}: {ex.Message}, {ex.StackTrace}");
-                    newSmartDocRequest.Steps.Add(new ProcessingStep
+                    newSmartDocRequest.RequestItem.CognitivePipelineActions.Add(new ProcessingStep
                     {
                         LastUpdatedAt = DateTime.UtcNow,
                         Status = SmartDocStatus.ProcessedUnsuccessfully.ToString(),
@@ -197,14 +197,14 @@ namespace Contoso.CognitivePipeline.BackgroundServices.Functions
                         {
                             LastUpdatedAt = DateTime.UtcNow,
                             Status = SmartDocStatus.ProcessedUnsuccessfully.ToString(),
-                            StepName = InstructionFlag.AnalyzeText.ToString()
+                            StepName = stepName
                         });
                     }
                 }
                 catch (Exception ex)
                 {
                     log.LogError($"***EXCEPTION*** in {stepName}: {ex.Message}, {ex.StackTrace}");
-                    newSmartDocRequest.Steps.Add(new ProcessingStep
+                    newSmartDocRequest.RequestItem.CognitivePipelineActions.Add(new ProcessingStep
                     {
                         LastUpdatedAt = DateTime.UtcNow,
                         Status = SmartDocStatus.ProcessedUnsuccessfully.ToString(),
@@ -241,14 +241,14 @@ namespace Contoso.CognitivePipeline.BackgroundServices.Functions
                         {
                             LastUpdatedAt = DateTime.UtcNow,
                             Status = SmartDocStatus.ProcessedUnsuccessfully.ToString(),
-                            StepName = InstructionFlag.AnalyzeText.ToString()
+                            StepName = stepName
                         });
                     }
                 }
                 catch (Exception ex)
                 {
                     log.LogError($"***EXCEPTION*** in {stepName}: {ex.Message}, {ex.StackTrace}");
-                    newSmartDocRequest.Steps.Add(new ProcessingStep
+                    newSmartDocRequest.RequestItem.CognitivePipelineActions.Add(new ProcessingStep
                     {
                         LastUpdatedAt = DateTime.UtcNow,
                         Status = SmartDocStatus.ProcessedUnsuccessfully.ToString(),
@@ -288,7 +288,7 @@ namespace Contoso.CognitivePipeline.BackgroundServices.Functions
                 catch (Exception ex)
                 {
                     log.LogError($"***EXCEPTION*** in {stepName}: {ex.Message}, {ex.StackTrace}");
-                    newSmartDocRequest.Steps.Add(new ProcessingStep
+                    newSmartDocRequest.RequestItem.CognitivePipelineActions.Add(new ProcessingStep
                     {
                         LastUpdatedAt = DateTime.UtcNow,
                         Status = SmartDocStatus.ProcessedUnsuccessfully.ToString(),

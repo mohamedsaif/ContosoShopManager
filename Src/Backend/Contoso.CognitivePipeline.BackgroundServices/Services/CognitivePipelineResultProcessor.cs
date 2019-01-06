@@ -70,13 +70,13 @@ namespace Contoso.CognitivePipeline.BackgroundServices.Services
 
         public static async Task UpdateDocument(NewRequest<SmartDoc> newDocReq, CosmosDBRepository<SmartDoc> client)
         {
-            foreach (var step in newDocReq.Steps)
-            {
-                if (newDocReq.RequestItem.CognitivePipelineActions == null)
-                    newDocReq.RequestItem.CognitivePipelineActions = new List<ProcessingStep>();
+            //foreach (var step in newDocReq.RequestItem.CognitivePipelineActions)
+            //{
+            //    if (newDocReq.RequestItem.CognitivePipelineActions == null)
+            //        newDocReq.RequestItem.CognitivePipelineActions = new List<ProcessingStep>();
 
-                newDocReq.RequestItem.CognitivePipelineActions.Add(step);
-            }
+            //    newDocReq.RequestItem.CognitivePipelineActions.Add(step);
+            //}
             await client.UpdateItemAsync(newDocReq.ItemReferenceId, newDocReq.RequestItem);
         }
 
