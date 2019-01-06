@@ -48,7 +48,7 @@ namespace Contoso.CognitivePipeline.BackgroundServices.Functions
             var newSmartDocRequestJson = await newReq.Content.ReadAsStringAsync();
             var newSmartDocRequest = JsonConvert.DeserializeObject<NewRequest<SmartDoc>>(newSmartDocRequestJson);
 
-            log.LogInformation($"NewReq function http triggered for: {newSmartDocRequestJson}");
+            log.LogInformation($"***NewSmartDocReq function http triggered for: {newSmartDocRequestJson}");
 
             string result = "";
 

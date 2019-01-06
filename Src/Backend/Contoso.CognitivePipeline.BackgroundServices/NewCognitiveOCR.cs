@@ -30,9 +30,8 @@ namespace Contoso.CognitivePipeline.BackgroundServices.Functions
             // Logger
             ILogger log)
         {
-            log.LogInformation($"New Direct-HTTP AnalyzeText Request triggered: {newRequest}");
-
             string stepName = InstructionFlag.AnalyzeText.ToString();
+            log.LogInformation($"***New {stepName} Direct-HTTP Request triggered: {JsonConvert.SerializeObject(newRequest)}");
 
             if (httpClient == null)
             {
@@ -59,10 +58,10 @@ namespace Contoso.CognitivePipeline.BackgroundServices.Functions
             {
                 newRequest.RequestItem.CognitivePipelineActions.Add(new ProcessingStep
                 {
-                    StepName = InstructionFlag.AnalyzeText.ToString(),
+                    StepName = stepName,
                     LastUpdatedAt = DateTime.UtcNow,
                     Output = ex.Message,
-                    Status = SmartDocStatus.ProccessedSuccessfully.ToString()
+                    Status = SmartDocStatus.ProcessedUnsuccessfully.ToString()
                 });
                 return (ActionResult)new BadRequestObjectResult(newRequest);
             }
