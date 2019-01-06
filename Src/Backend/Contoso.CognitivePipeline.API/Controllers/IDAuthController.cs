@@ -65,7 +65,7 @@ namespace Contoso.CognitivePipeline.API.Controllers
             //Reduce the size of the payload if isMinimum = true
             if (isMinimum)
             {
-                var output = JsonConvert.DeserializeObject<FaceAuthCard>(result);
+                var output = JsonConvert.DeserializeObject<EmployeeId>(result);
                 output.OptimizeSmartDoc(isMinimum);
                 result = JsonConvert.SerializeObject(output);
             }
