@@ -33,6 +33,7 @@ jobs:
     WorkingDirectory: 'Src/Backend/Contoso.CognitivePipeline.BackgroundServices'
     ArtifactName: 'ContosoBackendFunctions'
     PublishWebApp: False
+    ZipAfterPublish: False
 
 - template: azure-pipelines-angular.yml
   parameters:
