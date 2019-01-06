@@ -19,6 +19,7 @@ namespace Contoso.CognitivePipeline.BackgroundServices.Functions
 {
     public static class ClassificationOrchestrator
     {
+        /*Exclude from the project till completed functionality is available
         static double resultOperationSleep = 500;
         static HttpClient httpClient = new HttpClient();
 
@@ -211,5 +212,6 @@ namespace Contoso.CognitivePipeline.BackgroundServices.Functions
 
             return newRequest;
         }
+        */
     }
 }
