@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
@@ -29,5 +29,17 @@
   </ItemGroup>
 
   <Import Project="..\Contoso.CognitivePipeline.SharedModels\Contoso.CognitivePipeline.SharedModels.projitems" Label="Shared" />
+  <PropertyGroup>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+  </PropertyGroup>
 
+  <Target Name="IncludeDocFile" BeforeTargets="PrepareForPublish">
+    <ItemGroup Condition=" '$(DocumentationFile)' != '' ">
+      <_DocumentationFile Include="$(DocumentationFile)" />
+      <ContentWithTargetPath Include="@(_DocumentationFile->'%(FullPath)')"
+                             RelativePath="%(_DocumentationFile.Identity)"
+                             TargetPath="%(_DocumentationFile.Filename)%(_DocumentationFile.Extension)"
+                             CopyToPublishDirectory="PreserveNewest" />
+    </ItemGroup>
+  </Target>
 </Project>
