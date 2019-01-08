@@ -39,7 +39,7 @@ namespace Contoso.CognitivePipeline.BackgroundServices.Functions
             // Logger
             ILogger log)
         {
-            log.LogInformation($"New Direct-HTTP Thumbnail Request triggered: {newRequest}");
+            log.LogInformation($"New Direct-HTTP Thumbnail Request triggered: {JsonConvert.SerializeObject(newRequest)}");
 
             string stepName = InstructionFlag.Thumbnail.ToString();
 
@@ -71,7 +71,7 @@ namespace Contoso.CognitivePipeline.BackgroundServices.Functions
                     StepName = stepName,
                     LastUpdatedAt = DateTime.UtcNow,
                     Output = ex.Message,
-                    Status = SmartDocStatus.ProccessedSuccessfully.ToString()
+                    Status = SmartDocStatus.ProcessedUnsuccessfully.ToString()
                 });
                 return (ActionResult)new BadRequestObjectResult(newRequest);
             }

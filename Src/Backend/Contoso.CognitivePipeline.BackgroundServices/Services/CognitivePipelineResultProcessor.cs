@@ -22,12 +22,12 @@ namespace Contoso.CognitivePipeline.BackgroundServices.Services
                 var tempResult = CognitiveBusinessProcessor.ProcessEmployeeIdDocument(processedReq);
                 var isValid = await IsEmployeeExists(tempResult.EmployeeNum, usersClient);
                 tempResult.IsAuthenticationSuccessful = isValid;
-                tempResult.DetectionNotes = isValid ? "Authentication Sucessful" : "Authenticaton Failed";
+                tempResult.DetectionNotes += isValid ? ". Authentication Successful" : ". Authentication Failed";
                 tempResult.PrimaryClassification = InstructionFlag.AnalyzeText.ToString();
                 tempResult.PrimaryClassificationConfidence = 1;
                 result = JsonConvert.SerializeObject(tempResult);
 
-                //TODO: Future implementation to include face verfication on the employee scanned id as well
+                //TODO: Future implementation to include face verification on the employee scanned id as well
             }
             else if(processedReq.RequestItem.DocType == ClassificationType.Face)
             {
@@ -70,13 +70,13 @@ namespace Contoso.CognitivePipeline.BackgroundServices.Services
 
         public static async Task UpdateDocument(NewRequest<SmartDoc> newDocReq, CosmosDBRepository<SmartDoc> client)
         {
-            foreach (var step in newDocReq.Steps)
-            {
-                if (newDocReq.RequestItem.CognitivePipelineActions == null)
-                    newDocReq.RequestItem.CognitivePipelineActions = new List<ProcessingStep>();
+            //foreach (var step in newDocReq.RequestItem.CognitivePipelineActions)
+            //{
+            //    if (newDocReq.RequestItem.CognitivePipelineActions == null)
+            //        newDocReq.RequestItem.CognitivePipelineActions = new List<ProcessingStep>();
 
-                newDocReq.RequestItem.CognitivePipelineActions.Add(step);
-            }
+            //    newDocReq.RequestItem.CognitivePipelineActions.Add(step);
+            //}
             await client.UpdateItemAsync(newDocReq.ItemReferenceId, newDocReq.RequestItem);
         }
 

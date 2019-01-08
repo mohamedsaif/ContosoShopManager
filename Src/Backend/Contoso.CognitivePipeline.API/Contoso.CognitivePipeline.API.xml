@@ -33,7 +33,7 @@
             <param name="ownerId">Document Owner Id (like EmployeeId or CustomerId)</param>
             <param name="isAsync">Indicate if the processing will be Sync or Async</param>
             <param name="doc">The actual document binary data</param>
-            <param name="isMinimum">Flag to optimize the output by removing additiona details from the results.</param>
+            <param name="isMinimum">Flag to optimize the output by removing additional details from the results.</param>
         </member>
     </members>
 </doc>

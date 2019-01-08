@@ -1,6 +1,5 @@
 ﻿using Contoso.SB.API.Abstractions;
 
-//using Contoso.SB.API.Models;
 using Contoso.SB.API.Settings;
 using Contoso.CognitivePipeline.SharedModels.Models;
 using Microsoft.Extensions.Configuration;

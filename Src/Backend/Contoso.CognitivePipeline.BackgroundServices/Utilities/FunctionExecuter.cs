@@ -12,7 +12,7 @@ namespace Contoso.CognitivePipeline.BackgroundServices.Functions.Utilities
     public class FunctionExecuter
     {
         public static HttpClient httpClient = new HttpClient();
-        private static string functionKey = GlobalSettings.GetKeyValue("FunctionKey");
+        private static string functionKey = GlobalSettings.GetKeyValue("FunctionGlobalKey");
 
         public static async Task<IActionResult> CallFunction(string functionUri, StringContent content)
         {

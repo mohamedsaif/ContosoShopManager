@@ -32,7 +32,7 @@ namespace Contoso.CognitivePipeline.BackgroundServices.Functions
         {
             string stepName = InstructionFlag.AnalyzeImage.ToString();
 
-            log.LogInformation($"New Direct-HTTP {stepName} Request triggered: {newRequest}");
+            log.LogInformation($"***New {stepName} Direct-HTTP Request triggered: {{InstructionFlag.FaceAuthentication.ToString()}}");
 
             if (httpClient == null)
             {

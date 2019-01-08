@@ -5,6 +5,7 @@ trigger:
     include:
       - master
       - azure-pipelines
+      - function-prod-health
   paths:
     include:
       - 'Src/FaceExplorer-App'
@@ -19,7 +20,7 @@ jobs:
   parameters:
     Name: ContosoBackendAPIs
     RestoreBuildProjects: '**/*.API.csproj'
-    BuildConfiguration: 'Release'
+    BuildConfiguration: 'Debug'
     WorkingDirectory: 'Src/Backend/Contoso.CognitivePipeline.API'
     ArtifactName: 'ContosoBackendAPIs'
     PublishWebApp: True
@@ -32,7 +33,8 @@ jobs:
     WorkingDirectory: 'Src/Backend/Contoso.CognitivePipeline.BackgroundServices'
     ArtifactName: 'ContosoBackendFunctions'
     PublishWebApp: False
+    ZipAfterPublish: False
 
-- template: azure-pipelines-angular.yml
-  parameters:
-    Name: FaceExplorerApp
+#- template: azure-pipelines-angular.yml
+#  parameters:
+#    Name: FaceExplorerApp

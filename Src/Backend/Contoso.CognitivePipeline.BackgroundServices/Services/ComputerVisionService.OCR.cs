@@ -26,7 +26,7 @@ namespace Contoso.CognitivePipeline.BackgroundServices.Services
 
             // Create Cognitive Service request url with parameters
             var serviceAPIUrl = $"ocr?language=unk&detectOrientation=true";
-
+            
             var url = $"{baseUrl}/{serviceAPIUrl}";
 
             using (ByteArrayContent content = new ByteArrayContent(inputImage))

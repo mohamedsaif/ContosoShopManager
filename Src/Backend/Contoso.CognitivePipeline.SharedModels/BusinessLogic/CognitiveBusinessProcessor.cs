@@ -31,7 +31,7 @@ namespace Contoso.CognitivePipeline.SharedModels.BusinessLogic
             EmployeeId result = DocumentMapper.MapDocument<EmployeeId>(newReq.RequestItem);
 
             //In order to process document as Employee Id, we need a successful OCR
-            var ocrStep = newReq.Steps.Where(s => s.StepName == InstructionFlag.AnalyzeText.ToString()).FirstOrDefault();
+            var ocrStep = newReq.RequestItem.CognitivePipelineActions.Where(s => s.StepName == InstructionFlag.AnalyzeText.ToString()).FirstOrDefault();
             if(ocrStep != null)
             {
                 var ocrResult = JsonConvert.DeserializeObject<OCR>(ocrStep.Output);
@@ -56,9 +56,12 @@ namespace Contoso.CognitivePipeline.SharedModels.BusinessLogic
                         result.DetectionNotes = "Valid Employee Id";
                     }
                     else
-                        result.DetectionNotes = "Invalid Employee Id";
+                        result.DetectionNotes = "Invalid Employee Id*";
                 }
             }
+
+            if (string.IsNullOrEmpty(result.DetectionNotes))
+                result.DetectionNotes = "No OCR Found";
 
             return result;
         }
@@ -68,7 +71,7 @@ namespace Contoso.CognitivePipeline.SharedModels.BusinessLogic
             FaceAuthCard result = DocumentMapper.MapDocument<FaceAuthCard>(newReq.RequestItem);
             result.DetectionNotes = "Invalid Face Verification";
 
-            var faceStep = newReq.Steps.Where(s => s.StepName == InstructionFlag.FaceAuthentication.ToString()).FirstOrDefault();
+            var faceStep = newReq.RequestItem.CognitivePipelineActions.Where(s => s.StepName == InstructionFlag.FaceAuthentication.ToString()).FirstOrDefault();
             if (faceStep != null)
             {
                 var faceResult = JsonConvert.DeserializeObject<FaceAuth>(faceStep.Output);

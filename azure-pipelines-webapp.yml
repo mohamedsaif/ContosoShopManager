@@ -7,6 +7,7 @@ parameters:
   WorkingDirectory: 'PASSEDTOTHETEMPLATE'
   PublishWebApp: True
   ArtifactName: 'AppDrop'
+  ZipAfterPublish: True
 
 jobs:
 - job: ${{ Parameters.Name }}
@@ -33,7 +34,7 @@ jobs:
       command: publish
       publishWebProjects: ${{ Parameters.PublishWebApp }}
       arguments: '--configuration ${{ Parameters.BuildConfiguration }} --output $(build.artifactstagingdirectory)'
-      zipAfterPublish: True
+      zipAfterPublish: ${{ Parameters.ZipAfterPublish }}
       workingDirectory: ${{ Parameters.WorkingDirectory }}
 
   - task: PublishBuildArtifacts@1
