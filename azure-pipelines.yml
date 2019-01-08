@@ -35,6 +35,6 @@ jobs:
     PublishWebApp: False
     ZipAfterPublish: False
 
-#- template: azure-pipelines-angular.yml
-#  parameters:
-#    Name: FaceExplorerApp
+- template: azure-pipelines-angular.yml
+  parameters:
+    Name: FaceExplorerApp
