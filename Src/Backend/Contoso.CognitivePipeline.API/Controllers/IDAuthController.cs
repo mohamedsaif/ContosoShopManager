@@ -12,7 +12,9 @@ using Newtonsoft.Json;
 
 namespace Contoso.CognitivePipeline.API.Controllers
 {
-    [Route("api/[controller]")]
+    //Using the [controller] in route it will not be detected by each swagger documentation. So I'm using explicit route
+    //[Route("api/[controller]")]
+    [Route("api/idauth")]
     public class IDAuthController : ControllerBase
     {
         public const ClassificationType docType = ClassificationType.ID;
@@ -29,7 +31,12 @@ namespace Contoso.CognitivePipeline.API.Controllers
             newReqService = newAsyncReq;
         }
 
+        /// <summary>
+        /// Check the health of the service
+        /// </summary>
+        /// <returns>The status message</returns>
         [HttpGet]
+        [ProducesResponseType(200)]
         public IActionResult Get()
         {
             return Ok("{\"status\": \"" + this.GetType().Name + " working...\"}");
@@ -40,9 +47,9 @@ namespace Contoso.CognitivePipeline.API.Controllers
         /// </summary>
         /// <returns>The result of document after processing</returns>
         /// <param name="ownerId">Document Owner Id (like EmployeeId or CustomerId)</param>
-        /// <param name="isAsync">Indicate if the processing will be Sync or Async</param>
-        /// <param name="doc">The actual document binary data</param>
-        /// <param name="isMinimum">Flag to optimize the output by removing additiona details from the results.</param>
+        /// <param name="isAsync">Flag to indicate if operations need to execute immediately or will be queued</param>
+        /// <param name="doc">The binary of the document being processed</param>
+        /// <param name="isMinimum">Flag to optimize the output by removing additions details from the results.</param>
         [HttpPost("{ownerId}/{isAsync}/{isMinimum?}")]
         [ProducesResponseType(200, Type = typeof(EmployeeId))]
         [ProducesResponseType(400)]

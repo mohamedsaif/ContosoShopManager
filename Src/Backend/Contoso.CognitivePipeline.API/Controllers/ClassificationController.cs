@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Contoso.SB.API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/classification")]
     public class ClassificationController : Controller
     {
         IStorageRepository storageRepository;
@@ -25,15 +25,10 @@ namespace Contoso.SB.API.Controllers
             newReqService = newAsyncReq;
         }
 
-        //public IActionResult Index()
-        //{
-        //    return View();
-        //}
-        //[HttpGet()]
-        //    public JsonResult ListDocs()
-        //{
-
-        //}
+        /// <summary>
+        /// Check the health of the service
+        /// </summary>
+        /// <returns>The status message</returns>
         [HttpGet]
         public IActionResult Get()
         {
@@ -41,16 +36,13 @@ namespace Contoso.SB.API.Controllers
         }
 
         /// <summary>
-
         /// Uploads a document to Azure storage
-
         /// </summary>
-
-        /// <returns>The result of the file upload with size</returns>
-
-        /// <param name="ownerId">Customer ID</param>
-
-        /// <param name="file">Doc to be uploaded</param>
+        /// <returns>The result of the uploaded document</returns>
+        /// <param name="ownerId">Document owner Id</param>
+        /// <param name="docType">One of the following ID, StoreShelf, Face, Generic, Unidentified which will determine the cognitive operations to be executed</param>
+        /// <param name="isAsync">Flag to indicate if operations need to execute immediately or will be queued</param>
+        /// <param name="doc">The binary of the document being processed</param>
         [HttpPost("{ownerId}/{docType}/{isAsync}")]
         public async Task<IActionResult> SubmitDoc(string ownerId, string docType, bool isAsync, IFormFile doc)
         {

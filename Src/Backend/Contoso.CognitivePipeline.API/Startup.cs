@@ -16,11 +16,20 @@ using Microsoft.Extensions.Options;
 using Swashbuckle.AspNetCore.Swagger;
 using System.IO;
 using System.Reflection;
+using Swashbuckle.AspNetCore.SwaggerGen;
+using Contoso.CognitivePipeline.API.Helpers;
 
 namespace Contoso.SB.API
 {
     public class Startup
     {
+        List<string> apis = new List<string>
+        {
+            "IDAuth",
+            "FaceAuth",
+            "ShelvesCompliance",
+            "Classification",
+        };
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -35,12 +44,20 @@ namespace Contoso.SB.API
             services.AddMvc();
 
             //Add API documentation service
-            services.AddSwaggerGen(c =>
+            //services.AddSwaggerGen(c =>
+            //{
+            //    c.SwaggerDoc("v1", new Info { Title = "Contoso Cognitive Pipeline API", Version = "v1" });
+            //    var filePath = Path.Combine(System.AppContext.BaseDirectory, $"{Assembly.GetEntryAssembly().GetName().Name}.xml");
+            //    c.IncludeXmlComments(filePath);
+            //});
+            foreach(var api in apis)
             {
-                c.SwaggerDoc("v1", new Info { Title = "Contoso Cognitive Pipeline API", Version = "v1" });
-                var filePath = Path.Combine(System.AppContext.BaseDirectory, $"{Assembly.GetEntryAssembly().GetName().Name}.xml");
-                c.IncludeXmlComments(filePath);
-            });
+                services.AddSwaggerGen(this.SwaggerGen(api, $"api/{api.ToLower()}"));
+            }
+            //services.AddSwaggerGen(this.SwaggerGen("EmpIdAuth", "api/idauth"));
+            //services.AddSwaggerGen(this.SwaggerGen("FaceAuth", "api/faceauth"));
+            //services.AddSwaggerGen(this.SwaggerGen("Shelves", "api/shelves"));
+            //services.AddSwaggerGen(this.SwaggerGen("Classification", "api/classification"));
 
             //Register application services
             services.AddSingleton<IStorageRepository, AzureBlobStorageRepository>();
@@ -51,6 +68,24 @@ namespace Contoso.SB.API
 
             //Generate mock data service
             services.AddTransient<IMockDataSeeder, MockDataSeeder>();
+        }
+
+        private Action<SwaggerGenOptions> SwaggerGen(string name, string filter)
+        {
+            return c =>
+            {
+                c.SwaggerDoc(name, new Info { Title = $"Contoso Smart Shop API - {name}", Version = "1.0" });
+
+                // The swagger filter takes the filter and removes any path that doesn't contain 
+                // the value of the filter in its route. Allowing for us to seperate out the generated
+                // swagger documents
+                c.DocumentFilter<SwaggerFilter>(name, filter);
+
+                // Set the comments path for the Swagger JSON and UI.
+                var xmlFile = $"{Assembly.GetEntryAssembly().GetName().Name}.xml";
+                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+                c.IncludeXmlComments(xmlPath);
+            };
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -78,9 +113,22 @@ namespace Contoso.SB.API
 
             //Configuring Swagger API documentation and its UI
             app.UseSwagger();
+            //app.UseSwaggerUI(c =>
+            //{
+            //    c.SwaggerEndpoint("/swagger/v1/swagger.json", "Contoso Cognitive Pipeline V1");
+            //});
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Contoso Cognitive Pipeline V1");
+                foreach(var api in apis)
+                {
+                    c.SwaggerEndpoint($"/swagger/{api}/swagger.json", api);
+                }
+                //c.SwaggerEndpoint("/swagger/EmpIdAuth/swagger.json", "EmpIdAuth");
+                //c.SwaggerEndpoint("/swagger/FaceAuth/swagger.json", "Parts");
+                //c.SwaggerEndpoint("/swagger/Shelves/swagger.json", "Dummy");
+                //c.SwaggerEndpoint("/swagger/Classification/swagger.json", "Photo");
+                //c.SwaggerEndpoint("/swagger/Search/swagger.json", "Search");
+                c.RoutePrefix = string.Empty; // Makes Swagger UI the root page
             });
         }
     }

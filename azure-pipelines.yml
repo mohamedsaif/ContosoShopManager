@@ -6,6 +6,7 @@ trigger:
       - master
       - azure-pipelines
       - function-prod-health
+      - Client-SDK
   paths:
     include:
       - 'Src/FaceExplorer-App'
