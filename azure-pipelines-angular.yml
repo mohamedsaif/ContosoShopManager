@@ -33,6 +33,13 @@ jobs:
     inputs:
       workingDir: 'Src/FaceExplorer-App/dist'
       verbose: false
+  
+  - task: CopyFiles@2
+    displayName: 'Copy .config to: Src/FaceExplorer-App/dist'
+    inputs:
+      SourceFolder: 'Src/FaceExplorer-App/src'
+      Contents: '*.config'
+      TargetFolder: 'Src/FaceExplorer-App/dist'
 
   - task: ArchiveFiles@2
     displayName: 'Archive Src/FaceExplorer-App/dist'
