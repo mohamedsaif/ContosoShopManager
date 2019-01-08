@@ -8,7 +8,7 @@ import 'rxjs/add/observable/of';
 @Injectable()
 export class FaceApiService {
 
-  private baseUrl = '<specify Face API base URL here>';
+  private baseUrl = '#{faceAPIBaseUrl}#';
 
   constructor(private http: HttpClient) { }
 
@@ -38,21 +38,21 @@ export class FaceApiService {
   // ***** Persons Operations *****
 
   getPersonsByGroup(personGroupId) {
-    return this.http.get<any[]>(`${this.baseUrl}/persongroups/${personGroupId}/persons`, httpOptions);    
+    return this.http.get<any[]>(`${this.baseUrl}/persongroups/${personGroupId}/persons`, httpOptions);
   }
 
   getPerson(personGroupId, personId) {
-    return this.http.get<any[]>(`${this.baseUrl}/persongroups/${personGroupId}/persons/${personId}`, httpOptions);    
+    return this.http.get<any[]>(`${this.baseUrl}/persongroups/${personGroupId}/persons/${personId}`, httpOptions);
   }
 
   // ***** Person Operations *****
 
   createPerson(personGroupId, person) {
-    return this.http.post<any>(`${this.baseUrl}/persongroups/${personGroupId}/persons`, person, httpOptions);    
+    return this.http.post<any>(`${this.baseUrl}/persongroups/${personGroupId}/persons`, person, httpOptions);
   }
 
   deletePerson(personGroupId, personId) {
-    return this.http.delete<any[]>(`${this.baseUrl}/persongroups/${personGroupId}/persons/${personId}`, httpOptions);    
+    return this.http.delete<any[]>(`${this.baseUrl}/persongroups/${personGroupId}/persons/${personId}`, httpOptions);
   }
 
   // ***** Person Face Operations *****/
@@ -127,6 +127,6 @@ export class FaceApiService {
 const httpOptions = {
   headers: new HttpHeaders({
     'Content-Type': 'application/json',
-    'Ocp-Apim-Subscription-Key': '<specify Face API key here>'
+    'Ocp-Apim-Subscription-Key': '#{faceAPIKey}#'
   })
 };

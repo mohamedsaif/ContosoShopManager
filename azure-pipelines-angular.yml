@@ -9,6 +9,12 @@ jobs:
     vmImage: 'ubuntu-16.04'
     demands: npm
   steps:
+  - task: qetza.replacetokens.replacetokens-task.replacetokens@3
+    displayName: 'Replace tokens in **/*.ts'
+    inputs:
+      rootDirectory: 'Src/FaceExplorer-App/src/app'
+      targetFiles: '**/*.ts'
+      
   - script: sudo npm install -g @angular/cli
     displayName: Install Angular-CLI via NPM
 
