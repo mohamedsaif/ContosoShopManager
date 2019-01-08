@@ -10,10 +10,10 @@ jobs:
     demands: npm
   steps:
   - task: qetza.replacetokens.replacetokens-task.replacetokens@3
-    displayName: 'Replace tokens in **/*.ts'
+    displayName: 'Replace tokens in *.ts *.html'
     inputs:
       rootDirectory: 'Src/FaceExplorer-App/src/app'
-      targetFiles: '**/*.ts'
+      targetFiles: '**/*.ts,**/*.html'
       
   - script: sudo npm install -g @angular/cli
     displayName: Install Angular-CLI via NPM
@@ -34,8 +34,14 @@ jobs:
       workingDir: 'Src/FaceExplorer-App/dist'
       verbose: false
 
+  - task: ArchiveFiles@2
+    displayName: 'Archive Src/FaceExplorer-App/dist'
+    inputs:
+      rootFolderOrFile: 'Src/FaceExplorer-App/dist'
+      archiveFile: 'Src/FaceExplorer-App/dist/zip/$(Build.BuildId).zip'
+
   - task: PublishBuildArtifacts@1
     displayName: 'Publish Artifact: FaceExplorer-App-Dist'
     inputs:
-      PathtoPublish: 'Src/FaceExplorer-App/dist'
+      PathtoPublish: 'Src/FaceExplorer-App/dist/zip'
       ArtifactName: 'FaceExplorer-App-Dist'
