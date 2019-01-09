@@ -48,10 +48,11 @@ namespace Contoso.CognitivePipeline.API.Controllers
         /// <param name="isAsync">Flag to indicate if operations need to execute immediately or will be queued</param>
         /// <param name="doc">The binary of the document being processed</param>
         /// <param name="isMinimum">Flag to optimize the output by removing additions details from the results.</param>
-        [HttpPost("{ownerId}/{isAsync}/{isMinimum?}")]
+        [HttpPost("{ownerId}")]
         [ProducesResponseType(200, Type = typeof(FaceAuthCard))]
         [ProducesResponseType(400)]
-        public async Task<IActionResult> SubmitDoc(string ownerId, bool isAsync, IFormFile doc, bool isMinimum = true)
+        [Consumes("multipart/form-data")]
+        public async Task<IActionResult> SubmitDoc(string ownerId, [FromForm] IFormFile doc, [FromHeader] bool isAsync = false, [FromHeader] bool isMinimum = true)
         {
             NewRequest<SmartDoc> newReq = null;
             string result = null;

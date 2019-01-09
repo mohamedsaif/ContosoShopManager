@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace Contoso.CognitivePipeline.SharedModels.Models
 {
+    /// <summary>
+    /// User account information. Can be customer or employee
+    /// </summary>
     public class User : UserAccount
     {
         [JsonProperty("companyName")]

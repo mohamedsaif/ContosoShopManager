@@ -42,7 +42,7 @@
             </summary>
             <returns>The status message</returns>
         </member>
-        <member name="M:Contoso.CognitivePipeline.API.Controllers.IDAuthController.SubmitDoc(System.String,System.Boolean,Microsoft.AspNetCore.Http.IFormFile,System.Boolean)">
+        <member name="M:Contoso.CognitivePipeline.API.Controllers.IDAuthController.SubmitDoc(System.String,Microsoft.AspNetCore.Http.IFormFile,System.Boolean,System.Boolean)">
             <summary>
             Submit a new Document file to be processed by the Cognitive Pipeline
             </summary>
@@ -58,7 +58,7 @@
             </summary>
             <returns>The status message</returns>
         </member>
-        <member name="M:Contoso.CognitivePipeline.API.Controllers.ShelvesComplianceController.SubmitDoc(System.String,System.Boolean,Microsoft.AspNetCore.Http.IFormFile,System.Boolean)">
+        <member name="M:Contoso.CognitivePipeline.API.Controllers.ShelvesComplianceController.SubmitDoc(System.String,Microsoft.AspNetCore.Http.IFormFile,System.Boolean,System.Boolean)">
             <summary>
             Submit a new Document file to be processed by the Cognitive Pipeline
             </summary>
@@ -67,6 +67,26 @@
             <param name="isAsync">Flag to indicate if operations need to execute immediately or will be queued</param>
             <param name="doc">The binary of the document being processed</param>
             <param name="isMinimum">Flag to optimize the output by removing additions details from the results.</param>
+        </member>
+        <member name="T:Contoso.CognitivePipeline.SharedModels.Models.FaceAuthCard">
+            <summary>
+            Face authentication result
+            </summary>
+        </member>
+        <member name="T:Contoso.CognitivePipeline.SharedModels.Models.EmployeeId">
+            <summary>
+            Employee Id authentication results
+            </summary>
+        </member>
+        <member name="T:Contoso.CognitivePipeline.SharedModels.Models.SmartDoc">
+            <summary>
+            Primary document submitted for cognitive processing
+            </summary>
+        </member>
+        <member name="T:Contoso.CognitivePipeline.SharedModels.Models.User">
+            <summary>
+            User account information. Can be customer or employee
+            </summary>
         </member>
     </members>
 </doc>

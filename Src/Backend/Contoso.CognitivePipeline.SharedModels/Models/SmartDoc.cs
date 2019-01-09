@@ -9,6 +9,9 @@ using System.Threading.Tasks;
 
 namespace Contoso.CognitivePipeline.SharedModels.Models
 {
+    /// <summary>
+    /// Primary document submitted for cognitive processing
+    /// </summary>
     public class SmartDoc : BaseModel
     {
         public string OwnerId { get; set; }

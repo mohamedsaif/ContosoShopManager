@@ -53,6 +53,8 @@ namespace Contoso.SB.API
             foreach(var api in apis)
             {
                 services.AddSwaggerGen(this.SwaggerGen(api, $"api/{api.ToLower()}"));
+                //Control the auto generated parameters schema for API Management compatibility
+                services.AddSwaggerGen(c => c.SchemaFilter<CustomSchemaFilter>());
             }
             //services.AddSwaggerGen(this.SwaggerGen("EmpIdAuth", "api/idauth"));
             //services.AddSwaggerGen(this.SwaggerGen("FaceAuth", "api/faceauth"));
@@ -112,22 +114,25 @@ namespace Contoso.SB.API
             app.UseMvc();
 
             //Configuring Swagger API documentation and its UI
-            app.UseSwagger();
+            app.UseSwagger(c=>
+            {
+                c.PreSerializeFilters.Add((swaggerDoc, httpReq) => swaggerDoc.Host = httpReq.Host.Value);
+            });
+
+            //Single Swagger page for all controllers
             //app.UseSwaggerUI(c =>
             //{
             //    c.SwaggerEndpoint("/swagger/v1/swagger.json", "Contoso Cognitive Pipeline V1");
             //});
+
+            //Separate swagger page/json for each controller
             app.UseSwaggerUI(c =>
             {
                 foreach(var api in apis)
                 {
                     c.SwaggerEndpoint($"/swagger/{api}/swagger.json", api);
                 }
-                //c.SwaggerEndpoint("/swagger/EmpIdAuth/swagger.json", "EmpIdAuth");
-                //c.SwaggerEndpoint("/swagger/FaceAuth/swagger.json", "Parts");
-                //c.SwaggerEndpoint("/swagger/Shelves/swagger.json", "Dummy");
-                //c.SwaggerEndpoint("/swagger/Classification/swagger.json", "Photo");
-                //c.SwaggerEndpoint("/swagger/Search/swagger.json", "Search");
+                
                 c.RoutePrefix = string.Empty; // Makes Swagger UI the root page
             });
         }

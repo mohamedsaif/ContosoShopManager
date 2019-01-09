@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace Contoso.CognitivePipeline.SharedModels.Models
 {
+    /// <summary>
+    /// Face authentication result
+    /// </summary>
     public class FaceAuthCard : SmartDoc
     {
         public bool IsAuthenticationSuccessful { get; set; }

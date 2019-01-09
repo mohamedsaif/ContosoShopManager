@@ -44,6 +44,7 @@ namespace Contoso.SB.API.Controllers
         /// <param name="isAsync">Flag to indicate if operations need to execute immediately or will be queued</param>
         /// <param name="doc">The binary of the document being processed</param>
         [HttpPost("{ownerId}/{docType}/{isAsync}")]
+        [Consumes("multipart/form-data")]
         public async Task<IActionResult> SubmitDoc(string ownerId, string docType, bool isAsync, IFormFile doc)
         {
             // TODO: Introduce another parameter to identify the needed classification services (like classification, OCR,...)
