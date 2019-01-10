@@ -42,4 +42,4 @@ jobs:
 
 - template: azure-pipelines-nuget.yml
   parameters:
-    Name: FaceExplorerApp
+    Name: 'Contoso.CognitivePipeline.ClientSDK'
