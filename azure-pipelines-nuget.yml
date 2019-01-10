@@ -21,6 +21,14 @@ jobs:
       projects: ${{ Parameters.RestoreBuildProjects }}
 
   - task: DotNetCoreCLI@2
+    displayName: Build
+    inputs:
+      command: build
+      projects: ${{ Parameters.RestoreBuildProjects }}
+      arguments: '--configuration ${{ Parameters.BuildConfiguration }}'
+      workingDirectory: ${{ Parameters.WorkingDirectory }}
+
+  - task: DotNetCoreCLI@2
     displayName: Pack
     inputs:
       command: pack
