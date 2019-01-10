@@ -43,3 +43,4 @@ jobs:
 - template: azure-pipelines-nuget.yml
   parameters:
     Name: 'ClientSDK'
+    WorkingDirectory: 'Src/Backend/CognitivePipeline.ClientSDK'

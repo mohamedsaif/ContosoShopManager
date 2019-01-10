@@ -2,6 +2,7 @@
 parameters:
   Name: 'ContosoCognitivePipelineClientSDK'
   RestoreBuildProjects: '**/*.ClientSDK.csproj'
+  WorkingDirectory: 'PASSEDTOTHETEMPLATE'
   BuildConfiguration: 'Release'
   Major: '1'
   Minor: '0'
@@ -11,7 +12,22 @@ jobs:
   pool:
     vmImage: 'vs2017-win2016'
     demands: npm
+
   steps:
+  - task: DotNetCoreCLI@2
+  displayName: Restore
+  inputs:
+    command: restore
+    projects: ${{ Parameters.RestoreBuildProjects }}
+
+  - task: DotNetCoreCLI@2
+    displayName: Pack
+    inputs:
+      command: pack
+      projects: ${{ Parameters.RestoreBuildProjects }}
+      arguments: '--configuration ${{ Parameters.BuildConfiguration }}'
+      workingDirectory: ${{ Parameters.WorkingDirectory }}
+
   - task: NuGetCommand@2
     inputs:
       command: pack
@@ -20,6 +36,11 @@ jobs:
       majorVersion: '${{ Parameters.Major }}'
       minorVersion: '${{ Parameters.Minor }}'
       patchVersion: '$(Build.BuildId)'
+
+  - task: NuGetCommand@2
+    displayName: 'NuGet push'
+    inputs:
+      command: push
       publishVstsFeed: '$(azureArtifactFeedId)'
       allowPackageConflicts: true
 
