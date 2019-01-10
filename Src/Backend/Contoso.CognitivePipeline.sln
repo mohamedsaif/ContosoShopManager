@@ -11,6 +11,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Contoso.CognitivePipeline.B
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Contoso.CognitivePipeline.ClientSDK", "CognitivePipeline.ClientSDK\Contoso.CognitivePipeline.ClientSDK.csproj", "{E223094F-C527-467B-91CC-392E708805EE}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{B001ECF1-800B-4C18-B6E9-A3EF165F9FEF}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		Contoso.CognitivePipeline.SharedModels\Contoso.CognitivePipeline.SharedModels.projitems*{079448f8-a04e-418e-88ba-cc2d5c1fe21a}*SharedItemsImports = 13
