@@ -50,16 +50,18 @@ namespace Contoso.SB.API
             //    var filePath = Path.Combine(System.AppContext.BaseDirectory, $"{Assembly.GetEntryAssembly().GetName().Name}.xml");
             //    c.IncludeXmlComments(filePath);
             //});
+
+            //Create a separate schema for each controller
             foreach(var api in apis)
             {
                 services.AddSwaggerGen(this.SwaggerGen(api, $"api/{api.ToLower()}"));
-                //Control the auto generated parameters schema for API Management compatibility
-                services.AddSwaggerGen(c => c.SchemaFilter<CustomSchemaFilter>());
             }
-            //services.AddSwaggerGen(this.SwaggerGen("EmpIdAuth", "api/idauth"));
-            //services.AddSwaggerGen(this.SwaggerGen("FaceAuth", "api/faceauth"));
-            //services.AddSwaggerGen(this.SwaggerGen("Shelves", "api/shelves"));
-            //services.AddSwaggerGen(this.SwaggerGen("Classification", "api/classification"));
+
+            //Control the auto generated parameters schema for API Management compatibility
+            services.AddSwaggerGen(c => c.SchemaFilter<CustomSchemaFilter>());
+
+            //IFormFile Operation Filter
+            services.AddSwaggerGen(c => c.OperationFilter<FormFileOperationFilter>());
 
             //Register application services
             services.AddSingleton<IStorageRepository, AzureBlobStorageRepository>();
