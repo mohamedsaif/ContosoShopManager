@@ -36,19 +36,20 @@ jobs:
       arguments: '--configuration ${{ Parameters.BuildConfiguration }}'
       workingDirectory: ${{ Parameters.WorkingDirectory }}
 
-  - task: NuGetCommand@2
-    inputs:
-      command: pack
-      packagesToPack:  ${{ Parameters.RestoreBuildProjects }}
-      configuration: ${{ Parameters.BuildConfiguration }}
-      majorVersion: '${{ Parameters.Major }}'
-      minorVersion: '${{ Parameters.Minor }}'
-      patchVersion: '$(Build.BuildId)'
+#  - task: NuGetCommand@2
+#    inputs:
+#      command: pack
+#      packagesToPack:  ${{ Parameters.RestoreBuildProjects }}
+#      configuration: ${{ Parameters.BuildConfiguration }}
+#      majorVersion: '${{ Parameters.Major }}'
+#      minorVersion: '${{ Parameters.Minor }}'
+#      patchVersion: '$(Build.BuildId)'
 
   - task: NuGetCommand@2
     displayName: 'NuGet push'
     inputs:
       command: push
+      packagesToPush: '**/Contoso.CognitivePipeline.ClientSDK.1.0.0.nupkg.nupkg;**/Contoso.CognitivePipeline.ClientSDK.1.0.0.symbols.nupkg'
       publishVstsFeed: '$(azureArtifactFeedId)'
       allowPackageConflicts: true
 
