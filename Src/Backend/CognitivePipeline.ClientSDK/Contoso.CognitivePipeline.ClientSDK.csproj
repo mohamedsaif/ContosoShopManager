@@ -2,6 +2,12 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <Company>Contoso</Company>
+    <Authors>Mohamed Saif</Authors>
+    <Description>Provide strongly typed access to Contoso.CognitivePipeline.APIs after publishing it to Azure API Management Service. Visit https://aka.ms/ie-cw for more details.</Description>
+    <Copyright>https://aka.ms/ie-cw</Copyright>
+    <PackageLicenseUrl>https://aka.ms/ie-cw</PackageLicenseUrl>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
 
   <ItemGroup>

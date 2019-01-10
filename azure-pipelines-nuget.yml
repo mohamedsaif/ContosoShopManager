@@ -1,0 +1,30 @@
+
+parameters:
+  Name: 'Contoso.CognitivePipeline.ClientSDK'
+  RestoreBuildProjects: '**/*.ClientSDK.csproj'
+  BuildConfiguration: 'Release'
+  Major: '1'
+  Minor: '0'
+
+  jobs:
+- job: ${{ Parameters.Name }}
+  pool:
+    vmImage: 'ubuntu-16.04'
+    demands: npm
+  steps:
+  - task: NuGetCommand@2
+    inputs:
+      command: pack
+      packagesToPack:  ${{ Parameters.RestoreBuildProjects }}
+      configuration: ${{ Parameters.BuildConfiguration }}
+      majorVersion: '${{ Parameters.Major }}'
+      minorVersion: '${{ Parameters.Minor }}'
+      patchVersion: '$(Build.BuildId)'
+      publishVstsFeed: '$(azureArtifactFeedId)'
+      allowPackageConflicts: true
+
+  - task: PublishBuildArtifacts@1
+    displayName: 'Publish NuGet Artifact: ${{ Parameters.Name }}'
+    inputs:
+      PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+      ArtifactName: 'Contoso.CognitivePipeline.ClientSDK'

@@ -39,3 +39,7 @@ jobs:
 - template: azure-pipelines-angular.yml
   parameters:
     Name: FaceExplorerApp
+
+- template: azure-pipelines-nuget.yml
+  parameters:
+    Name: FaceExplorerApp

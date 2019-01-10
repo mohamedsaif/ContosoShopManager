@@ -4,7 +4,7 @@ parameters:
   Name: 'AngularApp'
 
 jobs:
-- job: ${{ parameters.Name }}
+- job: ${{ Parameters.Name }}
   pool:
     vmImage: 'ubuntu-16.04'
     demands: npm
