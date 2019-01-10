@@ -42,4 +42,4 @@ jobs:
 
 - template: azure-pipelines-nuget.yml
   parameters:
-    Name: 'Contoso.CognitivePipeline.ClientSDK'
+    Name: 'ClientSDK'

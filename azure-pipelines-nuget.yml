@@ -1,6 +1,6 @@
 
 parameters:
-  Name: 'Contoso.CognitivePipeline.ClientSDK'
+  Name: 'ContosoCognitivePipelineClientSDK'
   RestoreBuildProjects: '**/*.ClientSDK.csproj'
   BuildConfiguration: 'Release'
   Major: '1'
