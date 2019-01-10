@@ -6,7 +6,7 @@ parameters:
   Major: '1'
   Minor: '0'
 
-  jobs:
+jobs:
 - job: ${{ Parameters.Name }}
   pool:
     vmImage: 'ubuntu-16.04'
