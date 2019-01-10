@@ -15,10 +15,10 @@ jobs:
 
   steps:
   - task: DotNetCoreCLI@2
-  displayName: Restore
-  inputs:
-    command: restore
-    projects: ${{ Parameters.RestoreBuildProjects }}
+    displayName: Restore
+    inputs:
+      command: restore
+      projects: ${{ Parameters.RestoreBuildProjects }}
 
   - task: DotNetCoreCLI@2
     displayName: Pack
