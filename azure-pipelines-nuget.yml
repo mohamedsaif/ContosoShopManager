@@ -9,7 +9,7 @@ parameters:
 jobs:
 - job: ${{ Parameters.Name }}
   pool:
-    vmImage: 'ubuntu-16.04'
+    vmImage: 'vs2017-win2016'
     demands: npm
   steps:
   - task: NuGetCommand@2
