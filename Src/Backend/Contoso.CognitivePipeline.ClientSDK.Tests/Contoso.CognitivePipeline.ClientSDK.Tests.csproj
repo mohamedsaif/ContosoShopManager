@@ -1,0 +1,33 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="TestFiles\invalid1.jpg" />
+    <None Remove="TestFiles\invalid_id.png" />
+    <None Remove="TestFiles\valid1.jpg" />
+    <None Remove="TestFiles\valid_id.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="TestFiles\invalid1.jpg" />
+    <EmbeddedResource Include="TestFiles\valid_id.png" />
+    <EmbeddedResource Include="TestFiles\invalid_id.png" />
+    <EmbeddedResource Include="TestFiles\valid1.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="nunit" Version="3.10.1" />
+    <PackageReference Include="NUnit3TestAdapter" Version="3.10.0" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.8.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CognitivePipeline.ClientSDK\Contoso.CognitivePipeline.ClientSDK.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -20,7 +20,7 @@ namespace Contoso.CognitivePipeline.ClientSDK.Abstractions
         /// <param name="isMinimum">Flag to optimize the output by removing additions details from the results.</param>
         /// <returns>returns ShelfCompliance</returns>
         [Multipart]
-        [Post("shelves/api/shelvescompliance")]
-        Task<ShelfCompliance> AuthenticateFace(string ownerId, [AliasAs("doc")] StreamPart doc, [Header("Ocp-Apim-Subscription-Key")] string apiManagementKey, [Header("isAsync")] bool isAsync = false, [Header("isMinimum")] bool isMinimum = true);
+        [Post("/shelves/api/shelvescompliance")]
+        Task<ShelfCompliance> SubmitDoc(string ownerId, [AliasAs("doc")] StreamPart doc, [Header("Ocp-Apim-Subscription-Key")] string apiManagementKey, [Header("isAsync")] bool isAsync = false, [Header("isMinimum")] bool isMinimum = true);
     }
 }

@@ -20,7 +20,7 @@ namespace Contoso.CognitivePipeline.ClientSDK.Abstractions
         /// <param name="isMinimum">Flag to optimize the output by removing additions details from the results.</param>
         /// <returns>returns EmployeeId</returns>
         [Multipart]
-        [Post("id/api/idauth/{ownerId}")]
-        Task<EmployeeId> AuthenticateFace(string ownerId, [AliasAs("doc")] StreamPart doc, [Header("Ocp-Apim-Subscription-Key")] string apiManagementKey, [Header("isAsync")] bool isAsync = false, [Header("isMinimum")] bool isMinimum = true);
+        [Post("/id/api/idauth/{ownerId}")]
+        Task<EmployeeId> SubmitDoc(string ownerId, [AliasAs("doc")] StreamPart doc, [Header("Ocp-Apim-Subscription-Key")] string apiManagementKey, [Header("isAsync")] bool isAsync = false, [Header("isMinimum")] bool isMinimum = true);
     }
 }

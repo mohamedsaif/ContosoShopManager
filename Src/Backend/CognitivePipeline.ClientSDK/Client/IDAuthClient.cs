@@ -36,9 +36,16 @@ namespace Contoso.CognitivePipeline.ClientSDK.Client
         public async Task<EmployeeId> IDAuth(string ownerId, byte[] doc, bool isAsync = false, bool isMinimum = true)
         {
             IIDAuthAPI api = RestService.For<IIDAuthAPI>(apiBaseUrl);
-            var docStream = new StreamPart(new MemoryStream(doc), "doc");
-            var result = await api.AuthenticateFace(ownerId, docStream, apiKey, isAsync, isMinimum);
-            return result;
+            var docStream = new StreamPart(new MemoryStream(doc), "doc.file");
+            try
+            {
+                var result = await api.SubmitDoc(ownerId, docStream, apiKey, isAsync, isMinimum);
+                return result;
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
         }
     }
 }

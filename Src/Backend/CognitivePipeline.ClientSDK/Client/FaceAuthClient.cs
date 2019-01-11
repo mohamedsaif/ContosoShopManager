@@ -38,8 +38,15 @@ namespace Contoso.CognitivePipeline.ClientSDK.Client
         {
             IFaceAuthAPI api = RestService.For<IFaceAuthAPI>(apiBaseUrl);
             var docStream = new StreamPart(new MemoryStream(doc), "doc");
-            var result = await api.AuthenticateFace(ownerId, docStream, apiKey, isAsync, isMinimum);
-            return result;
+            try
+            {
+                var result = await api.SubmitDoc(ownerId, docStream, apiKey, isAsync, isMinimum);
+                return result;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
     }
 }
