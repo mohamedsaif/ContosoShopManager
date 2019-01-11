@@ -48,3 +48,7 @@ jobs:
   parameters:
     Name: 'ClientSDK'
     WorkingDirectory: 'Src/Backend/CognitivePipeline.ClientSDK'
+
+#- template: azure-pipelines-tests.yml
+#  parameters:
+#    Name: 'Tests'
