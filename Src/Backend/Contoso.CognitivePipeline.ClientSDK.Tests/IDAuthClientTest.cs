@@ -1,4 +1,5 @@
 using Contoso.CognitivePipeline.ClientSDK.Client;
+using Contoso.CognitivePipeline.ClientSDK.Tests;
 using Contoso.CognitivePipeline.ClientSDK.Tests.Helpers;
 using Contoso.CognitivePipeline.SharedModels.Models;
 using NUnit.Framework;
@@ -10,13 +11,11 @@ namespace Tests
     public class IDAuthClientTest
     {
         private IDAuthClient clientInstance;
-        private string baseUrl = "https://contoso-shop-api.azure-api.net";
-        private string key = "afd8a5e59fd64e1eafddfbbcf7b77f55";
-
+        
         [SetUp]
         public void Setup()
         {
-            clientInstance = new IDAuthClient(key, baseUrl);
+            clientInstance = new IDAuthClient(Constants.APIManagementKey, Constants.APIManagementBaseUrl);
         }
 
         [TearDown]
@@ -35,7 +34,7 @@ namespace Tests
         [Test]
         public async Task SubmitValidTest()
         {
-            string ownerId = "4f93adac-13c6-4fe6-b625-afe7b7431fa1";
+            string ownerId = Constants.OwnerId;
             string expectedValue = "Mohamed Saif";
             string testFileName = "valid_id.png";
             byte[] doc = TestFilesHelper.GetTestFile(testFileName);
@@ -44,6 +43,21 @@ namespace Tests
             var response = await clientInstance.IDAuth(ownerId, doc, isAsync, isMinimum);
             Assert.IsInstanceOf<EmployeeId> (response, "response type is valid");
             Assert.IsTrue(response.IsAuthenticationSuccessful, "Authentication successful");
+            Assert.AreEqual(response.EmployeeName, expectedValue, $"expected result ({expectedValue}) matched");
+        }
+
+        [Test]
+        public async Task SubmitInValidTest()
+        {
+            string ownerId = Constants.OwnerId;
+            string expectedValue = "Petra Korica";
+            string testFileName = "invalid_id.png";
+            byte[] doc = TestFilesHelper.GetTestFile(testFileName);
+            bool isAsync = false;
+            bool isMinimum = true;
+            var response = await clientInstance.IDAuth(ownerId, doc, isAsync, isMinimum);
+            Assert.IsInstanceOf<EmployeeId>(response, "response type is valid");
+            Assert.IsFalse(response.IsAuthenticationSuccessful, "Authentication successful");
             Assert.AreEqual(response.EmployeeName, expectedValue, $"expected result ({expectedValue}) matched");
         }
     }
