@@ -20,6 +20,7 @@ jobs:
     inputs:
       rootDirectory: '${{ Parameters.WorkingDirectory }}'
       targetFiles: '**/*Constants.cs'
+
   - task: DotNetCoreCLI@2
     displayName: Restore
     inputs:
@@ -29,6 +30,7 @@ jobs:
   - task: DotNetCoreCLI@2
     displayName: test
     inputs:
+      command: test
       projects: ${{ Parameters.RestoreBuildProjects }}
       arguments: '--configuration ${{ Parameters.BuildConfiguration }}'
 
