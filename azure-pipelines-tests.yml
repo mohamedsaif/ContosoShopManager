@@ -4,7 +4,7 @@ parameters:
   Name: 'ClientSDKTests'
   RestoreBuildProjects: '**/*.Tests.csproj'
   BuildConfiguration: 'Release'
-  WorkingDirectory: 'Src\Backend\Contoso.CognitivePipeline.ClientSDK.Tests'
+  WorkingDirectory: 'Src/Backend/Contoso.CognitivePipeline.ClientSDK.Tests'
   PublishWebApp: False
   ArtifactName: 'ClientSDK-Tests'
   ZipAfterPublish: False
