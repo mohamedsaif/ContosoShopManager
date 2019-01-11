@@ -35,16 +35,25 @@ jobs:
  #     projects: ${{ Parameters.RestoreBuildProjects }}
  #     arguments: '--configuration ${{ Parameters.BuildConfiguration }}'
  #     workingDirectory: ${{ Parameters.WorkingDirectory }}
-
-  - task: NuGetCommand@2
-    displayName: NuGet Pack
+  - task: DotNetCoreCLI@2
+    displayName: 'DotNet Pack'
     inputs:
       command: pack
-      packagesToPack:  ${{ Parameters.RestoreBuildProjects }}
-      configuration: ${{ Parameters.BuildConfiguration }}
-      majorVersion: '${{ Parameters.Major }}'
-      minorVersion: '${{ Parameters.Minor }}'
-      patchVersion: '$(Build.BuildId)'
+      packagesToPack: '${{ Parameters.RestoreBuildProjects }}'
+      configuration: '$(BuildConfiguration)'
+      packDirectory: '$(Build.ArtifactStagingDirectory)'
+      nobuild: true
+      versioningScheme: byBuildNumber
+
+#  - task: NuGetCommand@2
+#    displayName: NuGet Pack
+#    inputs:
+#      command: pack
+#      packagesToPack:  ${{ Parameters.RestoreBuildProjects }}
+#      configuration: ${{ Parameters.BuildConfiguration }}
+#      majorVersion: '${{ Parameters.Major }}'
+#      minorVersion: '${{ Parameters.Minor }}'
+#      patchVersion: '$(Build.BuildId)'
 
 #  - task: NuGetCommand@2
 #    displayName: 'NuGet push'
