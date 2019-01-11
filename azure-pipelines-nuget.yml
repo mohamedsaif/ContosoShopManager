@@ -55,7 +55,7 @@ jobs:
 ##dotnet build -c $(buildConfiguration)
 #dotnet test ClientSDK.UnitTests -c $(buildConfiguration)
   - script: |
-      dotnet pack ${{ Parameters.RestoreBuildProjects }} -c $(BuildConfiguration) /p:PackageVersion=${{ Parameters.Major }}.${{ Parameters.Minor }}.$(Build.BuildId) --output $(Build.ArtifactStagingDirectory) --no-build --no-restore
+      dotnet pack 'Src/Backend/CognitivePipeline.ClientSDK/Contoso.CognitivePipeline.ClientSDK.csproj' -c $(BuildConfiguration) /p:PackageVersion=${{ Parameters.Major }}.${{ Parameters.Minor }}.$(Build.BuildId) --output $(Build.ArtifactStagingDirectory) --no-build --no-restore
     displayName: 'DotNet Pack'
 
 #  - task: NuGetCommand@2
