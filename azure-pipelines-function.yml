@@ -5,6 +5,7 @@ parameters:
   RestoreBuildProjects: '**/*.API.csproj'
   BuildConfiguration: 'Release'
   WorkingDirectory: 'Src/Backend/Contoso.CognitivePipeline.BackgroundServices'
+
 jobs:
 - job: ${{ Parameters.Name }}
   pool:
