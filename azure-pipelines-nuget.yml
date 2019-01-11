@@ -15,46 +15,47 @@ jobs:
 
   steps:
   - task: DotNetCoreCLI@2
-    displayName: Restore
+    displayName: DotNet Restore
     inputs:
       command: restore
       projects: ${{ Parameters.RestoreBuildProjects }}
 
   - task: DotNetCoreCLI@2
-    displayName: Build
+    displayName: DotNet Build
     inputs:
       command: build
       projects: ${{ Parameters.RestoreBuildProjects }}
       arguments: '--configuration ${{ Parameters.BuildConfiguration }}'
       workingDirectory: ${{ Parameters.WorkingDirectory }}
 
-  - task: DotNetCoreCLI@2
-    displayName: Pack
-    inputs:
-      command: pack
-      projects: ${{ Parameters.RestoreBuildProjects }}
-      arguments: '--configuration ${{ Parameters.BuildConfiguration }}'
-      workingDirectory: ${{ Parameters.WorkingDirectory }}
-
-#  - task: NuGetCommand@2
-#    inputs:
-#      command: pack
-#      packagesToPack:  ${{ Parameters.RestoreBuildProjects }}
-#      configuration: ${{ Parameters.BuildConfiguration }}
-#      majorVersion: '${{ Parameters.Major }}'
-#      minorVersion: '${{ Parameters.Minor }}'
-#      patchVersion: '$(Build.BuildId)'
+ # - task: DotNetCoreCLI@2
+ #   displayName: Pack
+ #   inputs:
+ #     command: pack
+ #     projects: ${{ Parameters.RestoreBuildProjects }}
+ #     arguments: '--configuration ${{ Parameters.BuildConfiguration }}'
+ #     workingDirectory: ${{ Parameters.WorkingDirectory }}
 
   - task: NuGetCommand@2
-    displayName: 'NuGet push'
+    displayName: NuGet Pack
     inputs:
-      command: push
-      packagesToPush: '**/Contoso.CognitivePipeline.ClientSDK.1.0.0.nupkg.nupkg;**/Contoso.CognitivePipeline.ClientSDK.1.0.0.symbols.nupkg'
-      publishVstsFeed: '$(azureArtifactFeedId)'
-      allowPackageConflicts: true
+      command: pack
+      packagesToPack:  ${{ Parameters.RestoreBuildProjects }}
+      configuration: ${{ Parameters.BuildConfiguration }}
+      majorVersion: '${{ Parameters.Major }}'
+      minorVersion: '${{ Parameters.Minor }}'
+      patchVersion: '$(Build.BuildId)'
+
+#  - task: NuGetCommand@2
+#    displayName: 'NuGet push'
+#    inputs:
+#      command: push
+#      packagesToPush: '**/Contoso.CognitivePipeline.ClientSDK.*.nupkg;**/Contoso.CognitivePipeline.ClientSDK.*.symbols.nupkg'
+#      publishVstsFeed: '$(azureArtifactFeedId)'
+#      allowPackageConflicts: true
 
   - task: PublishBuildArtifacts@1
     displayName: 'Publish NuGet Artifact: ${{ Parameters.Name }}'
     inputs:
       PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-      ArtifactName: 'Contoso.CognitivePipeline.ClientSDK'
+      ArtifactName: 'CognitivePipeline-ClientSDK'

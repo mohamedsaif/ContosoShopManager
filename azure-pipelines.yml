@@ -12,6 +12,7 @@ trigger:
       - 'Src/FaceExplorer-App'
       - 'Src/Backend'
       - 'azure-pipelines.yml'
+      - 'azure-pipelines-*.yml'
 
 variables:
   buildConfiguration: 'Release'
