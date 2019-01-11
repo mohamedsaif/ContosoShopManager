@@ -12,7 +12,7 @@ using Newtonsoft.Json;
 
 namespace Contoso.CognitivePipeline.API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/faceauth")]
     public class FaceAuthController : ControllerBase
     {
         public const ClassificationType docType = ClassificationType.Face;
@@ -29,7 +29,12 @@ namespace Contoso.CognitivePipeline.API.Controllers
             newReqService = newAsyncReq;
         }
 
+        /// <summary>
+        /// Check the health of the service
+        /// </summary>
+        /// <returns>The status message</returns>
         [HttpGet]
+        [ProducesResponseType(200)]
         public IActionResult Get()
         {
             return Ok("{\"status\": \"" + this.GetType().Name + " working...\"}");
@@ -40,13 +45,14 @@ namespace Contoso.CognitivePipeline.API.Controllers
         /// </summary>
         /// <returns>The result of document after processing</returns>
         /// <param name="ownerId">Document Owner Id (like EmployeeId or CustomerId)</param>
-        /// <param name="isAsync">Indicate if the processing will be Sync or Async</param>
-        /// <param name="doc">The actual document binary data</param>
-        /// <param name="isMinimum">Flag to optimize the output by removing additiona details from the results.</param>
-        [HttpPost("{ownerId}/{isAsync}/{isMinimum?}")]
+        /// <param name="isAsync">Flag to indicate if operations need to execute immediately or will be queued</param>
+        /// <param name="doc">The binary of the document being processed</param>
+        /// <param name="isMinimum">Flag to optimize the output by removing additions details from the results.</param>
+        [HttpPost("{ownerId}")]
         [ProducesResponseType(200, Type = typeof(FaceAuthCard))]
         [ProducesResponseType(400)]
-        public async Task<IActionResult> SubmitDoc(string ownerId, bool isAsync, IFormFile doc, bool isMinimum = true)
+        [Consumes("multipart/form-data")]
+        public async Task<IActionResult> SubmitDoc(string ownerId, [FromForm] IFormFile doc, [FromHeader] bool isAsync = false, [FromHeader] bool isMinimum = true)
         {
             NewRequest<SmartDoc> newReq = null;
             string result = null;

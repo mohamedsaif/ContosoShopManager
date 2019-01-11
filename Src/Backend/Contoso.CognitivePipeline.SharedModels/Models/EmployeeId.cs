@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace Contoso.CognitivePipeline.SharedModels.Models
 {
+    /// <summary>
+    /// Employee Id authentication results
+    /// </summary>
     public class EmployeeId : SmartDoc
     {
         public bool IsAuthenticationSuccessful { get; set; }

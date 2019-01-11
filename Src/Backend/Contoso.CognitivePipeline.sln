@@ -11,6 +11,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Contoso.CognitivePipeline.B
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Contoso.CognitivePipeline.ClientSDK", "CognitivePipeline.ClientSDK\Contoso.CognitivePipeline.ClientSDK.csproj", "{E223094F-C527-467B-91CC-392E708805EE}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{B001ECF1-800B-4C18-B6E9-A3EF165F9FEF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Contoso.CognitivePipeline.ClientSDK.Tests", "Contoso.CognitivePipeline.ClientSDK.Tests\Contoso.CognitivePipeline.ClientSDK.Tests.csproj", "{1C2269C5-3DF8-4BDE-80CD-420895619EC5}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		Contoso.CognitivePipeline.SharedModels\Contoso.CognitivePipeline.SharedModels.projitems*{079448f8-a04e-418e-88ba-cc2d5c1fe21a}*SharedItemsImports = 13
@@ -32,9 +36,16 @@ Global
 		{E223094F-C527-467B-91CC-392E708805EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E223094F-C527-467B-91CC-392E708805EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E223094F-C527-467B-91CC-392E708805EE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1C2269C5-3DF8-4BDE-80CD-420895619EC5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1C2269C5-3DF8-4BDE-80CD-420895619EC5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1C2269C5-3DF8-4BDE-80CD-420895619EC5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1C2269C5-3DF8-4BDE-80CD-420895619EC5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{1C2269C5-3DF8-4BDE-80CD-420895619EC5} = {B001ECF1-800B-4C18-B6E9-A3EF165F9FEF}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {AD5E8940-C8EB-4C20-AC54-E7F0F685AEB9}

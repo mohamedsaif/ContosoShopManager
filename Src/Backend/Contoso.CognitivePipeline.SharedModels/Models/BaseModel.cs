@@ -10,7 +10,6 @@ namespace Contoso.CognitivePipeline.SharedModels.Models
     public class BaseModel
     {
         [JsonProperty("id")]
-        [System.ComponentModel.DataAnnotations.Key]
         public string Id { get; set; }
 
         [JsonProperty("createdAt")]

@@ -1,13 +1,13 @@
 # Azure Pipelines for .NET Core app (Web, Function, ....) :)
 # More info: https://docs.microsoft.com/en-us/azure/devops/pipelines/?view=vsts
 parameters:
-  Name: 'ASPNetCoreWebApp'
-  RestoreBuildProjects: '**/*.API.csproj'
+  Name: ContosoBackendFunction
+  RestoreBuildProjects: '**/*.BackgroundServices.csproj'
   BuildConfiguration: 'Release'
-  WorkingDirectory: 'Src/Backend/Contoso.CognitivePipeline.API'
-  PublishWebApp: True
-  ArtifactName: 'AppDrop'
-  ZipAfterPublish: True
+  WorkingDirectory: 'Src/Backend/Contoso.CognitivePipeline.BackgroundServices'
+  ArtifactName: 'ContosoBackendFunctions'
+  PublishWebApp: False
+  ZipAfterPublish: False
 
 jobs:
 - job: ${{ Parameters.Name }}

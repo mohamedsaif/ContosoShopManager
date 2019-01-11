@@ -5,8 +5,9 @@ parameters:
   RestoreBuildProjects: '**/*.API.csproj'
   BuildConfiguration: 'Release'
   WorkingDirectory: 'Src/Backend/Contoso.CognitivePipeline.BackgroundServices'
+
 jobs:
-- job: ${{ parameters.name }}
+- job: ${{ Parameters.Name }}
   pool:
     vmImage: 'ubuntu-16.04'
     demands: npm

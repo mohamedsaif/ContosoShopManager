@@ -1,13 +1,13 @@
 # Azure Pipelines for .NET Core app (Web, Function, ....) :)
 # More info: https://docs.microsoft.com/en-us/azure/devops/pipelines/?view=vsts
 parameters:
-  Name: 'ASPNetCoreWebApp'
-  RestoreBuildProjects: '**/*.API.csproj'
+  Name: 'ClientSDKTests'
+  RestoreBuildProjects: '**/*.Tests.csproj'
   BuildConfiguration: 'Release'
-  WorkingDirectory: 'Src/Backend/Contoso.CognitivePipeline.API'
-  PublishWebApp: True
-  ArtifactName: 'AppDrop'
-  ZipAfterPublish: True
+  WorkingDirectory: 'Src/Backend/Contoso.CognitivePipeline.ClientSDK.Tests'
+  PublishWebApp: False
+  ArtifactName: 'ClientSDK-Tests'
+  ZipAfterPublish: False
 
 jobs:
 - job: ${{ Parameters.Name }}
@@ -15,6 +15,12 @@ jobs:
     vmImage: 'ubuntu-16.04'
     demands: npm
   steps:
+  - task: qetza.replacetokens.replacetokens-task.replacetokens@3
+    displayName: 'Replace tokens in *.cs'
+    inputs:
+      rootDirectory: '${{ Parameters.WorkingDirectory }}'
+      targetFiles: '**/*Constants.cs'
+
   - task: DotNetCoreCLI@2
     displayName: Restore
     inputs:
@@ -22,11 +28,11 @@ jobs:
       projects: ${{ Parameters.RestoreBuildProjects }}
 
   - task: DotNetCoreCLI@2
-    displayName: Build
+    displayName: test
     inputs:
+      command: test
       projects: ${{ Parameters.RestoreBuildProjects }}
       arguments: '--configuration ${{ Parameters.BuildConfiguration }}'
-      workingDirectory: ${{ Parameters.WorkingDirectory }}
 
   - task: DotNetCoreCLI@2
     displayName: Publish
