@@ -2,3 +2,4 @@ Src/Backend/Contoso.CognitivePipeline.API/appsettings.Development.json
 Src/Backend/Contoso.CognitivePipeline.API/Mocks/TestInfo.txt
 /.vs
 Src/Backend/Contoso.CognitivePipeline.ClientSDK.Tests/Constants.cs
+Src/Backend/Contoso.CognitivePipeline.ClientSDK.Tests/local.Constants.txt
