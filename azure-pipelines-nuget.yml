@@ -29,44 +29,19 @@ jobs:
       projects: ${{ Parameters.RestoreBuildProjects }}
       arguments: '--configuration ${{ Parameters.BuildConfiguration }}'
       workingDirectory: ${{ Parameters.WorkingDirectory }}
-
- # - task: DotNetCoreCLI@2
- #   displayName: Pack
- #   inputs:
- #     command: pack
- #     projects: ${{ Parameters.RestoreBuildProjects }}
- #     arguments: '--configuration ${{ Parameters.BuildConfiguration }}'
- #     workingDirectory: ${{ Parameters.WorkingDirectory }}
  
- # - task: DotNetCoreCLI@2
- #   displayName: 'DotNet Pack'
- #   inputs:
- #     command: pack
- #     packagesToPack: '${{ Parameters.RestoreBuildProjects }}'
- #     configuration: '$(BuildConfiguration)'
- #     packDirectory: '$(Build.ArtifactStagingDirectory)'
- #     nobuild: true
- #     versioningScheme: byPrereleaseNumber
- #     majorVersion: '${{ Parameters.Major }}'
- #     minorVersion: '${{ Parameters.Minor }}'
- #     patchVersion: '$(Build.BuildId)'
-
-#TODO: add the following to the script
-##dotnet build -c $(buildConfiguration)
-#dotnet test ClientSDK.UnitTests -c $(buildConfiguration)
-  - script: |
-      dotnet pack '$(Build.SourcesDirectory)\Src\Backend\CognitivePipeline.ClientSDK\Contoso.CognitivePipeline.ClientSDK.csproj' -c $(BuildConfiguration) /p:PackageVersion=${{ Parameters.Major }}.${{ Parameters.Minor }}.$(Build.BuildId) --output $(Build.ArtifactStagingDirectory) --no-build --no-restore
+  - task: DotNetCoreCLI@2
     displayName: 'DotNet Pack'
-
-#  - task: NuGetCommand@2
-#    displayName: NuGet Pack
-#    inputs:
-#      command: pack
-#      packagesToPack:  ${{ Parameters.RestoreBuildProjects }}
-#      configuration: ${{ Parameters.BuildConfiguration }}
-#      majorVersion: '${{ Parameters.Major }}'
-#      minorVersion: '${{ Parameters.Minor }}'
-#      patchVersion: '$(Build.BuildId)'
+    inputs:
+      command: pack
+      packagesToPack: '${{ Parameters.RestoreBuildProjects }}'
+      configuration: '$(BuildConfiguration)'
+      packDirectory: '$(Build.ArtifactStagingDirectory)'
+      nobuild: true
+      versioningScheme: byPrereleaseNumber
+      majorVersion: '${{ Parameters.Major }}'
+      minorVersion: '${{ Parameters.Minor }}'
+      patchVersion: '$(Build.BuildId)'
 
 #  - task: NuGetCommand@2
 #    displayName: 'NuGet push'
