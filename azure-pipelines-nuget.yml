@@ -51,9 +51,10 @@ jobs:
  #     minorVersion: '${{ Parameters.Minor }}'
  #     patchVersion: '$(Build.BuildId)'
 
+#TODO: add the following to the script
+##dotnet build -c $(buildConfiguration)
+#dotnet test ClientSDK.UnitTests -c $(buildConfiguration)
   - script: |
-      #dotnet build -c $(buildConfiguration)
-      #dotnet test ClientSDK.UnitTests -c $(buildConfiguration)
       dotnet pack ${{ Parameters.RestoreBuildProjects }} -c $(BuildConfiguration) /p:PackageVersion=${{ Parameters.Major }}.${{ Parameters.Minor }}.$(Build.BuildId) --output $(Build.ArtifactStagingDirectory) --no-build --no-restore
     displayName: 'DotNet Pack'
 
