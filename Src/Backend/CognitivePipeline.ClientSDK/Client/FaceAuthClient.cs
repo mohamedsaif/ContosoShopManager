@@ -37,7 +37,7 @@ namespace Contoso.CognitivePipeline.ClientSDK.Client
         public async Task<FaceAuthCard> FaceAuth(string ownerId, byte[] doc, bool isAsync = false, bool isMinimum = true)
         {
             IFaceAuthAPI api = RestService.For<IFaceAuthAPI>(apiBaseUrl);
-            var docStream = new StreamPart(new MemoryStream(doc), "doc");
+            var docStream = new StreamPart(new MemoryStream(doc), "doc.file");
             try
             {
                 var result = await api.SubmitDoc(ownerId, docStream, apiKey, isAsync, isMinimum);

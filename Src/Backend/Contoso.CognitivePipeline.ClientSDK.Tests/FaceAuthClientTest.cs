@@ -8,10 +8,10 @@ using System.Threading.Tasks;
 namespace Tests
 {
     [TestFixture]
-    public class IDAuthClientTest : BaseClientTest<IDAuthClient, EmployeeId>
+    public class FaceAuthClientTest : BaseClientTest<FaceAuthClient, FaceAuthCard>
     {
         [Test]
-        public async Task SubmitValidCorrectId()
+        public async Task SubmitValidCorrectFace()
         {
             string ownerId = Constants.OwnerId;
             string expectedValue = "Mohamed Saif";
@@ -19,25 +19,25 @@ namespace Tests
             byte[] doc = TestFilesHelper.GetTestFile(testFileName);
             bool isAsync = false;
             bool isMinimum = true;
-            var response = await clientInstance.IDAuth(ownerId, doc, isAsync, isMinimum);
+            var response = await clientInstance.FaceAuth(ownerId, doc, isAsync, isMinimum);
             IsResultTypeValid(response);
             Assert.IsTrue(response.IsAuthenticationSuccessful, "Authentication successful");
-            Assert.AreEqual(response.EmployeeName, expectedValue, $"expected result ({expectedValue}) matched");
+            Assert.AreEqual(response.DetectedFaceName, expectedValue, $"expected result ({expectedValue}) matched");
         }
 
         [Test]
-        public async Task SubmiteValidIncorrectId()
+        public async Task SubmiteValidIncorrectFace()
         {
             string ownerId = Constants.OwnerId;
-            string expectedValue = "Petra Korica";
+            string expectedValue = null;
             string testFileName = "invalid_id.png";
             byte[] doc = TestFilesHelper.GetTestFile(testFileName);
             bool isAsync = false;
             bool isMinimum = true;
-            var response = await clientInstance.IDAuth(ownerId, doc, isAsync, isMinimum);
+            var response = await clientInstance.FaceAuth(ownerId, doc, isAsync, isMinimum);
             IsResultTypeValid(response);
             Assert.IsFalse(response.IsAuthenticationSuccessful, "Authentication unsuccessful");
-            Assert.AreEqual(response.EmployeeName, expectedValue, $"expected result ({expectedValue}) matched");
+            Assert.IsTrue(string.IsNullOrEmpty(response.DetectedFaceName), $"expected result ({expectedValue}) matched");
         }
 
         [Test]
@@ -49,10 +49,10 @@ namespace Tests
             byte[] doc = TestFilesHelper.GetTestFile(testFileName);
             bool isAsync = false;
             bool isMinimum = true;
-            var response = await clientInstance.IDAuth(ownerId, doc, isAsync, isMinimum);
+            var response = await clientInstance.FaceAuth(ownerId, doc, isAsync, isMinimum);
             IsResultTypeValid(response);
-            Assert.IsFalse(response.IsAuthenticationSuccessful, "Authentication successful");
-            Assert.AreEqual(response.EmployeeName, expectedValue, $"expected result ({expectedValue}) matched");
+            Assert.IsFalse(response.IsAuthenticationSuccessful, "Authentication unsuccessful");
+            Assert.IsTrue(string.IsNullOrEmpty(response.DetectedFaceName), $"expected result ({expectedValue}) matched");
         }
     }
 }
