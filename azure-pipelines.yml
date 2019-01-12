@@ -7,10 +7,12 @@ trigger:
       - azure-pipelines
       - function-prod-health
       - Client-SDK
+      - mobile-android
   paths:
     include:
       - 'Src/FaceExplorer-App'
       - 'Src/Backend'
+      - 'Src/Mobile'
       - 'azure-pipelines.yml'
       - 'azure-pipelines-angular.yml'
       - 'azure-pipelines-function.yml'

@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
@@ -27,7 +27,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\CognitivePipeline.ClientSDK\Contoso.CognitivePipeline.ClientSDK.csproj" />
+    <ProjectReference Include="..\..\CognitivePipeline.ClientSDK\Contoso.CognitivePipeline.ClientSDK.csproj" />
   </ItemGroup>
-
 </Project>
