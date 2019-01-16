@@ -6,9 +6,21 @@ Azure Computer Vision for Face offers comprehensive capabilities to deal with ph
 
 You can visit [Face Portal](https://azure.microsoft.com/en-us/services/cognitive-services/face/) to test and evaluate the different capabilities.
 
-## Azure Backend Setup
+# Employee Face Authentication
 
-You need to provision a dedicated Cognitive Service for Face APIs. This can be done easily by heading out to [Azure Portal](https://portal.azure.com) and click **Create New Service** then select Computer Vision - Face:
+Part of Cognitive Services Face APIs is [Face Verify](https://westus.dev.cognitive.microsoft.com/docs/services/563879b61984550e40cbbe8d/operations/563879b61984550f3039523a), which verify whether two faces belong to a same person or whether one face belongs to a person.
+
+Contoso Shop Manage app Biometric Authentication uses **Face Verify** to authenticate a live capture face image against a predefined list of employee faces.
+
+In order to achieve this scenario, some preparation work needs to be done. Face APIs have capabilities to store faces in a secure data store.
+
+In the below section we will provision and configure the required resources.
+
+# Azure Backend Setup
+
+First let's provision a dedicated Cognitive Service for Face APIs.
+
+This can be done easily by heading out to [Azure Portal](https://portal.azure.com) and click **Create New Service** then select **Computer Vision - Face**:
 
 ![face-azure](Assets/face-azure.png)
 
@@ -16,25 +28,39 @@ After successfully provisioning the service, take a note of both the endpoint an
 
 ![face-azure-overview](Assets/face-azure-overview.png)
 
-## Face Authentication
+## Configuring Face APIs Requirements
 
-Part of Cognitive Services Face APIs is [Face Verify](https://westus.dev.cognitive.microsoft.com/docs/services/563879b61984550e40cbbe8d/operations/563879b61984550f3039523a), which verify whether two faces belong to a same person or whether one face belongs to a person.
+In order to authenticate faces, you need to compare them against pre-defined faces.
 
-Contoso Biometric Authentication uses Face Verify to authenticate a live capture face image against a predefined list of employee faces.
+Faces vector data is stored under a [Person Group](https://westus.dev.cognitive.microsoft.com/docs/services/563879b61984550e40cbbe8d/operations/563879b61984550f30395244) or [Large Person Group](https://westus.dev.cognitive.microsoft.com/docs/services/563879b61984550e40cbbe8d/operations/599acdee6ac60f11b48b5a9d).
 
-In order to achieve this scenario, some preparation work needs to be done. Face APIs have capabilities to store faces in a secure data store.
+A person group is the container of the uploaded person data, including face images and face recognition features. You can think of it as container that will hold the faces for the company or department.
 
-Faces data store is hosted under what is called a [Person Group](https://westus.dev.cognitive.microsoft.com/docs/services/563879b61984550e40cbbe8d/operations/563879b61984550f30395244) or [Large Person Group](https://westus.dev.cognitive.microsoft.com/docs/services/563879b61984550e40cbbe8d/operations/599acdee6ac60f11b48b5a9d). A person group is the container of the uploaded person data, including face images and face recognition features. After creation, use [PersonGroup Person - Create](https://westus.dev.cognitive.microsoft.com/docs/services/563879b61984550e40cbbe8d/operations/563879b61984550f3039523c) to add persons into the group, and then call [PersonGroup - Train](https://westus.dev.cognitive.microsoft.com/docs/services/563879b61984550e40cbbe8d/operations/563879b61984550f30395249) to get this group ready for [Face - Identify](https://westus.dev.cognitive.microsoft.com/docs/services/563879b61984550e40cbbe8d/operations/563879b61984550f30395239).
+After creation, use [PersonGroup Person - Create](https://westus.dev.cognitive.microsoft.com/docs/services/563879b61984550e40cbbe8d/operations/563879b61984550f3039523c) to add persons into the group, and then call [PersonGroup - Train](https://westus.dev.cognitive.microsoft.com/docs/services/563879b61984550e40cbbe8d/operations/563879b61984550f30395249) to get this group ready for [Face - Identify](https://westus.dev.cognitive.microsoft.com/docs/services/563879b61984550e40cbbe8d/operations/563879b61984550f30395239).
 
 >***NOTE:*** The different between **Person Group** and **Large Person Group** is size. Large Person Group can hold up to 1,000,000 people while Person Group can handle 10,000 (under S0-tier subscription)
 
-## Face APIs - Postman
+## Face APIs Configurations
 
-To try out the different Face APIs preparation work, this workshop includes a ***Postman*** collection extract that can be imported. Collection is organized in folders that each include the relevant operations for each part of the Face APIs usage process.
+In order to have a working Faces database, you need to roughly do the following:
+
+1. Create New PersonGroup (the company private database of faces)
+2. Create New Person under the PersonGroup (single person under the company)
+3. Create Faces for that new Person (you can associate multiple faces with a single person to improve quality)
+4. Train The Faces API on the new PersonGroup data.
+5. Use both Face Detection and Face Verify to compare detected face in an image against a specific person.
+
+### Configurations via Postman
+
+You can accomplish all the above steps by using the different Face APIs preparation work via **Postman**.
+
+This workshop includes a [Face-API](../../Src/Postman-APIs/Face%20API.postman_collection.json) collection that can be imported.
+
+Collection is organized in folders that each include the relevant operations for each part of the Face APIs usage process.
 
 ![Postman Face APIs](Assets/face-postman.png)
 
-Also you need to import the [Dev](../../Src/Postman-APIs/Dev.postman_environment.json) environment variables that are being used through out the APIs.
+Also you need to import the environment variables [Dev](../../Src/Postman-APIs/Dev.postman_environment.json). It include all variables that are being used through out the APIs (like the base url for your Face API and Key).
 
 >**NOTE:** All APIs Postman collections used through out this workshop can be found under [Src/Postman-APIs](../../Src/Postman-APIs)
 
@@ -47,7 +73,12 @@ Steps to leverage Face Authentication scenario include:
 5. Verify the training status to ensure that Face APIs are using up to date model.
 6. Now you can start verifying faces using Face Detect and Verify
 
-## Face Explorer
+>***NOTE:*** Please take note of the generated PersonId as you need to update in the sample user created in CosmosDB **users** collection. You can do this via CosmosDB data explorer on Azure Portal.
+>
+>The sample users is created as part of the API initialization here [MockDataSeeder.cs](../../Src/Backend/Contoso.CognitivePipeline.API/Mocks/MockDataSeeder.cs)
+>![cosmosdb-users](Assets/cosmosdb-users.png)
+
+## Configuration via Face Explorer App
 
 Included with this workshop a nice Angular web application that provides GUI to interact with the Face APIs from setup to verification.
 

@@ -1,30 +1,32 @@
 {
-  "accountId": "1234567890123456",
   "companyName": "Contoso",
   "address": {
-    "firstLineAddress": "8th Street",
-    "secondLineAddress": "Dubai Deira City Center",
-    "city": "Dubai",
-    "zipCode": "1234",
-    "country": "UAE",
-    "point": {
-      "type": "Point",
-      "coordinates": [
-        25.2519659,
-        55.330614
-      ]
-    },
-    "id": "5e3a8b46-c8ef-49c4-b8a7-c01416bc74a2",
-    "createdAt": "2018-06-21T18:48:47.3616809Z",
-    "isDeleted": false
+      "firstLineAddress": "8th Street",
+      "secondLineAddress": "Dubai Deira City Center",
+      "city": "Dubai",
+      "zipCode": "1234",
+      "country": "UAE",
+      "point": {
+          "type": "Point",
+          "coordinates": [
+              25.2519659,
+              55.330614
+          ]
+      },
+      "id": "102bb173-35d7-4091-9e49-f9fd991783cf",
+      "createdAt": "2018-11-13T04:43:39.7615021Z",
+      "isDeleted": false,
+      "origin": null
   },
   "contactNumber": "+9711234567",
   "contactName": "Mohamed Saif",
   "email": "mohamed.saif@outlook.com",
   "website": "http://blog.mohamedsaif.com",
-  "AccountType": "Individual",
-  "AuthenticationOptions": "ADB2C",
-  "id": "35fe01f2-fc0a-43de-98cd-03dd7f18e077",
-  "createdAt": "2018-06-21T18:48:47.369398Z",
-  "isDeleted": false
+  "accountId": "A9876-543210",
+  "accountType": "Employee",
+  "authenticationOptions": "ADB2C",
+  "isActive": true,
+  "displayName": "Mohamed Saif",
+  "facePersonId": "059d9c59-81c1-4bb1-96ba-244ee931a8a2",
+  "id": "4f93adac-13c6-4fe6-b625-afe7b7431fa1"
 }
