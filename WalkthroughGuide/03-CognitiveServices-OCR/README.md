@@ -69,7 +69,7 @@ These are the process from the client to the backend:
 
 All backend APIs are encapsulated in in a nice ClientSDK that offers strongly typed access to the cognitive services. Checkout the implementation here [CognitivePipeline.ClientSDK](../../Src/Backend/CognitivePipeline.ClientSDK).
 
-All ClientSDK services have unit test associated with them. You can check this out here [](../../Src/Backend/Tests/Contoso.CognitivePipeline.ClientSDK.Tests)
+All ClientSDK services have unit test associated with them. You can check this out here [ClientSDK.Tests](../../Src/Backend/Tests/Contoso.CognitivePipeline.ClientSDK.Tests)
 
 ```csharp
 protected IDAuthClient clientInstance;

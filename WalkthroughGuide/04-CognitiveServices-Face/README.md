@@ -134,6 +134,80 @@ const httpOptions = {
 
 7. Save the changes and refresh your browser and everything should be set to go.
 
+## Testing the service
+
+Now that the Computer Vision for Face service is provisioned, you can start testing it through using Face APIs in Postman or Face Explorer App.
+
+## Contoso Backend
+
+Now let's check how using this cognitive service to achieve the required business scenario for Employee Face authentication.
+
+These are the process from the client to the backend:
+
+### ClientSDK
+
+All backend APIs are encapsulated in in a nice ClientSDK that offers strongly typed access to the cognitive services. Checkout the implementation here [CognitivePipeline.ClientSDK](../../Src/Backend/CognitivePipeline.ClientSDK).
+
+All ClientSDK services have unit test associated with them. You can check this out here [ClientSDK.Tests](../../Src/Backend/Tests/Contoso.CognitivePipeline.ClientSDK.Tests)
+
+```csharp
+protected FaceAuthClient clientInstance;
+
+[Test]
+public async Task SubmitValidCorrectFace()
+{
+    string ownerId = Constants.OwnerId;
+    string expectedValue = "Mohamed Saif";
+    string testFileName = "valid_id.png";
+    byte[] doc = TestFilesHelper.GetTestFile(testFileName);
+    bool isAsync = false;
+    bool isMinimum = true;
+    var response = await clientInstance.FaceAuth(ownerId, doc, isAsync, isMinimum);
+    IsResultTypeValid(response);
+    Assert.IsTrue(response.IsAuthenticationSuccessful, "Authentication successful");
+    Assert.AreEqual(response.DetectedFaceName, expectedValue, $"expected result ({expectedValue}) matched");
+}
+```
+
+### Cognitive Pipeline
+
+#### Execution Tree
+
+ClientSDK ->
+
+- Call the services through [FaceAuthClient](../../Src/Backend/CognitivePipeline.ClientSDK/Client/FaceAuthClient.cs)
+
+API Management Endpoint ->
+
+- ClientSDK make a call to API Management endpoint passing in the base url and the access key.
+
+CognitivePipeline.API ->
+
+- API Management FaceAuth API is connected to [FaceAuthController.cs](../../Src/Backend/Contoso.CognitivePipeline.API/Controllers/IDAuthController.cs).
+
+CognitivePipeline.BackgroundServices.NewSmartDocReq ->
+
+- [NewSmartReq.cs](../../Src/Backend/Contoso.CognitivePipeline.BackgroundServices/NewSmartDocReq.cs) will execute synchronously to retrieve and process the results based on the requested the cognitive instructions passed [InstructionFlag.cs](../../Src/Backend/Contoso.CognitivePipeline.SharedModels/Models/InstructionFlag.cs).
+
+```csharp
+public enum InstructionFlag
+{
+    AnalyzeImage,
+    AnalyzeText,
+    Thumbnail,
+    FaceAuthentication,
+    ShelfCompliance
+}
+```
+
+- It is worth noting that this function also execute the business logic related to producing business relevant result.
+- For example, [CognitivePipelineResultProcessor](../../Src/Backend/Contoso.CognitivePipeline.BackgroundServices/Services/CognitivePipelineResultProcessor.cs) takes the raw results from the cognitive services and apply business rules and type mapping to return relevant optimized results (like returning FaceAuthCard after validating it against the database of users).
+
+CognitivePipeline.BackgroundServices.NewCognitiveFaceAuth ->
+
+- Face authentication processing will happen through a dedicated function [NewCognitiveFaceAuth](../../Src/Backend/Contoso.CognitivePipeline.BackgroundServices/NewCognitiveFaceAuth.cs)
+- This function connect to cognitive services and pass through the API results. This means it can be used with any image not only employee faces.
+
 # Next Steps
 
 [Shelves Compliant AI Model](../05-CognitiveServices-CustomVision)
