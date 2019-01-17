@@ -21,7 +21,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Models\ClassificationType.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\FaceAuthCard.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\EmployeeId.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Models\InstructionType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\InstructionFlag.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Location.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\NewRequest.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\ProcessingStep.cs" />
