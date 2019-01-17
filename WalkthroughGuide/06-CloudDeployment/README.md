@@ -203,6 +203,22 @@ This is what you would have after fully importing the cognitive APIs swagger def
 
 ![apim-configuration](Assets/azure-apim-configuration.png)
 
+#### API Management Access Information
+
+You will need the base Url of the API Management service with a valid subscription key.
+
+You can access the base Url in the **Overview** tab, it will be named **Gateway URL**.
+
+You can access the key under **Users** -> **Administrator**.
+
+![azure-apim-users](Assets/azure-apim-subs.png)
+
+Keys by default are hidden. In order to copy any key you need first to show them. Show the keys associated with Unlimited subscription and take note of them:
+
+![azure-apim-users](Assets/azure-apim-keys.png)
+
+You will need the keys in Azure Pipelines variables (configured later) and in any Postman testing of the API Management APIs :)
+
 ## Operations (DevOps)
 
 Now it is time to setup the initial environments for DevOps.
@@ -238,6 +254,154 @@ Now it is up to you, either import the workshop repo to [Azure Repos](https://az
 
 ![azure-devops-github](Assets/azure-devops-gitfork.png)
 
-#### Configuring Pipelines
+#### Enabling Azure Pipelines for GitHub
 
 Azure Pipelines as I said before, works with both GitHub and Azure Repos (and several others source control). Now that you have your own copy setup, it is time to activate the automated build pipelines.
+
+Just go to [GitHub Marketplace](https://github.com/marketplace) and search for **Azure Pipelines** and install it on your account.
+
+![github-pipelines](Assets/azure-devops-github-pipelines.png)
+
+Select the Free plan :)
+
+![github-pipelines-pricing](Assets/azure-devops-github-pipelines-pricing.png)
+
+Azure Pipelines can be enabled on specific repos if you opt to.
+
+![github-pipelines-configuration](Assets/azure-devops-github-pipelines-config.png)
+
+The final step is to select your Azure DevOps project that will host the pipelines:
+
+![github-pipelines-configuration](Assets/azure-devops-github-pipelines-project.png)
+
+#### Azure Pipelines Build Tasks
+
+I opted to use the newest approach to define pipelines which is YAML files.
+
+You will find all the Azure Pipelines YAML files in the root of this repo. Azure DevOps look for a file called [azure-pipelines.yml](../../azure-pipelines.yml).
+
+```yaml
+# Azure Pipelines for GitHub :)
+# More info: https://docs.microsoft.com/en-us/azure/devops/pipelines/?view=vsts
+trigger:
+  branches:
+    include:
+      - master
+  paths:
+    include:
+      - 'Src/FaceExplorer-App'
+      - 'Src/Backend'
+      - 'Src/Mobile'
+      - 'azure-pipelines.yml'
+      - 'azure-pipelines-angular.yml'
+      - 'azure-pipelines-function.yml'
+      - 'azure-pipelines-webapp.yml'
+      - 'azure-pipelines-nuget.yml'
+
+variables:
+  buildConfiguration: 'Release'
+
+jobs:
+- template: azure-pipelines-webapp.yml
+  parameters:
+    Name: ContosoBackendAPIs
+    RestoreBuildProjects: '**/*.API.csproj'
+    BuildConfiguration: 'Debug'
+    WorkingDirectory: 'Src/Backend/Contoso.CognitivePipeline.API'
+    ArtifactName: 'ContosoBackendAPIs'
+    PublishWebApp: True
+
+- template: azure-pipelines-webapp.yml
+  parameters:
+    Name: ContosoBackendFunction
+    RestoreBuildProjects: '**/*.BackgroundServices.csproj'
+    BuildConfiguration: 'Release'
+    WorkingDirectory: 'Src/Backend/Contoso.CognitivePipeline.BackgroundServices'
+    ArtifactName: 'ContosoBackendFunctions'
+    PublishWebApp: False
+    ZipAfterPublish: False
+
+- template: azure-pipelines-angular.yml
+  parameters:
+    Name: FaceExplorerApp
+
+- template: azure-pipelines-nuget.yml
+  parameters:
+    Name: 'ClientSDK'
+    WorkingDirectory: 'Src/Backend/CognitivePipeline.ClientSDK'
+
+- template: azure-pipelines-tests.yml
+  parameters:
+    Name: 'Tests'
+```
+
+I've used one useful feature of YAML definitions, Templates, which you will find also in the root of the repo.
+
+- [azure-pipelines-angular.yml](../../azure-pipelines-angular.yml)
+- [azure-pipelines-function.yml](../../azure-pipelines-function.yml)
+- [azure-pipelines-nuget.yml](../../azure-pipelines-nuget.yml)
+- [azure-pipelines-tests.yml](../../azure-pipelines-tests.yml)
+- [azure-pipelines-webapp.yml](../../azure-pipelines-webapp.yml)
+
+>***NOTE:*** You need to disable the Tests pipeline in the root Azure Pipelines definition in order to release the project for the first time. Tests are using the API Management endpoints to test the ClientSDK functionalities.
+
+A successful run will look like this:
+
+![azure-pipelines-results](Assets/azure-devops-pipelines-results.png)
+
+#### Azure Pipeline Variables
+
+I mentioned before that secrets must not be part of source control. 
+
+Also you may need to inject some dynamic information as part of building your project.
+
+A good way to accomplish the above points is to use Pipelines Variables.
+
+Open the Pipelines -> Build in Azure DevOps and then click Edit:
+
+![azure-pipelines-results](Assets/azure-devops-pipelines-overview.png)
+
+In the Pipelines editor, select **Edit in the visual design**:
+
+![azure-pipelines-results](Assets/azure-devops-pipelines-edit.png)
+
+In the designer, navigate to the **Variables** tab:
+
+![azure-pipelines-results](Assets/azure-devops-pipelines-edit-var.png)
+
+Add the new variables shown above with the needed values for the build pipeline to function correctly.
+
+In this case, a successful build pipeline, will include the following artifact that we will need to deploy via the **Release Pipeline**:
+
+![pipeline-artifacts](Assets/azure-devops-pipelines-artifacts.png)
+
+1. ClientSDK-Tests
+2. CognitivePipeline-ClientSDK
+3. ContosoBackendAPIs
+4. ContosoBackendFunctions
+5. FaceExplorer-App-Dist
+
+>***NOTE:*** Please refer back to Azure DevOps documentation for [YAML](https://docs.microsoft.com/en-us/azure/devops/pipelines/yaml-schema?view=vsts&tabs=schema) and [Build Pipelines](https://docs.microsoft.com/en-us/azure/devops/pipelines/?view=vsts) to get further information about this subject.
+
+#### Azure Release Pipelines
+
+Now once you have a successful build pipeline setup, you need to deploy the resources to Azure services via Azure Release pipeline.
+
+To create one, head to Pipelines -> Releases in Azure DevOps and click New -> Import release pipeline:
+
+![azure-pipeline-release](Assets/azure-devops-release.png)
+
+In this repo, [Contoso-Backend-Services-CD.json](../../Src/Azure-Pipelines/Contoso-Backend-Services-CD.json), I've included a JSON file that include sample release definition that you can start with:
+
+![azure-pipeline-release-run](Assets/azure-devops-release-run.png)
+
+Notice that I connected this release pipeline to the output of the Build Pipeline.
+
+You can see here, I'm releasing all backend components here:
+
+1. API is deployed to Dev slot then swapped with production
+2. Backend Functions is deployed to Function App
+3. Face Explorer is deployed to App Service dev slot
+4. ClientSDK NuGet is deployed to Azure Artifacts
+
+>***NOTE:*** Please refer back to [Azure DevOps Release](https://docs.microsoft.com/en-us/azure/devops/pipelines/release/?view=vsts) documentation to get further information about this subject.
