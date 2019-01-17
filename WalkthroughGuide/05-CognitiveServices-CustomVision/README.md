@@ -50,7 +50,7 @@ When training completes, under the tab **Performance** you will have information
 
 ![Custom Vision Portal](Assets/new-customvision-project-performance.png)
 
-## Testing with Postman
+## Testing the service
 
 First you need to download and import the [Custom Vision APIs Collection](../../Src/Postman-APIs/Custom_Vision_API.postman_collection.json) along with the [Dev Environment](../../Src/Postman-APIs/Dev.postman_environment.json) to easily get started with your testing.
 
@@ -59,6 +59,75 @@ Please update the relevant parameters to reflect your endpoints and keys.
 You will notice you have two options to call you custom vision endpoint, one with URL to the image and the other with the actual image file submitted as part of the request body.
 
 This is a common approach of almost all Computer Vision APIs.
+
+## Contoso Backend
+
+Now let's check how using this cognitive service to achieve the required business scenario for shelves compliance.
+
+These are the process from the client to the backend:
+
+### ClientSDK
+
+All backend APIs are encapsulated in in a nice ClientSDK that offers strongly typed access to the cognitive services. Checkout the implementation here [CognitivePipeline.ClientSDK](../../Src/Backend/CognitivePipeline.ClientSDK).
+
+All ClientSDK services have unit test associated with them. You can check this out here [ClientSDK.Tests](../../Src/Backend/Tests/Contoso.CognitivePipeline.ClientSDK.Tests)
+
+```csharp
+protected ShelvesComplianceClient clientInstance;
+
+[Test]
+public async Task SubmitValidCompliantShelves()
+{
+    string ownerId = Constants.OwnerId;
+    var testFileName = "valid1.jpg";
+    byte[] doc = TestFilesHelper.GetTestFile(testFileName);
+    bool isAsync = false;
+    bool isMinimum = true;
+    var response = await clientInstance.ValidateShelvesCompliace(ownerId, doc, isAsync, isMinimum);
+    IsResultTypeValid(response);
+    Assert.IsTrue(response.IsConfidenceAcceptable, "Classification threshold passed");
+    Assert.IsTrue(response.IsCompliant, $"Classification of {response.DetectionNotes}");
+}
+```
+
+### Cognitive Pipeline
+
+#### Execution Tree
+
+ClientSDK ->
+
+- Call the services through [ShelvesComplianceClient](../../Src/Backend/CognitivePipeline.ClientSDK/Client/ShelvesComplianceClient.cs)
+
+API Management Endpoint ->
+
+- ClientSDK make a call to API Management endpoint passing in the base url and the access key.
+
+CognitivePipeline.API ->
+
+- API Management FaceAuth API is connected to [ShelvesComplianceController.cs](../../Src/Backend/Contoso.CognitivePipeline.API/Controllers/ShelvesComplianceController.cs).
+
+CognitivePipeline.BackgroundServices.NewSmartDocReq ->
+
+- [NewSmartReq.cs](../../Src/Backend/Contoso.CognitivePipeline.BackgroundServices/NewSmartDocReq.cs) will execute synchronously to retrieve and process the results based on the requested the cognitive instructions passed [InstructionFlag.cs](../../Src/Backend/Contoso.CognitivePipeline.SharedModels/Models/InstructionFlag.cs).
+
+```csharp
+public enum InstructionFlag
+{
+    AnalyzeImage,
+    AnalyzeText,
+    Thumbnail,
+    FaceAuthentication,
+    ShelfCompliance
+}
+```
+
+- It is worth noting that this function also execute the business logic related to producing business relevant result.
+- For example, [CognitivePipelineResultProcessor](../../Src/Backend/Contoso.CognitivePipeline.BackgroundServices/Services/CognitivePipelineResultProcessor.cs) takes the raw results from the cognitive services and apply business rules and type mapping to return relevant optimized results (like returning ShelfCompliance after validating it against the database of users).
+
+CognitivePipeline.BackgroundServices.NewCognitiveShelfCompliance ->
+
+- Face authentication processing will happen through a dedicated function [NewCognitiveShelfCompliance](../../Src/Backend/Contoso.CognitivePipeline.BackgroundServices/NewCognitiveShelfCompliance.cs)
+- This function connect to custom vision endpoint and return list of classifications based on the trained model.
 
 # Next Steps
 
