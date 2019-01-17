@@ -1,9 +1,5 @@
 ![Banner](Assets/Banner.png)
 
-# Title
+# Contoso Shop Manager
 
-TBD
-
-## Subtitle
-
-TBD
+Android version is being prepared to be published on GitHub soon :)
