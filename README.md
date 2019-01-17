@@ -10,6 +10,8 @@
 
 **A 360 Intelligent Experiences** workshop around using AI + Mobile Apps to deliver advance intelligent that help auditor and store managers to evaluate Retail market product stocking compliance
 
+![architecture](Res/architecture.png)
+
 The workshop aims to educate and inform data scientists and application development teams on the importance of having Data-Driven Intelligent Apps.
 
 The workshop will give you insights and hands-on sessions on how to leverage innovative scalable Azure AI Services and Cloud Backend Services for your applications that will help you deliver an unrivaled customer experience.
@@ -157,24 +159,28 @@ You can find a walkthrough guide for the project(s) that outlines how you too ca
     </tr>
 </table>
 
-# Invistigation
+# Investigation
 
 ## AI Options for Object Classifications:
+
 **During our scoping, we investigated a couple of approaches to image classification including:**
+
 * Custom Vision Service
-* Transfer Learning using CNTK ResNet 
-* Object Detection with CNTK Fast-RCNN. 
+* Transfer Learning using CNTK ResNet
+* Object Detection with CNTK Fast-RCNN.
+
 ## App Development
-* Highly available Mobile Backend as a Service (MBaaS) 
+
+* Highly available Mobile Backend as a Service (MBaaS)
 * Apps that targets: iOS, Android and Windows
-* Apps must be native to leverage 100% of device capabilities 
+* Apps must be native to leverage 100% of device capabilities
 * Cost efficiency is key (for both development and maintenance)
+
 ## DevOps
+
 * Establish Continuous Integration & Continuous Delivery for app delivery
 
-# Implemenation
-
-
+# Implementation
 
 ## Authors
 
@@ -184,8 +190,6 @@ You can find a walkthrough guide for the project(s) that outlines how you too ca
 |     [GitHub](https://github.com/mohamedsaif)   | [GitHub](https://github.com/)                |  [GitHub](https://github.com/SherifElMahdi)    |
 |  [Twitter](https://twitter.com/mohamedsaif101) | [Twitter](https://twitter.com/)              |        [Twitter](https://twitter.com/)         |
 |         [Blog](http://blog.mohamedsaif.com)    |         [Blog](https://microsoft.com/)       |          [Blog](https://microsoft.com)         |
-
-
 
 ### Contributors
 

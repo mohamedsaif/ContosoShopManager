@@ -8,7 +8,7 @@ As per the [architecture options discussed](../02-ArchitectureOptions), Contoso 
 
 In this walkthrough we will start provisioning all services that were not provisioned as part of the AI services that are provisioned in the previous steps.
 
->***NOTE:*** On the next guide [Backend-Services-DevOps]() will explore how to continuously build (CI) and deploy (CD) the code leveraging Azure DevOps.
+>***NOTE:*** Later on this guide I will explore how to continuously build (CI) and deploy (CD) the code leveraging Azure DevOps.
 
 To have a quick overview, we will be provisioning the following services:
 
@@ -103,7 +103,7 @@ Impartant thing is to make sure that the data seeded in the CosmosDB is what you
 
 Please take note of ***Connection String*** that will be used later in configuration access to both API and Function services later.
 
->***NOTE:*** for more information about the different Comoso DB capabilities and options, you can review [Cosmos DB Documentation](https://docs.microsoft.com/en-us/azure/cosmos-db/introduction).
+>***NOTE:*** for more information about the different Cosmos DB capabilities and options, you can review [Cosmos DB Documentation](https://docs.microsoft.com/en-us/azure/cosmos-db/introduction).
 
 #### Azure Storage Explorer for Cosmos DB
 
@@ -197,11 +197,51 @@ API Management service is very easy to setup, just click Create new service and 
 
 #### Configuration - API Management
 
-We will tackle this later after we deploy the actual API source code to our App Service.
+You will be able to tackle this later after we deploy the actual API source code to our App Service.
 
 This is what you would have after fully importing the cognitive APIs swagger definitions:
 
 ![apim-configuration](Assets/azure-apim-configuration.png)
+
+So proceed with the below sections and then come back here to import the APIs. See you soon :)
+
+Here I'm assuming the API app service is up and running and correctly configured the application settings that include important information and secrets.
+
+You can test if the API app is running correctly by going to **https://yourappname.azurewebsites.net/** where you should be directed to the Swagger UI:
+
+![azure-appservice-swagger](Assets/azure-apim-swagger.png)
+
+Couple of points to make here:
+
+1. Each controller has its own swagger UI.
+2. You can copy the link for the swagger.json for each controller. We will use this OpenAPI specs document to import the APIs to API Management service.
+
+Now let's import the first API, **IDAuth** API, to API Management:
+
+![azure-apim-addnewapi](Assets/azure-apim-addapi.png)
+
+Copy your **swagger.json** link from you API app service and paste it along with the other information showed in the below screenshot:
+
+![azure-apim-import](Assets/azure-apim-import.png)
+
+When importing completes, you can check the new imported API details in API Management. Double check that settings are configured correctly:
+
+![azure-apim-idsettings](Assets/azure-apim-idauth.png)
+
+Now repeat the above steps to:
+
+1. FaceAuth API
+   - Display name: **Cognitive API - FaceAuth
+   - API URL suffix: **face**
+   - Products: **Starter**, **Unlimited**
+2. ShelvesCompliance API
+   - Display name: **Cognitive API - ShelvesCompliance
+   - API URL suffix: **shelves**
+   - Products: **Starter**, **Unlimited**
+
+That is it. Now your are ready to activate the full DevOps pipeline and use the backend services through either direct API calls to API Management or through the ClientSDK :)
+
+>***NOTE:*** don't forget that you need API Management information to be passed to Azure build pipelines variables as mentioned in the DevOps steps.
 
 #### API Management Access Information
 
