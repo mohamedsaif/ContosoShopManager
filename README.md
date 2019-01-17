@@ -16,7 +16,7 @@ The workshop aims to educate and inform data scientists and application developm
 
 The workshop will give you insights and hands-on sessions on how to leverage innovative scalable Azure AI Services and Cloud Backend Services for your applications that will help you deliver an unrivaled customer experience.
 
-Attendees will also learn how Microsoft's Cognitive Services and Advance AI Techniques can be used in conjunction with App Development Tools to scope, design, and execute the next generation of intelligent services. 
+Attendees will also learn how Microsoft's Cognitive Services and Advance AI Techniques can be used in conjunction with App Development Tools to scope, design, and execute the next generation of intelligent services.
 
 # Workshop Requirements
 
@@ -36,6 +36,7 @@ Attendees will also learn how Microsoft's Cognitive Services and Advance AI Tech
 1. Data Scientists  
 2. Application Developers
 3. Development Leads/AI Leads
+4. System Architects
 
 > **NOTE:** We highly recommend you setup and configure your system *before* attending one of the guided sessions. Although we’ve allowed an hour in the morning to assist in trouble shooting configurations, we won’t have time to do a fresh installation.
 
@@ -140,7 +141,7 @@ You can find a walkthrough guide for the project(s) that outlines how you too ca
 
 # Backround
 
-## Contoso Smart Shop
+## Contoso Shop Manager
 
 ### Overview
 <table>
@@ -161,7 +162,7 @@ You can find a walkthrough guide for the project(s) that outlines how you too ca
 
 # Investigation
 
-## AI Options for Object Classifications:
+## AI Options for Classification/Object Detection
 
 **During our scoping, we investigated a couple of approaches to image classification including:**
 
