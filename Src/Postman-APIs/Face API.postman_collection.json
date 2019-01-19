@@ -24,7 +24,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"Microsoft GBB\",\r\n    \"userData\": \"Microsoft Global Black Belt Team\"\r\n}"
+							"raw": "{\r\n    \"name\": \"Contoso Shop Auditors\",\r\n    \"userData\": \"Contoso Shop Auditors Team\"\r\n}"
 						},
 						"url": {
 							"raw": "{{face-base-url}}/persongroups/1",
@@ -86,7 +86,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"name\": \"Microsoft GBB EMEA\",\n    \"userData\": \"Microsoft Global Black Belt Team\"\n}"
+							"raw": "{\n    \"name\": \"Contoso Shop Auditors EMEA\",\n    \"userData\": \"Contoso Shop Auditors Team\"\n}"
 						},
 						"url": {
 							"raw": "{{face-base-url}}/persongroups/1",
@@ -304,7 +304,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"Steve Michelotti\",\r\n    \"userData\": \"Steve Michelotti, Microsoft (updated)\"\r\n}"
+							"raw": "{\r\n    \"name\": \"Mo Saif\",\r\n    \"userData\": \"Mohamed Saif, Contoso Shop Auditor\"\r\n}"
 						},
 						"url": {
 							"raw": "{{face-base-url}}/persongroups/1/persons/{{personId}}",
@@ -464,7 +464,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"url\": \"https://psfaceapicourse.blob.core.windows.net/individuals/steve2.jpg\"\n}"
+							"raw": "{\n\t\"url\": \"https://avatars0.githubusercontent.com/u/1328093?s=400&u=1203a6bad28483e9c6d39eac242287c4feaed9eb&v=4\"\n}"
 						},
 						"url": {
 							"raw": "{{face-base-url}}/persongroups/1/persons/{{personId}}/persistedFaces",
@@ -554,7 +554,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"userData\": \"https://psfaceapicourse.blob.core.windows.net/individuals/steve2.jpg\"\n}"
+							"raw": "{\n\t\"userData\": \"https://avatars0.githubusercontent.com/u/1328093?s=400&u=1203a6bad28483e9c6d39eac242287c4feaed9eb&v=4\"\n}"
 						},
 						"url": {
 							"raw": "{{face-base-url}}/persongroups/1/persons/{{personId}}/persistedFaces/{{persistedFaceId}}",
@@ -733,7 +733,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"url\": \"https://contosoie.blob.core.windows.net/public-individuals/DevConf_Speakers.jpg\"\n}"
+							"raw": "{\n\t\"url\": \"https://IMAGEURL\"\n}"
 						},
 						"url": {
 							"raw": "{{face-base-url}}/detect",
@@ -819,7 +819,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"url\": \"https://psfaceapicourse.blob.core.windows.net/individuals/steve4.png\"\n}"
+							"raw": "{\n\t\"url\": \"https://avatars0.githubusercontent.com/u/1328093?s=400&u=1203a6bad28483e9c6d39eac242287c4feaed9eb&v=4\"\n}"
 						},
 						"url": {
 							"raw": "{{face-base-url}}/detect",
@@ -849,7 +849,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"faceId\": \"{{faceIdForVerification}}\",\n\t\"personGroupId\": \"pluralsight-authors\",\n\t\"personId\": \"<insert-person-id>\"\n}"
+							"raw": "{\n\t\"faceId\": \"{{faceIdForVerification}}\",\n\t\"personGroupId\": \"1\",\n\t\"personId\": \"<insert-person-id>\"\n}"
 						},
 						"url": {
 							"raw": "{{face-base-url}}/verify",
