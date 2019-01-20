@@ -43,14 +43,6 @@ namespace Contoso.SB.API
 
             services.AddMvc();
 
-            //Add API documentation service
-            //services.AddSwaggerGen(c =>
-            //{
-            //    c.SwaggerDoc("v1", new Info { Title = "Contoso Cognitive Pipeline API", Version = "v1" });
-            //    var filePath = Path.Combine(System.AppContext.BaseDirectory, $"{Assembly.GetEntryAssembly().GetName().Name}.xml");
-            //    c.IncludeXmlComments(filePath);
-            //});
-
             //Create a separate schema for each controller
             foreach(var api in apis)
             {
