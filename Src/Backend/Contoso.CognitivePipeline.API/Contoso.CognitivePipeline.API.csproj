@@ -34,6 +34,7 @@
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     <UserSecretsId>7ffd56d9-deaa-4bf9-9833-5f9df10f29d7</UserSecretsId>
+    <DockerComposeProjectPath>..\docker-compose.dcproj</DockerComposeProjectPath>
   </PropertyGroup>
 
   <Target Name="IncludeDocFile" BeforeTargets="PrepareForPublish">

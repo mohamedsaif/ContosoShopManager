@@ -1,0 +1,8 @@
+version: '3.4'
+
+services:
+  contoso.cognitivepipeline.api:
+    image: ${DOCKER_REGISTRY-}contosocognitivepipelineapi
+    build:
+      context: .
+      dockerfile: Contoso.CognitivePipeline.API/Dockerfile
