@@ -15,6 +15,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{B001ECF1
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Contoso.CognitivePipeline.ClientSDK.Tests", "Tests\Contoso.CognitivePipeline.ClientSDK.Tests\Contoso.CognitivePipeline.ClientSDK.Tests.csproj", "{ECCFD93C-4308-4812-9A7A-7644DB4D66DF}"
 EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{CCF394D6-90BF-4817-B3B6-C5EB8FCA52EB}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		Contoso.CognitivePipeline.SharedModels\Contoso.CognitivePipeline.SharedModels.projitems*{079448f8-a04e-418e-88ba-cc2d5c1fe21a}*SharedItemsImports = 13
@@ -40,6 +42,10 @@ Global
 		{ECCFD93C-4308-4812-9A7A-7644DB4D66DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ECCFD93C-4308-4812-9A7A-7644DB4D66DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ECCFD93C-4308-4812-9A7A-7644DB4D66DF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CCF394D6-90BF-4817-B3B6-C5EB8FCA52EB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CCF394D6-90BF-4817-B3B6-C5EB8FCA52EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CCF394D6-90BF-4817-B3B6-C5EB8FCA52EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CCF394D6-90BF-4817-B3B6-C5EB8FCA52EB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
