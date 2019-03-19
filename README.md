@@ -206,6 +206,7 @@ You can always create issue, suggest an update through PR or direct message me o
 
 ### Contributors
 
+- **Sethu Raman**
 - **Steve Michelotti** for the great [Face-API-Explorer](https://github.com/smichelotti/ps-face-api-explorer) web app ([GitHub](https://github.com/smichelotti))
 
 ### Inspired by the Microsoft App Innovation Workshop
