@@ -6,7 +6,7 @@ Contoso Shop Manager App is a cross platform mobile application that would allow
 
 >***NOTE*** You must deploy the backend first before being able to use the mobile apps. Please refer back to this workshop guide to achieve that.
 
-## Technical Implemenation
+## Technical Implementation
 
 Making a decision to use Xamarin Forms to build a cross platform native mobile apps was logical choice given that all requirements (including some of each platform native features) would be achieved.
 
